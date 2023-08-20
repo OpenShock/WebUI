@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack",
     "local": "webpack-dev-server --mode development --https",
     "dev": "webpack-dev-server --mode development --https"
   },
