@@ -39,16 +39,16 @@
 
         <b-row align-h="center">
             <b-col cols="auto" md="auto">
-                <permission-button style="width: 46px" icon="fa-solid fa-volume-high" :state="shocker.permSound"
-                    @click="shocker.permSound = !shocker.permSound" />
+                <permission-button style="width: 46px" icon="fa-solid fa-volume-high" :state="shocker.permissions.sound"
+                    @click="shocker.permissions.sound = !shocker.permissions.sound" />
             </b-col>
             <b-col cols="auto" md="auto">
-                <permission-button style="width: 46px" icon="fa-solid fa-water" :state="shocker.permVibrate"
-                    @click="shocker.permVibrate = !shocker.permVibrate" />
+                <permission-button style="width: 46px" icon="fa-solid fa-water" :state="shocker.permissions.vibrate"
+                    @click="shocker.permissions.vibrate = !shocker.permissions.vibrate" />
             </b-col>
             <b-col cols="auto" md="auto">
-                <permission-button style="left: 0; width: 46px" icon="fa-solid fa-bolt" :state="shocker.permShock"
-                    @click="shocker.permShock = !shocker.permShock" />
+                <permission-button style="left: 0; width: 46px" icon="fa-solid fa-bolt" :state="shocker.permissions.shock"
+                    @click="shocker.permissions.shock = !shocker.permissions.shock" />
             </b-col>
             <b-col class="save-button" v-if="modified">
                 <b-button variant="nano" @click="saveChanges"><i class="fa-solid fa-floppy-disk"></i></b-button>
@@ -82,16 +82,20 @@ export default {
     },
     methods: {
         loadTranslatedValues() {
-            this.limit.duration = this.shocker.limitDuration === null ? 30 : this.shocker.limitDuration / 1000.0;
-            this.limit.intensity = this.shocker.limitIntensity === null ? 100 : this.shocker.limitIntensity;
+            this.limit.duration = this.shocker.limits.duration === null ? 30 : this.shocker.limits.duration / 1000.0;
+            this.limit.intensity = this.shocker.limits.intensity === null ? 100 : this.shocker.limits.intensity;
         },
         async saveChanges() {
             await apiCall.makeCall("PATCH", `1/shares/links/${this.$route.params.id}/${this.shocker.id}`, {
-                permSound: this.shocker.permSound,
-                permVibrate: this.shocker.permVibrate,
-                permShock: this.shocker.permShock,
-                limitDuration: this.limit.duration == 30.0 ? null : this.limit.duration * 1000,
-                limitIntensity: this.limit.intensity == 100 ? null : this.limit.intensity
+                permissions: {
+                    sound: this.shocker.permSound,
+                    vibrate: this.shocker.permVibrate,
+                    shock: this.shocker.permShock,
+                },
+                limits: {
+                    duration: this.limit.duration == 30.0 ? null : this.limit.duration * 1000,
+                    intensity: this.limit.intensity == 100 ? null : this.limit.intensity
+                }
             });
             this.modified = false;
         },
@@ -194,6 +198,8 @@ export default {
     .head {
         border-bottom: solid 2px var(--main-background-color);
         padding-bottom: 10px !important;
+        margin-left: -10px;
+        margin-right: -10px;
 
         .pause-col {
             cursor: pointer;

@@ -219,6 +219,8 @@ export default {
     .head {
         border-bottom: solid 2px var(--main-background-color);
         padding-bottom: 10px !important;
+        margin-left: -10px;
+        margin-right: -10px;
 
         .pause-col {
             cursor: pointer;

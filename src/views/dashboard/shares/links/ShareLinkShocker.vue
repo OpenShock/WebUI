@@ -35,13 +35,13 @@
                     <b-container align-items="center" style="margin-top: 15px">
                         <b-row align-h="center">
                             <b-col md="auto" style="width: unset">
-                                <round-slider v-model="shocker.state.intensity" :max="shocker.limitIntensity === null ? 100 : shocker.limitIntensity" pathColor="#1b1d1e" rangeColor="#8577ef"
+                                <round-slider v-model="shocker.state.intensity" :max="shocker.limits.intensity === null ? 100 : shocker.limits.intensity" pathColor="#1b1d1e" rangeColor="#8577ef"
                                     start-angle="315" end-angle="+270" width="30" line-cap="round" radius="75" />
 
                                 <p style="text-align: center;">Intensity</p>
                             </b-col>
                             <b-col md="auto" style="width: unset">
-                                <round-slider v-model="shocker.state.duration" :max="shocker.limitDuration === null ? 30 : shocker.limitDuration / 1000" pathColor="#1b1d1e" rangeColor="#8577ef"
+                                <round-slider v-model="shocker.state.duration" :max="shocker.limits.duration === null ? 30 : shocker.limits.duration / 1000" pathColor="#1b1d1e" rangeColor="#8577ef"
                                     start-angle="315" end-angle="+270" line-cap="round" radius="75" width="30" min="0.3"
                                     step="0.1" />
 
@@ -51,15 +51,15 @@
                     </b-container>
                 </b-row>
                 <b-row align-h="center">
-                    <b-col v-if="shocker.permSound" cols="auto" md="auto">
+                    <b-col v-if="shocker.permissions.sound" cols="auto" md="auto">
                         <control-button style="width: 46px" text="" icon="fa-solid fa-volume-high"
                             loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(3)" />
                     </b-col>
-                    <b-col v-if="shocker.permVibrate" cols="auto" md="auto">
+                    <b-col v-if="shocker.permissions.vibrate" cols="auto" md="auto">
                         <control-button style="width: 46px" text="" icon="fa-solid fa-water"
                             loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(2)" />
                     </b-col>
-                    <b-col v-if="shocker.permShock" cols="auto" md="auto">
+                    <b-col v-if="shocker.permissions.shock" cols="auto" md="auto">
                         <control-button style="left: 0; width: 46px" text="" icon="fa-solid fa-bolt"
                             loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(1)" />
                     </b-col>
@@ -198,6 +198,8 @@ export default {
     .head {
         border-bottom: solid 2px var(--main-background-color);
         padding-bottom: 10px !important;
+        margin-left: -10px;
+        margin-right: -10px;
 
         .pause-col {
             cursor: pointer;
