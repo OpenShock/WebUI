@@ -1,6 +1,6 @@
 const config = {
 	apiUrl: "https://dev-api.shocklink.net/",
-	webUiUrl: "https://localhost:8080/#/",
+	webUiUrl: "https://dev.shocklink.net/#/",
 	shortUrl: "https://shockl.ink/s/"
 }
 
