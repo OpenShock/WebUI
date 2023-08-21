@@ -88,7 +88,7 @@ export default {
         async saveChanges() {
             await apiCall.makeCall("PATCH", `1/shares/links/${this.$route.params.id}/${this.shocker.id}`, {
                 permissions: {
-                    sound: this.shocker.permissions.Sound,
+                    sound: this.shocker.permissions.sound,
                     vibrate: this.shocker.permissions.vibrate,
                     shock: this.shocker.permissions.shock,
                 },
