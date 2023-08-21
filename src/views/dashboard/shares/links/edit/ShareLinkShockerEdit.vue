@@ -160,13 +160,13 @@ export default {
         'limit.intensity'(newValue, oldValue) {
             if (oldValue !== null) this.modified = true;
         },
-        'shocker.permShock'(newValue, oldValue) {
+        'shocker.permissions.shock'(newValue, oldValue) {
             if (oldValue !== null) this.modified = true;
         },
-        'shocker.permVibrate'(newValue, oldValue) {
+        'shocker.permissions.vibrate'(newValue, oldValue) {
             if (oldValue !== null) this.modified = true;
         },
-        'shocker.permSound'(newValue, oldValue) {
+        'shocker.permissions.sound'(newValue, oldValue) {
             if (oldValue !== null) this.modified = true;
         },
     }
