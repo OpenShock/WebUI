@@ -8,7 +8,10 @@ const enc = new TextDecoder("utf-8");
 const commitHash = enc.decode(require('child_process').execSync('git rev-parse HEAD')).replace('\n', '');
 
 module.exports = (env) => {
-	console.log(env);
+	
+	const targetEnv = env.TARGET_ENV === undefined ? process.env.TAEGET_ENV : env.TAEGET_ENV;
+	console.log("Compiling with TAREGET_ENV = " + targetEnv);
+
 	return {
 		entry: {
 			main: "./src/main.js",
@@ -79,7 +82,7 @@ module.exports = (env) => {
 			new webpack.DefinePlugin({
 				'process.env': {
 					'COMMIT_HASH': JSON.stringify(commitHash),
-					'TARGET_ENV': JSON.stringify(env.TARGET_ENV)
+					'TARGET_ENV': JSON.stringify(targetEnv)
 				}
 			})
 		],
