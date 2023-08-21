@@ -40,7 +40,7 @@ export default {
       return COMMIT_HASH.substring(0, 7);
     },
     targetEnv() {
-      return TARGET_ENV;
+      return TARGET_ENV.toUpperCase();
     },
     connectionColor() {
       switch(this.$store.state.userHubState) {
