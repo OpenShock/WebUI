@@ -88,9 +88,9 @@ export default {
         async saveChanges() {
             await apiCall.makeCall("PATCH", `1/shares/links/${this.$route.params.id}/${this.shocker.id}`, {
                 permissions: {
-                    sound: this.shocker.permSound,
-                    vibrate: this.shocker.permVibrate,
-                    shock: this.shocker.permShock,
+                    sound: this.shocker.permissions.Sound,
+                    vibrate: this.shocker.permissions.vibrate,
+                    shock: this.shocker.permissions.shock,
                 },
                 limits: {
                     duration: this.limit.duration == 30.0 ? null : this.limit.duration * 1000,
