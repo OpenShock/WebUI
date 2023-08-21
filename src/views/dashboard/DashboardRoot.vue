@@ -52,7 +52,7 @@ export default {
       return this.self.loading || !this.userHubOk;
     },
     loadingText() {
-      if(this.loading) return "<p>Authenticating user.<br>Please wait...</p>"
+      if(this.isLoading) return "<p>Authenticating user.<br>Please wait...</p>"
       if(this.userHubInitiallyConnected) return "<p>Trying to reconnect.<br>Please wait...</p>"
       return "<p>Trying to connect to user hub.<br>Please wait...</p>";
     },
