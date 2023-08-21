@@ -5,6 +5,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require("webpack");
 const enc = new TextDecoder("utf-8");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const commitHash = enc.decode(require('child_process').execSync('git rev-parse HEAD')).replace('\n', '');
 
 module.exports = (env) => {
@@ -43,6 +44,15 @@ module.exports = (env) => {
 					},
 				},
 				{
+					test: /\.(pngKeep)$/,
+					loader: "file-loader",
+					options: {
+						name: "[name].[ext]",
+						outputPath: "static",
+						useRelativePaths: true
+					},
+				},
+				{
 					test: /\.(png|jpe?g|gif|webm|mp4|svg)$/,
 					loader: "file-loader",
 					options: {
@@ -69,6 +79,9 @@ module.exports = (env) => {
 			],
 		},
 		plugins: [
+			new CopyWebpackPlugin({'patterns': [
+				{from:'./src/static/images', to:'static/images'}
+			]}),
 			new VueLoaderPlugin(),
 			new CleanWebpackPlugin(),
 			new MiniCssExtractPlugin({
