@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "local": "webpack-dev-server --mode development --https",
-    "dev": "webpack-dev-server --mode development --https"
+    "local": "webpack-dev-server --mode development --env TARGET_ENV=local --https",
+    "dev": "webpack-dev-server --mode development --env TARGET_ENV=development --https"
   },
   "keywords": [],
   "author": "",

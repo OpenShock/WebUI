@@ -1,4 +1,4 @@
-require("@/globals/config/config." + process.env.NODE_ENV + ".js");
+require("@/globals/config/config." + process.env.TARGET_ENV + ".js");
 require("@/js/utils.js");
 import "bootstrap/scss/bootstrap.scss";
 import ApiCall from '/src/js/ApiCall';
@@ -9,7 +9,7 @@ toastr.options = {
 global.toastr = toastr;
 global.apiCall = ApiCall;
 global.COMMIT_HASH = process.env.COMMIT_HASH;
-global.NODE_ENV = process.env.NODE_ENV;
+global.TARGET_ENV = process.env.TARGET_ENV;
 global.apiCall = ApiCall;
 
 import jQuery from 'jquery';

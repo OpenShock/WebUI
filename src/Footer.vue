@@ -2,7 +2,7 @@
   <p class="version">ShockLink UI 1.2.0
     <a target="_blank" :href="'https://github.com/Shock-Link/WebUI/commit/' + commitHash">{{ commitHash }}</a> | API <span
       v-html="apiVersion"></span> <a target="_blank"
-      :href="'https://github.com/Shock-Link/API/commit/' + apiCommitHash">{{ apiCommitHash }}</a>
+      :href="'https://github.com/Shock-Link/API/commit/' + apiCommitHash">{{ apiCommitHash }}</a> | <span>{{ targetEnv }}</span>
   </p>
   <p class="cred"><a href="https://github.com/Shock-Link">Made by ShockLink Team</a></p>
   <p class="status" :style="'color: #' + connectionColor + ';'" v-html="$store.state.userHubState"></p>
@@ -38,6 +38,9 @@ export default {
   computed: {
     commitHash() {
       return COMMIT_HASH.substring(0, 7);
+    },
+    targetEnv() {
+      return TARGET_ENV;
     },
     connectionColor() {
       switch(this.$store.state.userHubState) {
