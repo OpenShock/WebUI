@@ -61,7 +61,9 @@ $shocker-limit-color: #f16051;
 
   .table {
     --bs-table-striped-color: #212529;
-    --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+    --bs-table-color: #212529;
+    --bs-table-striped-bg: rgba(0, 0, 0, 0.03);
+    --bs-table-bg: rgba(0, 0, 0, 0.05);
     --bs-table-active-color: #212529;
     --bs-table-active-bg: rgba(0, 0, 0, 0.1);
     --bs-table-hover-color: #212529;
@@ -98,8 +100,10 @@ $shocker-limit-color: #f16051;
   --main-color-white: #fff;
 
   .table {
-    --bs-table-striped-bg: #2c3034;
+    --bs-table-striped-bg: #222425;
+    --bs-table-bg: #2c3034;
     --bs-table-striped-color: #fff;
+    --bs-table-color: #fff;
     --bs-table-active-bg: #373b3e;
     --bs-table-active-color: #fff;
     --bs-table-hover-bg: #323539;
@@ -166,6 +170,11 @@ body {
 
 
 .table {
+  border-radius: 10px;
+  border: 1px solid;
+  border-collapse: collapse;
+  overflow: hidden;
+  
   tbody {
     tr {
       &:hover {
