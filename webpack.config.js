@@ -8,6 +8,7 @@ const enc = new TextDecoder("utf-8");
 const commitHash = enc.decode(require('child_process').execSync('git rev-parse HEAD')).replace('\n', '');
 
 module.exports = (env) => {
+	console.log(env);
 	return {
 		entry: {
 			main: "./src/main.js",
