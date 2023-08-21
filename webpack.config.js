@@ -10,7 +10,7 @@ const commitHash = enc.decode(require('child_process').execSync('git rev-parse H
 module.exports = (env) => {
 	
 	console.log(process);
-	const targetEnv = env.TARGET_ENV === undefined ? process.env.TAEGET_ENV : env.TAEGET_ENV;
+	const targetEnv = env.TARGET_ENV === undefined ? process.env.TARGET_ENV : env.TARGET_ENV;
 	console.log("Compiling with TARGET_ENV = " + targetEnv);
 
 	return {
