@@ -9,6 +9,8 @@ toastr.options = {
 global.toastr = toastr;
 global.apiCall = ApiCall;
 global.COMMIT_HASH = process.env.COMMIT_HASH;
+global.NODE_ENV = process.env.NODE_ENV;
+global.apiCall = ApiCall;
 
 import jQuery from 'jquery';
 global.jQuery = jQuery;
