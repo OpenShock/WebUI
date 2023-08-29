@@ -37,10 +37,10 @@ export default {
   },
   computed: {
     commitHash() {
-      return COMMIT_HASH.substring(0, 7);
+      return env.COMMIT_HASH.substring(0, 7);
     },
     targetEnv() {
-      return TARGET_ENV.toUpperCase();
+      return env.TARGET_ENV.toUpperCase();
     },
     connectionColor() {
       switch(this.$store.state.userHubState) {

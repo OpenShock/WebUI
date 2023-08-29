@@ -1,3 +1,8 @@
+global.env = {
+	COMMIT_HASH: process.env.COMMIT_HASH,
+	TARGET_ENV: process.env.TARGET_ENV
+};
+
 require("@/globals/config/config." + process.env.TARGET_ENV + ".js");
 require("@/js/utils.js");
 import "bootstrap/scss/bootstrap.scss";
@@ -7,9 +12,6 @@ toastr.options = {
 	"positionClass": "toast-bottom-right"
 }
 global.toastr = toastr;
-global.apiCall = ApiCall;
-global.COMMIT_HASH = process.env.COMMIT_HASH;
-global.TARGET_ENV = process.env.TARGET_ENV;
 global.apiCall = ApiCall;
 
 import jQuery from 'jquery';
