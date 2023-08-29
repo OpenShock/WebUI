@@ -43,15 +43,6 @@ module.exports = (env) => {
 					},
 				},
 				{
-					test: /\.(pngKeep)$/,
-					loader: "file-loader",
-					options: {
-						name: "[name].[ext]",
-						outputPath: "static",
-						useRelativePaths: true
-					},
-				},
-				{
 					test: /\.(png|jpe?g|gif|webm|mp4|svg)$/,
 					loader: "file-loader",
 					options: {
