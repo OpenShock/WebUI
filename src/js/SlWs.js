@@ -11,7 +11,8 @@ connection.on("DeviceStatus", (states) => {
     states.forEach(state => {
         storeF.dispatch('setDeviceState', {
             id: state.device,
-            online: state.online
+            online: state.online,
+            firmwareVersion: state.firmwareVersion
         })
     });
 });

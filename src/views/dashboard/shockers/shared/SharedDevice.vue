@@ -23,23 +23,26 @@ export default {
     props: ['device'],
     data() {
         return {
-            onlineState: false
+            onlineState: false,
+            firmwareVersion: null
         }
     },
     beforeMount() {
-        this.device.state = {
-            online: false
-        };
-
         this.onlineState = this.getOnlineState();
-        this.emitter.on('deviceStateUpdate', () => {
-            this.onlineState = this.getOnlineState();
+        this.firmwareVersion = this.getFirmwareVersion();
+        this.emitter.on('deviceStateUpdate', ({id, data}) => {
+            this.onlineState = data.online;
+            this.firmwareVersion = data.firmwareVersion;
         });
     },
     methods: {
         getOnlineState() {
             if (this.$store.state.deviceStates[this.device.id] === undefined) return false;
-            return this.$store.state.deviceStates[this.device.id];
+            return this.$store.state.deviceStates[this.device.id].online;
+        },
+        getFirmwareVersion() {
+            if (this.$store.state.deviceStates[this.device.id] === undefined) return false;
+            return this.$store.state.deviceStates[this.device.id].firmwareVersion;
         }
     },
     computed: {

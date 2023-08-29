@@ -7,9 +7,12 @@
     <b-container>
       <b-table hover striped :items="devices" :fields="fields" class="devices-table">
         <template #cell(status)="row">
-          <span :class="!row.item.$onlineState ? 'offline' : 'online'">
+          <span :id="'tooltip-state' + row.item.id" :class="!row.item.$onlineState ? 'offline' : 'online'">
             <i class="fa-solid fa-circle"></i>
           </span>
+          <b-tooltip :target="'tooltip-state' + row.item.id" triggers="hover">
+            {{ !row.item.$onlineState ? 'Offline' : 'Online'}}<span v-if="row.item.$onlineState"><br>Firmware Version: {{ getFirmwareVersionString(row.item.$firmwareVersion) }}</span>
+          </b-tooltip>
         </template>
         <template #cell(actions)="row">
           <div cols="auto" class="elli" @click="ellipsis($event, row.item)">
@@ -209,13 +212,16 @@ export default {
       this.$swal('Success!', 'Successfully created new device', 'success');
       await this.loadDevices();
     },
-    getOnlineState(deviceId) {
-      if (this.$store.state.deviceStates[deviceId] === undefined) return false;
-      return this.$store.state.deviceStates[deviceId];
-    },
     updateOnlineStateAll() {
       this.devices.forEach(device => {
-        device.$onlineState = this.getOnlineState(device.id);
+        if (this.$store.state.deviceStates[device.id] === undefined) {
+          device.$onlineState = false;
+          device.$firmwareVersion = null;
+        } else {
+          const deviceState = this.$store.state.deviceStates[device.id];
+          device.$onlineState = deviceState.online;
+          device.$firmwareVersion = deviceState.firmwareVersion;
+        }
       });
     },
     async loadDevices() {
@@ -256,6 +262,10 @@ export default {
     },
     sendCaptiveMessage(deviceId, enabled) {
       ws.captive(deviceId, enabled);
+    },
+    getFirmwareVersionString(version) {
+      if(version === null) return "Older than 7.1.0.0, please upgrade.";
+      return version;
     },
     ellipsis(e, item) {
       this.$contextmenu({

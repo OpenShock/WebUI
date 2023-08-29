@@ -13,7 +13,7 @@ module.exports = (env) => {
 	const targetEnv = env.TARGET_ENV === undefined ? process.env.TARGET_ENV : env.TARGET_ENV;
 	console.log("Compiling with TARGET_ENV = " + targetEnv);
 
-	return {
+	return { 
 		entry: {
 			main: "./src/main.js",
 		},
@@ -114,6 +114,7 @@ module.exports = (env) => {
 		},
 		devServer: {
 			hot: true,
+			allowedHosts: "all"
 		}
 	};
 };

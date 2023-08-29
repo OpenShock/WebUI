@@ -4,8 +4,13 @@
             <b-col cols="auto">
                 <p>{{ device.name }}</p>
             </b-col>
-            <b-col :class="onlineStateComp">
-                <i class="fa-solid fa-circle"></i>
+            <b-col>
+                <span :id="'tooltip-state' + device.id" :class="!this.onlineState ? 'offline' : 'online'">
+            <i class="fa-solid fa-circle"></i>
+          </span>
+          <b-tooltip :target="'tooltip-state' + device.id" triggers="hover">
+            {{ !this.onlineState ? 'Offline' : 'Online'}}<span v-if="this.onlineState"><br>Firmware Version: {{ getFirmwareVersionString }}</span>
+          </b-tooltip>
             </b-col>
         </b-row>
         <b-row>
@@ -23,24 +28,32 @@ export default {
     props: ["device"],
     data() {
         return {
-            onlineState: false
+            onlineState: false,
+            firmwareVersion: null
         }
     },
     beforeMount() {
         this.onlineState = this.getOnlineState();
-        this.emitter.on('deviceStateUpdate', () => {
-            this.onlineState = this.getOnlineState();
+        this.firmwareVersion = this.getFirmwareVersion();
+        this.emitter.on('deviceStateUpdate', ({id, data}) => {
+            this.onlineState = data.online;
+            this.firmwareVersion = data.firmwareVersion;
         });
     },
     methods: {
         getOnlineState() {
             if (this.$store.state.deviceStates[this.device.id] === undefined) return false;
-            return this.$store.state.deviceStates[this.device.id];
+            return this.$store.state.deviceStates[this.device.id].online;
+        },
+        getFirmwareVersion() {
+            if (this.$store.state.deviceStates[this.device.id] === undefined) return false;
+            return this.$store.state.deviceStates[this.device.id].firmwareVersion;
         }
     },
     computed: {
-        onlineStateComp() {
-            return this.onlineState ? 'online' : 'offline';
+        getFirmwareVersionString() {
+            if(this.firmwareVersion === null) return "Older than 7.1.0.0, please upgrade.";
+            return this.firmwareVersion;
         }
     }
 }

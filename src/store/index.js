@@ -36,9 +36,14 @@ const store = createStore({
 		setDarkMode(state, dark) {
 			state.settings.dark = dark;
 		},
-		setDeviceState(state, {id, online}) {
-			state.deviceStates[id] = online;
-			emitter.emit('deviceStateUpdate', {id, online});
+		setDeviceState(state, {id, online, firmwareVersion}) {
+			const data = {
+				online,
+				firmwareVersion
+			};
+			state.deviceStates[id] = data;
+
+			emitter.emit('deviceStateUpdate', {id, data});
 		},
 		setUserHubState(state, newState) {
 			state.userHubState = newState;
@@ -66,8 +71,8 @@ const store = createStore({
 			commit('setDarkMode', dark);
 			utils.setDarkMode(dark);
 		},
-		setDeviceState({commit}, {id, online}) {
-			commit('setDeviceState', {id, online});
+		setDeviceState({commit}, {id, online, firmwareVersion}) {
+			commit('setDeviceState', {id, online, firmwareVersion});
 		},
 		async getSelf({commit}) {
 			const res = await apiCall.makeCall('GET', '1/users/self');
