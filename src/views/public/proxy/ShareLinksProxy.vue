@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import LoadingWithText from '../utils/LoadingWithText.vue';
+import LoadingWithText from '../../utils/LoadingWithText.vue';
 
 export default {
     components: { LoadingWithText },
@@ -72,10 +72,6 @@ export default {
 
 <style scoped lang="scss">
 .proxy-container {
-    display: grid;
-    place-items: center;
-    min-height: 100vh;
-
     .inner-card {   
         width: 400px;
         height: 150px;

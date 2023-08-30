@@ -12,11 +12,6 @@ const routes = [
 		component: lazyLoad('Root'),
 	},
 	{
-		path: '/proxy/shares/links/:id',
-		component: lazyLoad('proxy/ShareLinksProxy'),
-		props: true
-	},
-	{
 		path: '/dashboard',
 		component: lazyLoad('dashboard/DashboardRoot'),
 		redirect: '/dashboard/home',
@@ -175,7 +170,12 @@ const routes = [
 				path: 'shares/links/:id',
 				component: lazyLoad('dashboard/shares/links/ViewShareLink'),
 				props: route => ({id: route.params.id, publicMode: true })
-			}
+			},
+			{
+				path: 'proxy/shares/links/:id',
+				component: lazyLoad('public/proxy/ShareLinksProxy'),
+				props: true
+			},
 		]
 	}
 ]

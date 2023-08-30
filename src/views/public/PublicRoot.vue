@@ -1,41 +1,44 @@
 <template>
-    <router-view v-slot="{ Component }">
-      <transition name="component-fade" mode="out-in">
-        <div :key="'0'" id="app-root" class="public-root">
-          <public-nav-root></public-nav-root>
-  
+  <router-view v-slot="{ Component }">
+    <transition name="component-fade" mode="out-in">
+      <div :key="'0'" id="app-root" class="public-root">
+        <public-nav-root></public-nav-root>
+
+        <div class="public-wrap">
           <transition name="component-fade" mode="out-in">
             <component :is="Component"></component>
           </transition>
-  
         </div>
-      </transition>
-    </router-view>
-  </template>
+      </div>
+    </transition>
+  </router-view>
+</template>
   
-  <script>
+<script>
 import PublicNavRoot from './nav/PublicNavRoot.vue'
 
-  export default {
+export default {
   components: { PublicNavRoot },
-    mounted() {
+  mounted() {
 
-    },
-    data() {
-      return {
-
-      }
-    },
-    computed: {
-
-    },
-    methods: {
+  },
+  data() {
+    return {
 
     }
-  }
-  </script>
-  
-  <style lang="scss">
+  },
+  computed: {
 
-  </style>
+  },
+  methods: {
+
+  }
+}
+</script>
+  
+<style lang="scss">
+.public-wrap {
+  padding: 25px 35px;
+}
+</style>
   

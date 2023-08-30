@@ -10,7 +10,7 @@
                     <i class="fa-solid fa-pause"></i>
                 </span>
             </b-col>
-            <b-col cols="10" class="shocker-name-col">
+            <b-col cols="10" class="shocker-name-col" :class="isOwn ? '' : 'reduced-padding-left'">
                 <p class="shocker-name">{{ shocker.name }}</p>
             </b-col>
             <b-col v-if="isOwn" cols="auto" class="elli" @click="ellipsis">
@@ -216,6 +216,10 @@ export default {
             margin-right: auto;
             width: calc(100% - 50px);
             padding-left: 8px;
+
+            &.reduced-padding-left {
+                padding-left: 5px;
+            }
 
             .shocker-name {
                 white-space: nowrap;
