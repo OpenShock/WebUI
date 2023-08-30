@@ -1,7 +1,7 @@
 <template>
     <b-container class="shocker">
         <b-row class="head">
-            <b-col cols="auto" class="pause-col" @click="togglePause">
+            <b-col v-if="isOwn" cols="auto" class="pause-col" @click="togglePause">
                 <span v-if="shocker.isPaused" class="paused">
                     <i class="fa-solid fa-play"></i>
                 </span>
@@ -13,7 +13,7 @@
             <b-col cols="10" class="shocker-name-col">
                 <p class="shocker-name">{{ shocker.name }}</p>
             </b-col>
-            <b-col cols="auto" class="elli" @click="ellipsis">
+            <b-col v-if="isOwn" cols="auto" class="elli" @click="ellipsis">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
             </b-col>
         </b-row>
@@ -77,7 +77,7 @@ import ControlButton from '../../../utils/ControlButton.vue';
 export default {
     components: { Loading, RoundSlider, ControlButton },
 
-    props: ["shocker", "editMode"],
+    props: ["shocker", "editMode", "isOwn"],
     data() {
         return {
             inProgress: false,

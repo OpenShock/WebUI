@@ -26,7 +26,7 @@
             <div v-else>
                 <b-row v-for="device in shareLink.devices" :key="device.id">
                     <b-col v-for="item in device.shockers" :key="item.id" class="shocker-col">
-                        <share-link-shocker :shocker="item" @control="controlShocker"></share-link-shocker>
+                        <share-link-shocker :is-own="isOwn" :shocker="item" @control="controlShocker"></share-link-shocker>
                     </b-col>
                 </b-row>
             </div>
@@ -238,7 +238,7 @@ export default {
         },
         isOwn() {
             if (this.shareLink === undefined) return false;
-            return this.shareLink.author.id === this.$store.state.user.id;
+            return !this.publicMode && this.shareLink.author.id === this.$store.state.user.id;
         },
         proxyPath() {
             return '/proxy/shares/links/' + this.id;
