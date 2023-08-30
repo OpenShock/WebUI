@@ -2,10 +2,9 @@
     <b-container class="shocker">
         <b-row class="head">
             <b-col v-if="isOwn" cols="auto" class="pause-col" @click="togglePause">
-                <span v-if="shocker.isPaused" class="paused">
+                <span v-if="pausedOnShareLinkLevel" class="paused">
                     <i class="fa-solid fa-play"></i>
                 </span>
-
                 <span v-else>
                     <i class="fa-solid fa-pause"></i>
                 </span>
@@ -18,32 +17,37 @@
             </b-col>
         </b-row>
         <div class="content-container">
-            <div v-if="shocker.isPaused" class="paused-text width100">
-                <b-container class="width100">
-                    <b-row align-h="center">
-                        <b-col cols="auto">
-                            <h2>Paused</h2>
-                        </b-col>
-                        <b-col cols="auto" @click="togglePause" style="cursor: pointer;">
+            <div v-if="pauseReasonText !== null" class="paused-text width100">
+                <b-container class="width100" style="text-align: center;">
+                    <h2>Paused</h2>
+                    <b-row @click="togglePause" style="cursor: pointer;">
+                        <span v-if="pausedOnShareLinkLevel">
                             <i style="font-size: 38px;" class="fa-solid fa-play"></i>
-                        </b-col>
+                        </span>
+                        <span v-else>
+                            <i style="font-size: 38px;" class="fa-solid fa-pause"></i>
+                        </span>
                     </b-row>
+                    <h2>{{ pauseReasonText }}</h2>
                 </b-container>
             </div>
-            <div class="content-child" :class="shocker.isPaused ? 'paused' : ''">
+            <div class="content-child" :class="pauseReasonText !== null ? 'paused' : ''">
                 <b-row>
                     <b-container align-items="center" style="margin-top: 15px">
                         <b-row align-h="center">
                             <b-col md="auto" style="width: unset">
-                                <round-slider v-model="shocker.state.intensity" :max="shocker.limits.intensity === null ? 100 : shocker.limits.intensity" pathColor="#1b1d1e" rangeColor="#8577ef"
-                                    start-angle="315" end-angle="+270" width="30" line-cap="round" radius="75" />
+                                <round-slider v-model="shocker.state.intensity"
+                                    :max="shocker.limits.intensity === null ? 100 : shocker.limits.intensity"
+                                    pathColor="#1b1d1e" rangeColor="#8577ef" start-angle="315" end-angle="+270" width="30"
+                                    line-cap="round" radius="75" />
 
                                 <p style="text-align: center;">Intensity</p>
                             </b-col>
                             <b-col md="auto" style="width: unset">
-                                <round-slider v-model="shocker.state.duration" :max="shocker.limits.duration === null ? 30 : shocker.limits.duration / 1000" pathColor="#1b1d1e" rangeColor="#8577ef"
-                                    start-angle="315" end-angle="+270" line-cap="round" radius="75" width="30" min="0.3"
-                                    step="0.1" />
+                                <round-slider v-model="shocker.state.duration"
+                                    :max="shocker.limits.duration === null ? 30 : shocker.limits.duration / 1000"
+                                    pathColor="#1b1d1e" rangeColor="#8577ef" start-angle="315" end-angle="+270"
+                                    line-cap="round" radius="75" width="30" min="0.3" step="0.1" />
 
                                 <p style="text-align: center;">Duration</p>
                             </b-col>
@@ -70,6 +74,7 @@
 </template>
 
 <script>
+import PR from '@/js/PauseReason.js';
 import Loading from '../../../utils/Loading.vue';
 import RoundSlider from 'vue-three-round-slider';
 import ControlButton from '../../../utils/ControlButton.vue';
@@ -85,7 +90,7 @@ export default {
         }
     },
     beforeMount() {
-        
+
     },
     methods: {
         ellipsis(e) {
@@ -150,12 +155,32 @@ export default {
             setTimeout(() => this.inProgress = false, this.shocker.state.duration * 1000);
         },
         async togglePause() {
-            const toSet = !this.shocker.isPaused;
-            await apiCall.makeCall("POST", `1/shockers/${this.shocker.id}/pause`, {
+            const toSet = !this.pausedOnShareLinkLevel;
+            const res = await apiCall.makeCall("POST", `1/shares/links/${this.$route.params.id}/${this.shocker.id}/pause`, {
                 pause: toSet
             });
 
-            this.shocker.isPaused = toSet;
+            if (res === undefined || res.status !== 200) {
+                toastr.error("Error while updating pause state");
+                return;
+            }
+
+            this.shocker.paused = res.data.data;
+        }
+    },
+    computed: {
+        pausedOnShareLinkLevel() {
+            return this.shocker.paused & PR.SHARE_LINK;
+        },
+        pauseReasonText() {
+            const p = this.shocker.paused;
+            if (p & PR.SHOCKER && p & PR.SHARE_LINK) return "Share link and shocker level"
+            if (p & PR.SHARE_LINK) return "Share link level";
+            if (p & PR.SHOCKER) return "Shocker level";
+
+            if (p === 0) return null;
+
+            return "Level: " + p;
         }
     }
 }
@@ -182,6 +207,10 @@ export default {
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 100;
+
+            svg {
+                padding: 0;
+            }
         }
 
         .content-child {
@@ -237,5 +266,4 @@ export default {
             padding: 0 12px;
         }
     }
-}
-</style>
+}</style>
