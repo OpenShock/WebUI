@@ -75,10 +75,7 @@
             </b-form-group>
 
             <b-form-group label="Model (editable)" label-for="item-model" label-class="mb-1">
-              <b-form-select id="item-model" :state="validationEditModel" v-model="retrievedShocker.model" :options="modelOptions"/>
-              <b-form-invalid-feedback :state="validationEditModel">
-                    Select a model type
-                </b-form-invalid-feedback>
+              <b-form-select id="item-model" v-model="retrievedShocker.model" :options="modelOptions"/>
             </b-form-group>
 
             <b-form-group label="Created on (readonly)" label-for="item-created" label-class="mb-1">
@@ -103,17 +100,17 @@ export default {
             modelOptions: [
                 {
                     text: "Small",
-                    value: 0
+                    value: "Small"
                 },
                 {
                     text: "PetTrainer",
-                    value: 1
+                    value: "PetTrainer"
                 }
             ],
             selectedDevice: "",
             newName: "",
             newRfId: 0,
-            newModel: 0,
+            newModel: "Small",
             devicesLoading: false,
             modal: {
                 new: false,
@@ -162,14 +159,6 @@ export default {
         validationRfId() {
             return this.newRfId >= 0 && this.newRfId <= 65535;
         },
-        validationModel() {
-            var valid = false;
-            this.modelOptions.forEach((text, value) => {
-                if(value === this.newModel) valid = true;
-            });
-            return valid;
-        },
-
         validationEditDevice() {
             return this.retrievedShocker.device !== "";
         },

@@ -83,10 +83,10 @@ export default {
         },
         getTypeForLog(type) {
             switch(type) {
-                case 0: return "fa-stop";
-                case 1: return "fa-bolt";
-                case 2: return "fa-water";
-                case 3: return "fa-volume-high";
+                case "Stop": return "fa-stop";
+                case "Shock": return "fa-bolt";
+                case "Vibrate": return "fa-water";
+                case "Sound": return "fa-volume-high";
             }
             return "fa-error"
         }
@@ -97,7 +97,7 @@ export default {
 <style scoped lang="scss">
 
 .logs-container {
-    overflow-y: scroll;
+
 .logs-table {
 
 

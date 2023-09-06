@@ -8,7 +8,7 @@
             <b-table hover striped :items="tokens" :fields="fields" class="tokens-table">
 
                 <template #cell(permissions)="row">
-                    <i class="perm fa-solid fa-bolt" :class="row.item.permissions.includes(0) ? 'enabled' : 'disabled'"></i>
+                    <i class="perm fa-solid fa-bolt" :class="row.item.permissions.includes('Shockers_Use') ? 'enabled' : 'disabled'"></i>
                 </template>
 
                 <template #cell(actions)="row">
