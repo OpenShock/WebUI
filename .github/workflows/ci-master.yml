@@ -14,6 +14,7 @@ name: ci-master
 # TARGET_ENV is used by Webpack to determine the build target.
 env:
   REGISTRY: ghcr.io
+  ARTIFACT_NAME: shocklink-webui.zip
   IMAGE_NAME: ${{ github.repository_owner }}/shocklink-webui
   TARGET_ENV: production
 
