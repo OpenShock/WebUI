@@ -46,10 +46,10 @@ jobs:
       - name: Build
         run: npm run build --if-present
       
-      - name: Compress the artifact
-        run: zip -r ${{ env.ARTIFACT_NAME }} dist
+      - name: Compress internal artifacts
+        run: cd dist && zip -r ${{ env.ARTIFACT_NAME }} .
       
-      - name: Upload artifact
+      - name: Upload internal artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.ARTIFACT_NAME }}
@@ -66,7 +66,7 @@ jobs:
           sparse-checkout: |
             Dockerfile
       
-      - name: Download artifacts
+      - name: Download internal artifacts
         uses: actions/download-artifact@v3
         with:
           name: ${{ env.ARTIFACT_NAME }}

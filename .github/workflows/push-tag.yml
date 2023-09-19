@@ -42,7 +42,7 @@ jobs:
         run: npm run build --if-present
       
       - name: Compress internal artifacts
-        run: zip -r ${{ env.ARTIFACT_NAME }} dist
+        run: cd dist && zip -r ${{ env.ARTIFACT_NAME }} .
       
       - name: Upload internal artifacts
         uses: actions/upload-artifact@v3
