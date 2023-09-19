@@ -34,6 +34,7 @@ jobs:
         with:
           path: |
             ~/.npm
+            ~/node_modules
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
 
