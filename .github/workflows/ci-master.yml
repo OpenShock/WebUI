@@ -16,6 +16,7 @@ env:
   ARTIFACT_NAME: shocklink-webui.zip
   IMAGE_NAME: ${{ github.repository_owner }}/shocklink-webui
   TARGET_ENV: production
+  NODE_ENV: production
 
 jobs:
 
