@@ -32,4 +32,4 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: nmp run build --if-present
+        run: npm run build --if-present
