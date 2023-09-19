@@ -1,0 +1,72 @@
+on:
+  push:
+    tags:
+      - 'v*'
+
+name: push-tag
+
+# REGISTRY and IMAGE_NAME are for building and tagging the container.
+# TARGET_ENV is used by Webpack to determine the build target.
+env:
+  REGISTRY: ghcr.io
+  ARTIFACT_NAME: shocklink-webui.zip
+  IMAGE_NAME: ${{ github.repository_owner }}/shocklink-webui
+  TARGET_ENV: production
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 17.x
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build --if-present
+      
+      # This step differs from the main CI.
+      - name: Compress the artifacts
+        run: zip -r ${{ env.ARTIFACT_NAME }} dist
+      
+      # This step differs from the main CI.
+      - name: Upload artifacts
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.ARTIFACT_NAME }}
+          asset_name: ${{ env.ARTIFACT_NAME }}
+          tag: ${{ github.ref }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      # This step differs from the main CI.
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=tag
+      
+      - name: Build image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
