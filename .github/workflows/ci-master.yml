@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+    types: [opened, reopened, synchronize]
+
+name: ci-master
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # - uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       ~/.cache/pip
+      #       ~/.platformio/cache
+      #     key: ${{ runner.os }}-arch
+
+      - uses: actions/setup-node@v4
+        with:
+          python-version: 17.x
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: nmp run build --if-present
