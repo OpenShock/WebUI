@@ -24,9 +24,9 @@ jobs:
       #       ~/.platformio/cache
       #     key: ${{ runner.os }}-arch
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v3
         with:
-          python-version: 17.x
+          node-version: 17.x
 
       - name: Install dependencies
         run: npm ci
