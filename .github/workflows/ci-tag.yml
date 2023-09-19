@@ -3,7 +3,7 @@ on:
     tags:
       - 'v*'
 
-name: push-tag
+name: ci-tag
 
 # REGISTRY and IMAGE_NAME are for building and tagging the container.
 # TARGET_ENV is used by Webpack to determine the build target.
