@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - master
+      - develop
   pull_request:
     branches:
       - master
@@ -18,11 +19,11 @@ env:
 
 jobs:
 
-  build:
+  build-ui:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v3
         with:
@@ -33,6 +34,34 @@ jobs:
 
       - name: Build
         run: npm run build --if-present
+      
+      - name: Compress the artifact
+        run: zip -r ${{ env.ARTIFACT_NAME }} dist
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ github.workspace }}/${{ env.ARTIFACT_NAME }}
+
+  build-container:
+    runs-on: ubuntu-latest
+    needs: build-ui
+    if: github.event_name != 'pull_request'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            Dockerfile
+      
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+      
+      - name: Extract artifacts
+        run: unzip ${{ env.ARTIFACT_NAME }} -d dist
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -44,6 +73,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
+      # - Tag as 'master' when master branch is pushed
+      # - Tag as pr-{n} when a PR is created
+      # - 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
@@ -58,6 +90,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
