@@ -73,7 +73,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ env.ARTIFACT_NAME }}
-          path: ${{ github.workspace }}/${{ env.ARTIFACT_NAME }}
       
       - name: Extract artifacts
         run: unzip ${{ env.ARTIFACT_NAME }} -d dist
