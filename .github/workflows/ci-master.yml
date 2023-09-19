@@ -84,9 +84,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
-      # - Tag as 'master' when master branch is pushed
-      # - Tag as pr-{n} when a PR is created
-      # - 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
