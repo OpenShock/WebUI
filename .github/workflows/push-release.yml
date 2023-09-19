@@ -1,9 +1,8 @@
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [published]
 
-name: push-tag
+name: push-release
 
 # REGISTRY and IMAGE_NAME are for building and tagging the container.
 # TARGET_ENV is used by Webpack to determine the build target.
