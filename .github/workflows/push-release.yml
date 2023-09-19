@@ -1,23 +1,12 @@
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-    types: [opened, reopened, synchronize]
+  release:
+    types: [published]
 
-name: ci-master
-
-# REGISTRY and IMAGE_NAME are for building and tagging the container.
-# TARGET_ENV is used by Webpack to determine the build target.
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-  TARGET_ENV: production
+name: push-release
 
 jobs:
 
+  # Copied verbatim from https://docs.platformio.org/en/stable/integration/ci/github-actions.html
   build:
     runs-on: ubuntu-latest
 
@@ -49,14 +38,11 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=edge,branch=master
-            type=ref,event=pr
       
-      - name: Build image
+      - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: false
+          push: true
           tags: ${{ steps.meta.output.tags }}
           labels: ${{ steps.meta.output.labels }}
