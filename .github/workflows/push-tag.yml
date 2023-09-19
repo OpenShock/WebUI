@@ -39,6 +39,7 @@ jobs:
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ github.workspace }}/${{ env.ARTIFACT_NAME }}
+          retention-days: 1
   
   publish-artifacts:
     runs-on: ubuntu-latest
