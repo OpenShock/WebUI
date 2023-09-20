@@ -47,7 +47,7 @@ services:
 ```
 
 # Development
-Contributions are welcome! We're eager to see what you come up with. Make sure to [join us on Discord]()
+Contributions are welcome! We're eager to see what you come up with. Make sure to [join us on Discord](https://discord.gg/AHcCbXbEcF).
 
 ## Dependencies
 
