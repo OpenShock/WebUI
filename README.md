@@ -4,6 +4,7 @@ This is the ShockLink Web UI. It is a single-page application that communicates 
 
 ## Contents
 
+- [Configuring](#configuring)
 - [Deployment](#deployment)
   - [Using Docker](#using-docker)
   - [Using `docker-compose`](#using-docker-compose)
