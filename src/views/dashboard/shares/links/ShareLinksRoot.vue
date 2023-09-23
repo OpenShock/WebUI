@@ -63,7 +63,7 @@ export default {
     },
     methods: {
         copyUrl(id) {
-            navigator.clipboard.writeText(config.shortUrl + id);
+            navigator.clipboard.writeText(config.shortUrl + "s/" + id);
             toastr.success('Share Link copied to clipboard');
         },
         async loadShareLinks() {

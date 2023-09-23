@@ -375,7 +375,7 @@ export default {
             }
 
             this.loadCodes();
-            this.$swal('Successfully created share code!', `Code: ${res.data.data}`, 'success');
+            this.$swal('Successfully created share code!', `Link: ${config.shortUrl}c/${res.data.data}<br><br>Code: ${res.data.data}`, 'success');
         }
     }
 }

@@ -176,6 +176,11 @@ const routes = [
 				component: lazyLoad('public/proxy/ShareLinksProxy'),
 				props: true
 			},
+			{
+				path: 'proxy/shares/code/:id',
+				component: lazyLoad('public/proxy/ShareCodeProxy'),
+				props: true
+			},
 		]
 	}
 ]

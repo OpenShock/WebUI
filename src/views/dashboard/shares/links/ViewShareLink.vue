@@ -244,7 +244,7 @@ export default {
             return '/proxy/shares/links/' + this.id;
         },
         shareLinkUrl() {
-            return config.shortUrl + this.id;
+            return config.shortUrl + "s/" + this.id;
         },
         existingShockerIds() {
             var arr = [];
