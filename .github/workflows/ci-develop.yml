@@ -15,7 +15,7 @@ env:
   BRANCH: develop
   REGISTRY: ghcr.io
   ARTIFACT_NAME: shocklink-webui.zip
-  IMAGE_NAME: ${{ github.repository_owner }}/shocklink-webui
+  IMAGE_NAME: ${{ github.repository_owner }}/webui
   TARGET_ENV: development
   NODE_ENV: development
 
