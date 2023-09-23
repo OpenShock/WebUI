@@ -30,7 +30,7 @@ This documentation describes how to self-host the WebUI container. This might no
 $ docker run \
     -p 80:80/tcp \
     --name shocklink-webui \
-    ghcr.io/shocklink/shocklink-webui:latest
+    ghcr.io/shocklink/webui:latest
 ```
 
 ## Using `docker-compose`
@@ -41,7 +41,7 @@ version: '3.9'
 
 services:
   webui:
-    image: ghcr.io/shock-link/shocklink-webui:latest
+    image: ghcr.io/shock-link/webui:latest
     container_name: shocklink-webui
     ports:
       - "80:80/tcp"
