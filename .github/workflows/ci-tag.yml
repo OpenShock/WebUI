@@ -10,7 +10,7 @@ name: ci-tag
 env:
   REGISTRY: ghcr.io
   ARTIFACT_NAME: shocklink-webui.zip
-  IMAGE_NAME: ${{ github.repository_owner }}/shocklink-webui
+  IMAGE_NAME: ${{ github.repository_owner }}/webui
   TARGET_ENV: production
   NODE_ENV: production
 
@@ -101,13 +101,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
+      - uses: oprypin/find-latest-tag@v1
+        id: latest-tag
+        with:
+          repository: ${{ github.repository }}
+          releases-only: false
+      
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=false
           tags: |
-            type=raw,value=latest
+            type=raw,value=latest,enable=${{ steps.latest-tag.outputs.tag == github.ref_name }}
             type=ref,event=tag
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
