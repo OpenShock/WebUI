@@ -5,13 +5,17 @@ services:
   # Database. Only Postgres is currently supported.
   db:
     image: postgres:16
+    ports:
+      - "5432:5432/tcp"
     environment:
       - POSTGRES_PASSWORD=postgres
   
   # Redis with Redisearch.
   redis:
-    image: redislabs/redisearch:latest
-
+    image: redis/redis-stack-server:latest
+    volumes:
+      - /opt/docker/shocklink/redis/redis-stack.conf:/redis-stack.conf
+  
   # The API.
   # Check https://github.com/Shock-Link/API for the latest configuration settings.
   api:
@@ -22,7 +26,7 @@ services:
     ports:
       - "5001:80/tcp"
     environment:
-      - SHOCKLINK__DB=Host=docker-node;Port=1337;Database=root;Username=root;Password=root;Search Path=ShockLink
+      - SHOCKLINK__DB=Host=db;Port=5432;Database=postgres;Username=postgres;Password=postgres;Search Path=ShockLink
       - SHOCKLINK__REDIS__HOST=redis
       - SHOCKLINK__FRONTENDBASEURL=http://local:5002
   
