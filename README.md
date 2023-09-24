@@ -16,35 +16,77 @@ This is the ShockLink Web UI. It is a single-page application that communicates 
 
 # Configuring
 
-The [shocklink-webui](https://github.com/Shock-Link/WebUI/pkgs/container/shocklink-webui) container unfortunately does not support any configuration beyond nginx configuration, as it is currently based on `nginx:alpine`. 
+The [shocklink-webui](https://github.com/Shock-Link/WebUI/pkgs/container/shocklink-webui) container supports configuration via environment variables.
 
-If you wish to change the API that the WebUI communicates with, locally modify the [configuration file](src/globals/config/config.production.js) and build the container manually.
+**NOTE:** All of the below values are always prefixed with `https://`. This cannot be omitted.
+
+|Variable|Default|Description|
+|-|-|-|
+|`SHOCKLINK_API_URL`|`api.shocklink.net/`| URL of the API. |
+|`SHOCKLINK_WEBUI_URL`|`shocklink.net/#/`| URL of the ShockLink WebUI. |
+|`SHOCKLINK_SHARE_URL`|`shockl.ink/s/`| URL to prefix share links with. When visited, should redirect to `${SHOCKLINK_WEBUI_URL}/public/proxy/shares/links/{ID}`. |
 
 # Deployment
 
 This documentation describes how to self-host the WebUI container. This might not be of interest to you if you are content using [ShockLink.net](https://shocklink.net).
 
 ## Using Docker
+Assuming you are running on `localhost`, with [the API](https://github.com/Shock-Link/API) running on port `5001`:
 
 ```bash
 $ docker run \
-    -p 80:80/tcp \
+    -p 5002:80/tcp \
+    -e SHOCKLINK_API_URL=localhost:5001/ \
+    -e SHOCKLINK_WEBUI_URL=localhost:5002/#/ \
+    -e SHOCKLINK_SHARE_URL=localhost:5002/#/public/proxy/shares/links/ \
     --name shocklink-webui \
     ghcr.io/shocklink/webui:latest
 ```
 
 ## Using `docker-compose`
-At the time of writing, the [ShockLink API](https://github.com/Shock-Link/API) is not yet readily available. This example contains **only** the WebUI.
+
+Assuming a deployment on `localhost`:
 
 ```yml
 version: '3.9'
 
 services:
+
+  # Database. Only Postgres is currently supported.
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_PASSWORD=postgres
+  
+  # Redis with Redisearch.
+  redis:
+    image: redislabs/redisearch:latest
+
+  # The API.
+  # Check https://github.com/Shock-Link/API for the latest configuration settings.
+  api:
+    image: ghcr.io/shock-link/api:latest
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "5001:80/tcp"
+    environment:
+      - FRONTEND_BASE_URL=localhost
+      - REDIS_HOST=redis
+      - DB=db
+  
+  # The Web UI (this repository).
   webui:
     image: ghcr.io/shock-link/webui:latest
-    container_name: shocklink-webui
+    depends_on:
+      - api
     ports:
-      - "80:80/tcp"
+      - "5002:80/tcp"
+    environment:
+      - SHOCKLINK_API_URL=localhost:5001/
+      - SHOCKLINK_WEBUI_URL=localhost:5002/#/
+      - SHOCKLINK_SHARE_URL=localhost:5002/#/public/proxy/shares/links/
 ```
 
 # Development
