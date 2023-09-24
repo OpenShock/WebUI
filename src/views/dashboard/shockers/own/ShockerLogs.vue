@@ -7,7 +7,7 @@
                     <b-container>
                         <b-row align-h="start" align-v="center">
                             <b-col md="auto">
-                                <img class="user-image" :src="row.item.controlledBy.image + 'x128'" />
+                                <img class="user-image" :src="row.item.controlledBy.image + '&s=256'" />
                             </b-col>
                             <b-col>
                                 <p class="mb-0">{{ row.item.controlledBy.customName === null ? row.item.controlledBy.name : row.item.controlledBy.customName + ' [' + row.item.controlledBy.name + ']' }}</p>

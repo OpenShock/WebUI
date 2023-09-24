@@ -23,7 +23,7 @@
                     <b-container>
                         <b-row align-h="start" align-v="center">
                             <b-col md="auto">
-                                <img class="user-image" :src="row.item.sharedWith.image + 'x128'" />
+                                <img class="user-image" :src="row.item.sharedWith.image + '&s=128'" />
                             </b-col>
                             <b-col>
                                 <p class="mb-0">{{ row.item.sharedWith.name }}</p>
@@ -79,7 +79,7 @@
             <b-container style="padding: 0;">
                 <b-row align-h="start" align-v="center">
                     <b-col md="auto">
-                        <img class="user-image" :src="editing.sharedWith.image + 'x128'" />
+                        <img class="user-image" :src="editing.sharedWith.image + '&s=128'" />
                     </b-col>
                     <b-col>
                         <p class="mb-0">{{ editing.sharedWith.name }}</p>
