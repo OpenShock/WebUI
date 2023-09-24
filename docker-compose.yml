@@ -24,16 +24,16 @@ services:
     environment:
       - SHOCKLINK__DB=Host=docker-node;Port=1337;Database=root;Username=root;Password=root;Search Path=ShockLink
       - SHOCKLINK__REDIS__HOST=redis
-      - SHOCKLINK__FRONTENDBASEURL=http://localhost:5002
+      - SHOCKLINK__FRONTENDBASEURL=http://local:5002
   
   # The Web UI (this repository).
   webui:
-    image: ghcr.io/shock-link/webui:latest
+    image: ghcr.io/shock-link/webui:master
     depends_on:
       - api
     ports:
       - "5002:80/tcp"
     environment:
-      - SHOCKLINK_API_URL=localhost:5001/
-      - SHOCKLINK_WEBUI_URL=localhost:5002/#/
-      - SHOCKLINK_SHARE_URL=localhost:5002/#/public/proxy/shares/links/
+      - SHOCKLINK_API_URL=http://local:5001/
+      - SHOCKLINK_WEBUI_URL=http://local:5002/#/
+      - SHOCKLINK_SHARE_URL=http://local:5002/#/public/proxy/shares/links/

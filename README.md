@@ -18,13 +18,11 @@ This is the ShockLink Web UI. It is a single-page application that communicates 
 
 The [shocklink-webui](https://github.com/Shock-Link/WebUI/pkgs/container/shocklink-webui) container supports configuration via environment variables.
 
-**NOTE:** All of the below values are always prefixed with `https://`. This cannot be omitted.
-
 |Variable|Default|Description|
 |-|-|-|
-|`SHOCKLINK_API_URL`|`api.shocklink.net/`| URL of the API. |
-|`SHOCKLINK_WEBUI_URL`|`shocklink.net/#/`| URL of the ShockLink WebUI. |
-|`SHOCKLINK_SHARE_URL`|`shockl.ink/s/`| URL to prefix share links with. When visited, should redirect to `${SHOCKLINK_WEBUI_URL}/public/proxy/shares/links/{ID}`. |
+|`SHOCKLINK_API_URL`|`https://api.shocklink.net/`| URL of the API. |
+|`SHOCKLINK_WEBUI_URL`|`https://shocklink.net/#/`| URL of the ShockLink WebUI. |
+|`SHOCKLINK_SHARE_URL`|`https://shockl.ink/s/`| URL to prefix share links with. When visited, should redirect to `${SHOCKLINK_WEBUI_URL}/public/proxy/shares/links/{ID}`. |
 
 # Deployment
 
@@ -36,9 +34,9 @@ Assuming you are running on `localhost`, with [the API](https://github.com/Shock
 ```bash
 $ docker run \
     -p 5002:80/tcp \
-    -e SHOCKLINK_API_URL=localhost:5001/ \
-    -e SHOCKLINK_WEBUI_URL=localhost:5002/#/ \
-    -e SHOCKLINK_SHARE_URL=localhost:5002/#/public/proxy/shares/links/ \
+    -e SHOCKLINK_API_URL=http://localhost:5001/ \
+    -e SHOCKLINK_WEBUI_URL=http://localhost:5002/#/ \
+    -e SHOCKLINK_SHARE_URL=http://localhost:5002/#/public/proxy/shares/links/ \
     --name shocklink-webui \
     ghcr.io/shocklink/webui:latest
 ```

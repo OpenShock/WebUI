@@ -1,8 +1,8 @@
 FROM nginx:1-alpine
 
-ENV SHOCKLINK_API_URL=api.shocklink.net
-ENV SHOCKLINK_WEBUI_URL=shocklink.net/#/
-ENV SHOCKLINK_SHARE_URL=shockl.ink/s/
+ENV SHOCKLINK_API_URL=https://api.shocklink.net
+ENV SHOCKLINK_WEBUI_URL=https://shocklink.net/#/
+ENV SHOCKLINK_SHARE_URL=https://shockl.ink/s/
 
 # Copy release artifacts (static JS and CSS bundles)
 COPY dist /usr/share/nginx/html

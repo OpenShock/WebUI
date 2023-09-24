@@ -1,7 +1,7 @@
 const config = {
-	apiUrl: "https://SHOCKLINK_API_URL",
-	webUiUrl: "https://SHOCKLINK_WEBUI_URL",
-	shortUrl: "https://SHOCKLINK_SHARE_URL"
+	apiUrl: "SHOCKLINK_API_URL",
+	webUiUrl: "SHOCKLINK_WEBUI_URL",
+	shortUrl: "SHOCKLINK_SHARE_URL"
 }
 
 global.config = config;
