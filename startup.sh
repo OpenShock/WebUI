@@ -27,6 +27,7 @@ inject() {
 
 # Inject our variables.
 inject SHOCKLINK_API_DOMAIN $SHOCKLINK_API_DOMAIN
+inject SHOCKLINK_WEBUI_DOMAIN $SHOCKLINK_WEBUI_DOMAIN
 
 # Start nginx as normal.
 # If something breaks, see: https://github.com/nginxinc/docker-nginx/blob/master/mainline/debian/Dockerfile
