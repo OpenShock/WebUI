@@ -22,7 +22,7 @@ inject() {
     require $1
 
     echo "[$NAME] Injecting variable: $1 = $2"
-    sed -i 's/$1/${!var}/g' $SERVE_PATH/*.js
+    find . -name "*.js" -exec sed -i 's/$1/${!var}/g' {} +
 }
 
 # Inject our variables.
