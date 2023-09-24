@@ -28,7 +28,7 @@ services:
   
   # The Web UI (this repository).
   webui:
-    image: ghcr.io/shock-link/webui:master
+    image: ghcr.io/redmushie/webui:master
     depends_on:
       - api
     ports:
