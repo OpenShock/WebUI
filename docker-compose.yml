@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+
+  # Database. Only Postgres is currently supported.
+  db:
+    image: postgres:16
+    ports:
+      - "5432:5432/tcp"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+  
+  # Redis with Redisearch.
+  redis:
+    image: redis/redis-stack-server:latest
+    volumes:
+      - /opt/docker/shocklink/redis/redis-stack.conf:/redis-stack.conf
+  
+  # The API.
+  # Check https://github.com/Shock-Link/API for the latest configuration settings.
+  api:
+    image: ghcr.io/shock-link/api:latest
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "5001:80/tcp"
+    environment:
+      - SHOCKLINK__DB=Host=db;Port=5432;Database=postgres;Username=postgres;Password=postgres;Search Path=ShockLink
+      - SHOCKLINK__REDIS__HOST=redis
+      - SHOCKLINK__FRONTENDBASEURL=http://local:5002
+  
+  # The Web UI (this repository).
+  webui:
+    image: ghcr.io/redmushie/webui:master
+    depends_on:
+      - api
+    ports:
+      - "5002:80/tcp"
+    environment:
+      - SHOCKLINK_API_URL=http://local:5001/
+      - SHOCKLINK_WEBUI_URL=http://local:5002/#/
+      - SHOCKLINK_SHARE_URL=http://local:5002/#/public/proxy/shares/links/
