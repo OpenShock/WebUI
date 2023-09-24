@@ -16,7 +16,7 @@ env:
   REGISTRY: ghcr.io
   ARTIFACT_NAME: shocklink-webui.zip
   IMAGE_NAME: ${{ github.repository_owner }}/webui
-  TARGET_ENV: production
+  TARGET_ENV: container
   NODE_ENV: production
 
 jobs:

@@ -1,6 +1,7 @@
 FROM nginx:1-alpine
 
 ENV SHOCKLINK_API_DOMAIN=api.shocklink.net
+ENV SHOCKLINK_WEBUI_DOMAIN=shocklink.net
 
 # Copy release artifacts (static JS and CSS bundles)
 COPY dist /usr/share/nginx/html
