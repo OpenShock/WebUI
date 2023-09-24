@@ -5,33 +5,8 @@ global.env = {
 
 require("@/globals/config/config." + process.env.TARGET_ENV + ".js");
 require("@/js/utils.js");
-
 import "bootstrap/scss/bootstrap.scss";
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
-import 'normalize.css';
-import 'toastr/build/toastr.css';
-import "@fontsource/poppins";
-import "./App.scss";
-import 'sweetalert2/dist/sweetalert2.min.css';
-import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
-
-import { dom, library } from '@fortawesome/fontawesome-svg-core';
-
 import ApiCall from '/src/js/ApiCall';
-import App from '@/App';
-import BootstrapVueNext from 'bootstrap-vue-next'
-import ContextMenu from '@imengyu/vue3-context-menu'
-import Footer from '@/Footer';
-import VueSweetalert2 from 'vue-sweetalert2';
-import {createApp} from 'vue';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import jQuery from 'jquery';
-import mitt from 'mitt';
-import router from '@/router';
-import storeA from '@/store';
 import toastr from 'toastr';
 toastr.options = {
 	"positionClass": "toast-bottom-right"
@@ -39,12 +14,34 @@ toastr.options = {
 global.toastr = toastr;
 global.apiCall = ApiCall;
 
+import jQuery from 'jquery';
 global.jQuery = jQuery;
 global.$ = jQuery;
+import {createApp} from 'vue';
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
+import 'normalize.css';
+import 'toastr/build/toastr.css';
+import "@fontsource/poppins";
+import "./App.scss";
+import 'sweetalert2/dist/sweetalert2.min.css';
 
+import App from '@/App';
+import Footer from '@/Footer';
+import router from '@/router';
+import storeA from '@/store';
+import mitt from 'mitt';
+import BootstrapVueNext from 'bootstrap-vue-next'
+import VueSweetalert2 from 'vue-sweetalert2';
 
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+import ContextMenu from '@imengyu/vue3-context-menu'
 
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 library.add(fas, far, fab);
 dom.watch();
 
