@@ -43,49 +43,7 @@ $ docker run \
 
 ## Using `docker-compose`
 
-Assuming a deployment on `localhost`:
-
-```yml
-version: '3.9'
-
-services:
-
-  # Database. Only Postgres is currently supported.
-  db:
-    image: postgres:16
-    environment:
-      - POSTGRES_PASSWORD=postgres
-  
-  # Redis with Redisearch.
-  redis:
-    image: redislabs/redisearch:latest
-
-  # The API.
-  # Check https://github.com/Shock-Link/API for the latest configuration settings.
-  api:
-    image: ghcr.io/shock-link/api:latest
-    depends_on:
-      - db
-      - redis
-    ports:
-      - "5001:80/tcp"
-    environment:
-      - FRONTEND_BASE_URL=localhost
-      - REDIS_HOST=redis
-      - DB=db
-  
-  # The Web UI (this repository).
-  webui:
-    image: ghcr.io/shock-link/webui:latest
-    depends_on:
-      - api
-    ports:
-      - "5002:80/tcp"
-    environment:
-      - SHOCKLINK_API_URL=localhost:5001/
-      - SHOCKLINK_WEBUI_URL=localhost:5002/#/
-      - SHOCKLINK_SHARE_URL=localhost:5002/#/public/proxy/shares/links/
-```
+See [docker-compose.yml](docker-compose.yml).
 
 # Development
 Contributions are welcome! We're eager to see what you come up with. Make sure to [join us on Discord](https://discord.gg/AHcCbXbEcF).
