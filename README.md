@@ -16,7 +16,7 @@ This is the ShockLink Web UI. It is a single-page application that communicates 
 
 # Configuring
 
-The [shocklink-webui](https://github.com/Shock-Link/WebUI/pkgs/container/shocklink-webui) container supports configuration via environment variables.
+The [webui](https://github.com/Shock-Link/WebUI/pkgs/container/webui) container supports configuration via environment variables.
 
 |Variable|Default|Description|
 |-|-|-|
