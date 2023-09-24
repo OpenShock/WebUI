@@ -128,4 +128,3 @@ jobs:
           file: ${{ env.ARTIFACT_NAME }}
           asset_name: ${{ env.ARTIFACT_NAME }}
           tag: ${{ github.ref }}
-  
