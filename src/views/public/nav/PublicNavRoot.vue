@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar first-level">
-    <a class="navbar-logo"><img src="@/assets/images/shocklink-logo-white.png" alt="ShockLink Logo"/></a>
+    <a class="navbar-logo"><img src="@/assets/images/Logo.svg" alt="ShockLink Logo"/></a>
     <theme-toggle/>
     <button class="navbar-toggler" @click="mobileShow = !mobileShow" type="button"
             aria-controls="navbarSupportedContent" aria-expanded="false"

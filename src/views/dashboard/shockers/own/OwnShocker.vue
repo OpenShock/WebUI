@@ -35,13 +35,13 @@
                     <b-container align-items="center" style="margin-top: 15px">
                         <b-row align-h="center">
                             <b-col md="auto" style="width: unset">
-                                <round-slider v-model="shocker.state.intensity" pathColor="#1b1d1e" rangeColor="#8577ef"
+                                <round-slider v-model="shocker.state.intensity" pathColor="#1b1d1e" rangeColor="#e14a6d"
                                     start-angle="315" end-angle="+270" width="30" line-cap="round" radius="75" />
 
                                 <p style="text-align: center;">Intensity</p>
                             </b-col>
                             <b-col md="auto" style="width: unset">
-                                <round-slider v-model="shocker.state.duration" pathColor="#1b1d1e" rangeColor="#8577ef"
+                                <round-slider v-model="shocker.state.duration" pathColor="#1b1d1e" rangeColor="#e14a6d"
                                     start-angle="315" end-angle="+270" line-cap="round" radius="75" width="30" min="0.3"
                                     max="30" step="0.1" />
 
