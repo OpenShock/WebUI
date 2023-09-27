@@ -4,6 +4,8 @@
         <i class="fa-solid fa-plus"></i>
       </div>
 
+    <loading v-if="loadingShockers"/>
+
     <b-container>
         <b-row v-for="item in ownShockers" :key="item.id">
             <device :device="item"></device>
@@ -95,6 +97,7 @@ export default {
     components: {Loading, Device},
     data() {
         return {
+            loadingShockers: true,
             ownShockers: [],
             devices: [],
             modelOptions: [
@@ -193,6 +196,8 @@ export default {
                     }
                 });
             });
+
+            this.loadingShockers = false;
         },
         async loadDevices() {
             this.devicesLoading = true;
