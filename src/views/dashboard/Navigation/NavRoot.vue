@@ -294,9 +294,9 @@ export default {
 @media (max-width: 991px) {
   .first-level {
 
-    .navbar-logo {
-      height: 35px;
-      padding-top: 10px;
+    .navbar-logo img {
+      padding: 8px;
+      padding-left: 0;
     }
 
     .collapse {
