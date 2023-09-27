@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar first-level">
-    <a class="navbar-logo"><img src="@/assets/images/Logo.svg" alt="naxoKit Logo"/></a>
+    <a class="navbar-logo"><img src="@/assets/images/Logo.svg" alt="OpenShock Logo"/></a>
     <theme-toggle/>
     <button class="navbar-toggler" @click="mobileShow = !mobileShow" type="button"
             aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -293,6 +293,12 @@ export default {
 
 @media (max-width: 991px) {
   .first-level {
+
+    .navbar-logo {
+      height: 35px;
+      padding-top: 10px;
+    }
+
     .collapse {
       ul {
         :deep(li) a {
