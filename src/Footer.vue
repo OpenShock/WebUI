@@ -4,7 +4,7 @@
       v-html="apiVersion"></span> <a target="_blank"
       :href="'https://github.com/Shock-Link/API/commit/' + apiCommitHash">{{ apiCommitHash }}</a> | <span>{{ targetEnv }}</span>
   </p>
-  <p class="cred"><a href="https://github.com/Shock-Link">Made by ShockLink Team</a></p>
+  <p class="cred"><a href="https://github.com/Open-Shock">Made by OpenShock Team</a></p>
   <p class="status" :style="'color: #' + connectionColor + ';'" v-html="$store.state.userHubState"></p>
 </template>
 <script>
