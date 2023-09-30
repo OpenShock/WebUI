@@ -8,6 +8,8 @@ require("@/js/utils.js");
 import "bootstrap/scss/bootstrap.scss";
 import ApiCall from '/src/js/ApiCall';
 import toastr from 'toastr';
+import * as Sentry from "@sentry/vue";
+
 toastr.options = {
 	"positionClass": "toast-bottom-right"
 }
