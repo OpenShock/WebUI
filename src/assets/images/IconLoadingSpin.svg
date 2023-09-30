@@ -15,12 +15,7 @@
     </g>
   </g>
 
-  <animateTransform href="#path47"
-  attributeName="transform"
-  type="rotate"
-  from="0 250 250"
-  to="360 250 250" dur="1s"
-  
-  repeatCount="indefinite" />
+  <animateTransform href="#path47" attributeName="transform" type="rotate" from="0 250 250" to="360 250 250" dur="1s"
+    repeatCount="indefinite" />
 
 </svg>
