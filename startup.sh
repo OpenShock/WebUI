@@ -2,7 +2,7 @@
 
 # Variables for startup script
 SERVE_PATH=/usr/share/nginx/html
-NAME=ShockLink
+NAME=OpenShock
 
 require() {
     if [ -z "$1" ]; then
@@ -26,9 +26,10 @@ inject() {
 }
 
 # Inject our variables.
-inject SHOCKLINK_API_URL $SHOCKLINK_API_URL
-inject SHOCKLINK_WEBUI_URL $SHOCKLINK_WEBUI_URL
-inject SHOCKLINK_SHARE_URL $SHOCKLINK_SHARE_URL
+inject OPENSHOCK_NAME $OPENSHOCK_NAME
+inject OPENSHOCK_API_URL $OPENSHOCK_API_URL
+inject OPENSHOCK_WEBUI_URL $OPENSHOCK_WEBUI_URL
+inject OPENSHOCK_SHARE_URL $OPENSHOCK_SHARE_URL
 
 # Start nginx as normal.
 # If something breaks, see: https://github.com/nginxinc/docker-nginx/blob/master/mainline/debian/Dockerfile

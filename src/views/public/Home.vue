@@ -2,7 +2,7 @@
     <b-container>
         <b-row>
             <b-col align-self="center">
-                <h1>ShockLink Landing Page</h1>
+                <h1>OPENSHOCK_NAME Landing Page</h1>
             </b-col>
         </b-row>
         <b-row>

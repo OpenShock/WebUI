@@ -9,7 +9,7 @@ name: ci-tag
 # TARGET_ENV is used by Webpack to determine the build target.
 env:
   REGISTRY: ghcr.io
-  ARTIFACT_NAME: shocklink-webui.zip
+  ARTIFACT_NAME: openshock-webui.zip
   IMAGE_NAME: ${{ github.repository_owner }}/webui
   TARGET_ENV: container
   NODE_ENV: production

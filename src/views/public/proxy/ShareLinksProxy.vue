@@ -12,7 +12,7 @@
                 </b-form-group>
                 <div v-else>
                     <b-row style="margin-bottom: 10px;">
-                        <b-button variant="outline-light" @click="login">Login with ShockLink Account</b-button>
+                        <b-button variant="outline-light" @click="login">Login with OPENSHOCK_NAME Account</b-button>
                     </b-row>
                     <b-row>
                         <b-button variant="outline-light" @click="guest">Enter as Guest</b-button>
