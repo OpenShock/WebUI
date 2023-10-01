@@ -19,7 +19,7 @@ services:
   # The API.
   # Check https://github.com/OpenShock/API for the latest configuration settings.
   api:
-    image: ghcr.io/OpenShock/api:latest
+    image: ghcr.io/openshock/api:latest
     depends_on:
       - db
       - redis
@@ -32,7 +32,7 @@ services:
   
   # The Web UI (this repository).
   webui:
-    image: ghcr.io/OpenShock/webui:master
+    image: ghcr.io/openshock/webui:master
     depends_on:
       - api
     ports:

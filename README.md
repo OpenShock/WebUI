@@ -39,8 +39,8 @@ $ docker run \
     -e OPENSHOCK_URL=http://localhost:5002 \
     -e OPENSHOCK_API_URL=http://localhost:5001 \
     -e OPENSHOCK_SHARE_URL=http://localhost:5002/#/public/proxy/shares/links/ \
-    --name openshoc-webui \
-    ghcr.io/OpenShock/webui:latest
+    --name openshock-webui \
+    ghcr.io/openshock/webui:latest
 ```
 
 ## Using `docker-compose`
