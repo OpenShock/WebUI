@@ -33,7 +33,8 @@ services:
   
   # The Web UI (this repository).
   webui:
-    #image: ghcr.io/openshock/webui:master
+    # Make sure to fresh build if you make changes:
+    #     docker-compose up --build
     build: .
     container_name: webui
     depends_on:
