@@ -23,6 +23,7 @@ inject() {
 
     echo "[$NAME] Injecting variable: $1 = $2"
     find $SERVE_PATH -name "*.js" -exec sed -i "s|$1|$2|g" {} +
+    find $SERVE_PATH -name "*.html" -exec sed -i "s|$1|$2|g" {} +
 }
 
 # Inject our variables.
