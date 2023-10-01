@@ -14,12 +14,13 @@ services:
   redis:
     image: redis/redis-stack-server:latest
     volumes:
-      - /opt/docker/shocklink/redis/redis-stack.conf:/redis-stack.conf
+      - /opt/docker/openshock/redis/redis-stack.conf:/redis-stack.conf
   
   # The API.
-  # Check https://github.com/Shock-Link/API for the latest configuration settings.
+  # Check https://github.com/OpenShock/API for the latest configuration settings.
   api:
-    image: ghcr.io/shock-link/api:latest
+    image: ghcr.io/openshock/api:latest
+    container_name: api
     depends_on:
       - db
       - redis
@@ -32,12 +33,16 @@ services:
   
   # The Web UI (this repository).
   webui:
-    image: ghcr.io/redmushie/webui:master
+    # Make sure to fresh build if you make changes:
+    #     docker-compose up --build
+    build: .
+    container_name: webui
     depends_on:
       - api
     ports:
       - "5002:80/tcp"
     environment:
-      - SHOCKLINK_API_URL=http://local:5001/
-      - SHOCKLINK_WEBUI_URL=http://local:5002/#/
-      - SHOCKLINK_SHARE_URL=http://local:5002/#/public/proxy/shares/links/
+      - OPENSHOCK_NAME=LocalShock
+      - OPENSHOCK_URL=http://webui.localhost:5002
+      - OPENSHOCK_API_URL=http://api.localhost:5001
+      - OPENSHOCK_SHARE_URL=http://webui.localhost:5002/#/public/proxy/shares/links/

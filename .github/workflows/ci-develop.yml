@@ -14,7 +14,7 @@ name: ci-develop
 env:
   BRANCH: develop
   REGISTRY: ghcr.io
-  ARTIFACT_NAME: shocklink-webui.zip
+  ARTIFACT_NAME: openshock-webui.zip
   IMAGE_NAME: ${{ github.repository_owner }}/webui
   TARGET_ENV: container
   NODE_ENV: development

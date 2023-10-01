@@ -1,6 +1,6 @@
-# ShockLink WebUI
+# OpenShock WebUI
 
-This is the ShockLink Web UI. It is a single-page application that communicates with the [ShockLink API](https://github.com/Shock-Link/API). It is written using JavaScript and SCSS using the Vue 3 framework.
+This is the OpenShock Web UI. It is a single-page application that communicates with the [OpenShock API](https://github.com/OpenShock/API). It is written using JavaScript and SCSS using the Vue 3 framework.
 
 ## Contents
 
@@ -16,29 +16,31 @@ This is the ShockLink Web UI. It is a single-page application that communicates 
 
 # Configuring
 
-The [webui](https://github.com/Shock-Link/WebUI/pkgs/container/webui) container supports configuration via environment variables.
+The [webui](https://github.com/OpenShock/WebUI/pkgs/container/webui) container supports configuration via environment variables.
 
 |Variable|Default|Description|
 |-|-|-|
-|`SHOCKLINK_API_URL`|`https://api.shocklink.net/`| URL of the API. |
-|`SHOCKLINK_WEBUI_URL`|`https://shocklink.net/#/`| URL of the ShockLink WebUI. |
-|`SHOCKLINK_SHARE_URL`|`https://shockl.ink/s/`| URL to prefix share links with. When visited, should redirect to `${SHOCKLINK_WEBUI_URL}/public/proxy/shares/links/{ID}`. |
+|`OPENSHOCK_NAME`|`LocalShock`| Name of the OpenShock instance. |
+|`OPENSHOCK_URL`|`http://webui:80`| URL of the OpenShock WebUI. (NO trailing slash!) |
+|`OPENSHOCK_SHARE_URL`|`https://webui:80/s`| URL to prefix share links with. (NO trailing slash!) When visited, should redirect to `${OPENSHOCK_WEBUI_URL}/public/proxy/shares/links/{ID}`. |
+|`OPENSHOCK_API_URL`|`http://api:80/`| URL of the API. (NO trailing slash!) |
 
 # Deployment
 
-This documentation describes how to self-host the WebUI container. This might not be of interest to you if you are content using [ShockLink.net](https://shocklink.net).
+This documentation describes how to self-host the WebUI container. This might not be of interest to you if you are content using a public OpenShock instance such as [ShockLink.net](https://shocklink.net).
 
 ## Using Docker
-Assuming you are running on `localhost`, with [the API](https://github.com/Shock-Link/API) running on port `5001`:
+Assuming you are running on `localhost`, with [the API](https://github.com/OpenShock/API) running on port `5001`:
 
 ```bash
 $ docker run \
     -p 5002:80/tcp \
-    -e SHOCKLINK_API_URL=http://localhost:5001/ \
-    -e SHOCKLINK_WEBUI_URL=http://localhost:5002/#/ \
-    -e SHOCKLINK_SHARE_URL=http://localhost:5002/#/public/proxy/shares/links/ \
-    --name shocklink-webui \
-    ghcr.io/shocklink/webui:latest
+    -e OPENSHOCK_NAME=LocalShock \
+    -e OPENSHOCK_URL=http://localhost:5002 \
+    -e OPENSHOCK_API_URL=http://localhost:5001 \
+    -e OPENSHOCK_SHARE_URL=http://localhost:5002/#/public/proxy/shares/links/ \
+    --name openshock-webui \
+    ghcr.io/openshock/webui:latest
 ```
 
 ## Using `docker-compose`

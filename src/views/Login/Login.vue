@@ -38,7 +38,7 @@
     </div>
     <div v-else>
       <loading-view :loading="!requestDone" :error="!successful"
-                    :successText="'<p><b>Successfully logged in!</b></p><p>Redirecting to <br><b><u>ShockLink Dashboard</u></b></p>'"
+                    :successText="'<p><b>Successfully logged in!</b></p><p>Redirecting to <br><b><u>Dashboard</u></b></p>'"
                     :errorText="errorMessage"/>
       <div class="sep-or">
         <a class="txt2" @click="resetAll">Go Back</a>
