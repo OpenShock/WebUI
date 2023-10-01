@@ -20,6 +20,7 @@ services:
   # Check https://github.com/OpenShock/API for the latest configuration settings.
   api:
     image: ghcr.io/openshock/api:latest
+    container_name: api
     depends_on:
       - db
       - redis
@@ -32,13 +33,15 @@ services:
   
   # The Web UI (this repository).
   webui:
-    image: ghcr.io/openshock/webui:master
+    #image: ghcr.io/openshock/webui:master
+    build: .
+    container_name: webui
     depends_on:
       - api
     ports:
       - "5002:80/tcp"
     environment:
       - OPENSHOCK_NAME=LocalShock
-      - OPENSHOCK_URL=http://local:5002
-      - OPENSHOCK_API_URL=http://api:80
+      - OPENSHOCK_URL=http://webui.localhost:5002
+      - OPENSHOCK_API_URL=http://api.localhost:80
       - OPENSHOCK_SHARE_URL=http://local:5002/#/public/proxy/shares/links/

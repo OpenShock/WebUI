@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
+    "build-ci": "webpack --mode production --env TARGET_ENV=container",
     "local": "webpack-dev-server --mode development --env TARGET_ENV=local --https",
     "dev": "webpack-dev-server --mode development --env TARGET_ENV=development --https"
   },
