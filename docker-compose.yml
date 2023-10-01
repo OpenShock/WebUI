@@ -43,5 +43,5 @@ services:
     environment:
       - OPENSHOCK_NAME=LocalShock
       - OPENSHOCK_URL=http://webui.localhost:5002
-      - OPENSHOCK_API_URL=http://api.localhost:80
-      - OPENSHOCK_SHARE_URL=http://local:5002/#/public/proxy/shares/links/
+      - OPENSHOCK_API_URL=http://api.localhost:5001
+      - OPENSHOCK_SHARE_URL=http://webui.localhost:5002/#/public/proxy/shares/links/
