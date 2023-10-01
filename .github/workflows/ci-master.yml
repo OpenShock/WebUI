@@ -14,7 +14,7 @@ name: ci-master
 env:
   BRANCH: master
   REGISTRY: ghcr.io
-  ARTIFACT_NAME: shocklink-webui.zip
+  ARTIFACT_NAME: openshock-webui.zip
   IMAGE_NAME: ${{ github.repository_owner }}/webui
   TARGET_ENV: container
   NODE_ENV: production
