@@ -25,6 +25,13 @@ The [webui](https://github.com/OpenShock/WebUI/pkgs/container/webui) container s
 |`OPENSHOCK_SHARE_URL`|`https://webui:80/s`| URL to prefix share links with. (NO trailing slash!) When visited, should redirect to `${OPENSHOCK_WEBUI_URL}/public/proxy/shares/links/{ID}`. |
 |`OPENSHOCK_API_URL`|`http://api:80/`| URL of the API. (NO trailing slash!) |
 
+### Technical environment runtime variables
+These lines might be interesting if you are wanting to modify something related to the environment variables.
+
+- src/globals/config/config.{profile-name}.js"
+- (for container) startup.sh
+- for static index.html: webpack.config.js L81/82
+
 # Deployment
 
 This documentation describes how to self-host the WebUI container. This might not be of interest to you if you are content using a public OpenShock instance such as [ShockLink.net](https://shocklink.net).
