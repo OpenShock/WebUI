@@ -22,7 +22,7 @@
     "axios": "^1.5.1",
     "bootstrap-vue-next": "^0.14.7",
     "copy-webpack-plugin": "^11.0.0",
-    "core-js": "^3.32.2",
+    "core-js": "^3.33.0",
     "esp-web-tools": "^9.4.0",
     "jquery": "^3.7.1",
     "material-design-icons-iconfont": "^6.7.0",
