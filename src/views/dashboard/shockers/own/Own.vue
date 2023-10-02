@@ -102,8 +102,8 @@ export default {
             devices: [],
             modelOptions: [
                 {
-                    text: "Small",
-                    value: "Small"
+                    text: "CaiXianlin",
+                    value: "CaiXianlin"
                 },
                 {
                     text: "PetTrainer",
@@ -113,7 +113,7 @@ export default {
             selectedDevice: "",
             newName: "",
             newRfId: 0,
-            newModel: "Small",
+            newModel: "CaiXianlin",
             devicesLoading: false,
             modal: {
                 new: false,
