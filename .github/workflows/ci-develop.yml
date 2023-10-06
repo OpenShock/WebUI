@@ -123,6 +123,7 @@ jobs:
 
     steps:
       - name: Call deployment webhook
+        shell: bash
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         run: |
