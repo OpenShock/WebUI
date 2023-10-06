@@ -10,7 +10,7 @@ export default {
   methods: {
     redirect() {
       console.log("Redirecting...");
-      if(utils.authExists()) {
+      if(utils.isLoggedIn()) {
         this.$router.push('/dashboard/');
       } else {
         this.$router.push('/account/');

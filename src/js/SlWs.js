@@ -1,8 +1,10 @@
 import storeF from '@/store'
+import router from '@/router'
 import * as signalR from '@microsoft/signalr'
 
+
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl(config.apiUrl + "1/hubs/user")
+    .withUrl(config.apiUrl + "1/hubs/user?session=" + localStorage.getItem("token"))
     .configureLogging(signalR.LogLevel.Information)
     .withAutomaticReconnect([0, 1000, 2000, 5000, 10000, 10000, 15000, 30000, 60000])
     .build();
@@ -45,7 +47,12 @@ setInterval(() => {
     }
 }, 200);
 
-connection.start().catch((err) => toastr.error(err, "User Hub"));
+connection.start().catch((err) => {
+    if(err.message && err.message.includes(`Status code '401'`)) {
+        localStorage.removeItem("token");
+        router.push('/account/login');
+    } else toastr.error(err, "User Hub");
+});
 
 global.ws = ws;
 global.userHubConnection = connection;

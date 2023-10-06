@@ -83,13 +83,14 @@ export default {
           method: 'POST',
           url: config.apiUrl + '1/account/login',
           data: {
-            username: this.username,
             email: this.username,
             password: this.password
           }
         });
+
+        localStorage.setItem("token", res.data.data.sessionToken);
+        localStorage.setItem("token_validUntil", res.data.data.validUntil);
         this.successful = true;
-        utils.setLogin();
         setTimeout(() => {
           const returnUrl = this.$store.state.returnUrl;
           if(returnUrl !== undefined) {
