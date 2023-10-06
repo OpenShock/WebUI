@@ -33,15 +33,20 @@
 </template>
 
 <script>
-require("@/js/SlWs.js");
+import UserHub from '@/js/UserHub.js';
 import NavRoot from "./Navigation/NavRoot";
 import LoadingView from "../utils/LoadingView";
 
 export default {
   components: { NavRoot, LoadingView },
-  mounted() {
+  beforeMount() {
     this.stateLoop();
+    global.ws = this.userHubInstance;
+    this.userHubInstance.start();
     this.getSelf();
+  },
+  unmounted() {
+    this.userHubInstance.stop();
   },
   data() {
     return {
@@ -50,7 +55,8 @@ export default {
         finished: false
       },
       loading: true,
-      success: false
+      success: false,
+      userHubInstance: new UserHub()
     }
   },
   computed: {
