@@ -15,12 +15,16 @@ let utils = {
 		}
 		return "";
 	},
-	setLogin() {
-		this.setCookie("loggedIn", "true", 7);
-	},
-	authExists() {
-		let user = this.getCookie("loggedIn");
-		return user === "true";
+	isLoggedIn() {
+		const expiresOnRaw = localStorage.getItem("token_validUntil");
+		if(expiresOnRaw === null) return false;
+		const tokenExists = localStorage.getItem("token") !== null;
+		if(!tokenExists) return false;
+
+		const asDate = new Date(expiresOnRaw);
+		if(isNaN(asDate)) return false;
+
+		return asDate > Date.now();
 	},
 	isDarkMode() {
 		const cook = this.getCookie("settings_dark");
@@ -30,7 +34,7 @@ let utils = {
 		return true;
 	},
 	setDarkMode(dark) {
-		this.setCookie("settings_dark", dark, 3652);
+		localStorage.setItem("dark", dark);
 	},
 	setCookie(cname, cvalue, exdays) {
 		const d = new Date();
@@ -56,7 +60,10 @@ let utils = {
 		try {
 			const res = await axios({
 				method: "GET",
-				url: config.apiUrl + "1/users/self"
+				url: config.apiUrl + "1/users/self",
+				headers: {
+					OpenShockSession: localStorage.getItem("token")
+				}
 			});
 
 			return res.status === 200;

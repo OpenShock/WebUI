@@ -79,11 +79,14 @@ export default {
   },
   methods: {
     async getSelf() {
+
       this.loading = true;
       try {
         await this.$store.dispatch('getSelf');
         this.success = true;
-      } catch (_) { }
+      } catch (err) { 
+        console.error(err);
+       }
       this.loading = false;
 
 
