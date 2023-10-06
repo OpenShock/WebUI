@@ -27,7 +27,7 @@ let utils = {
 	},
 	isDarkMode() {
 		const cook = localStorage.getItem("dark");
-		if(cook !== "") {
+		if(cook !== null) {
 			return cook === "true";
 		}
 		return true;
