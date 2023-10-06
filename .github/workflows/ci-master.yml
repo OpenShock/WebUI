@@ -12,7 +12,6 @@ name: ci-master
 # REGISTRY and IMAGE_NAME are for building and tagging the container.
 # TARGET_ENV is used by Webpack to determine the build target.
 env:
-  BRANCH: master
   REGISTRY: ghcr.io
   ARTIFACT_NAME: openshock-webui.zip
   IMAGE_NAME: ${{ github.repository_owner }}/webui
