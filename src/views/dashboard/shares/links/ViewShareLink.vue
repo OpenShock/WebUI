@@ -242,7 +242,7 @@ export default {
             return !this.publicMode && this.shareLink.author.id === this.$store.state.user.id;
         },
         proxyPath() {
-            return '/proxy/shares/links/' + this.id;
+            return '/public/proxy/shares/links/' + this.id;
         },
         shareLinkUrl() {
             return config.shortUrl + "s/" + this.id;

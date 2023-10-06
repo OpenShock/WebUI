@@ -4,7 +4,10 @@ This is the OpenShock Web UI. It is a single-page application that communicates 
 
 ## Contents
 
+- [OpenShock WebUI](#openshock-webui)
+  - [Contents](#contents)
 - [Configuring](#configuring)
+    - [Technical environment runtime variables](#technical-environment-runtime-variables)
 - [Deployment](#deployment)
   - [Using Docker](#using-docker)
   - [Using `docker-compose`](#using-docker-compose)
@@ -22,7 +25,7 @@ The [webui](https://github.com/OpenShock/WebUI/pkgs/container/webui) container s
 |-|-|-|
 |`OPENSHOCK_NAME`|`LocalShock`| Name of the OpenShock instance. |
 |`OPENSHOCK_URL`|`http://webui:80`| URL of the OpenShock WebUI. (NO trailing slash!) |
-|`OPENSHOCK_SHARE_URL`|`https://webui:80/s`| URL to prefix share links with. (NO trailing slash!) When visited, should redirect to `${OPENSHOCK_WEBUI_URL}/public/proxy/shares/links/{ID}`. |
+|`OPENSHOCK_SHARE_URL`|`https://webui:80/`| URL to prefix share links with. (NO trailing slash!) When visited, should redirect to `${OPENSHOCK_WEBUI_URL}/public/proxy/shares/links/{ID}`. |
 |`OPENSHOCK_API_URL`|`http://api:80/`| URL of the API. (NO trailing slash!) |
 
 ### Technical environment runtime variables

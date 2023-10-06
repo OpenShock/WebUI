@@ -50,7 +50,7 @@ export default {
             this.$router.push("/dashboard/shockers/shared");
         },
         login() {
-            this.$store.dispatch('setReturnUrl', "/proxy/shares/code/" + this.id);
+            this.$store.dispatch('setReturnUrl', "/public/proxy/shares/code/" + this.id);
             this.$router.push("/account/login");
         }
     }
