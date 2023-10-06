@@ -114,4 +114,4 @@ jobs:
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         run: |
-          curl -X HEAD -d "" $WEBHOOK_URL
+          curl -X HEAD -d "" "$WEBHOOK_URL"
