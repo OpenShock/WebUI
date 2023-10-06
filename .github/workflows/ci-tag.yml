@@ -2,7 +2,7 @@ on:
   push:
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
-      - '[0-9]+.[0-9]+.[0-9]+-rc[0-9]+'
+      - '[0-9]+.[0-9]+.[0-9]+-rc.[0-9]+'
 
 name: ci-tag
 
@@ -131,3 +131,4 @@ jobs:
           file: ${{ env.ARTIFACT_NAME }}
           asset_name: ${{ env.ARTIFACT_NAME }}
           tag: ${{ github.ref }}
+          prerelease: ${{ contains(github.ref_name, '-rc') }}
