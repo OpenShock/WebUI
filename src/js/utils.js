@@ -1,19 +1,18 @@
 import axios from "axios";
+import router from '@/router';
 
 let utils = {
-	getCookie(cname) {
-		let name = cname + "=";
-		let ca = document.cookie.split(';');
-		for(let i = 0; i < ca.length; i++) {
-			let c = ca[i];
-			while (c.charAt(0) == ' ') {
-				c = c.substring(1);
-			}
-			if (c.indexOf(name) == 0) {
-				return c.substring(name.length, c.length);
-			}
+	getLoginSafe() {
+		const loggedIn = this.isLoggedIn();
+		if(!loggedIn) {
+			this.clearLogin();
+			return null;
 		}
-		return "";
+		return localStorage.getItem("token");
+	},
+	clearLogin() {
+		localStorage.removeItem("token");
+		router.push('/account/login');
 	},
 	isLoggedIn() {
 		const expiresOnRaw = localStorage.getItem("token_validUntil");
@@ -27,7 +26,7 @@ let utils = {
 		return asDate > Date.now();
 	},
 	isDarkMode() {
-		const cook = this.getCookie("settings_dark");
+		const cook = localStorage.getItem("dark");
 		if(cook !== "") {
 			return cook === "true";
 		}
@@ -35,12 +34,6 @@ let utils = {
 	},
 	setDarkMode(dark) {
 		localStorage.setItem("dark", dark);
-	},
-	setCookie(cname, cvalue, exdays) {
-		const d = new Date();
-		d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-		let expires = "expires="+d.toUTCString();
-		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 	},
 	getError(err) {
 		if(err !== undefined && err.response !== undefined) {

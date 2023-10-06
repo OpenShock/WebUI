@@ -113,6 +113,7 @@ export default {
       if (this.activeItem.$refs === undefined || this.activeItem.$refs.li === undefined) return;
       const element = $(this.activeItem.$refs.li);
       const pos = element.position();
+      if(pos === undefined) return;
       this.hori.top = pos.top;
       this.hori.left = pos.left;
       this.hori.width = element.innerWidth();
