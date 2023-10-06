@@ -14,14 +14,13 @@ class ApiCall {
 				url: config.apiUrl + path,
 				data: data,
 				headers: {
-					OpenShockSession: localStorage.getItem("token")
+					OpenShockSession: utils.getLoginSafe()
 				}
 			});
 		} catch (err) {
 			toastr.error(utils.getError(err), "API interaction failed");
 			if(err.response !== undefined && err.response.status === 401) {
-				localStorage.removeItem("token");
-				router.push('/account/login');
+				utils.clearLogin();
 				return undefined;
 			}
 
@@ -30,7 +29,7 @@ class ApiCall {
 	}
 
 	async makeCallHeaders(method, path, data, headers) {
-		headers.OpenShockSession = localStorage.getItem("token");
+		headers.OpenShockSession = utils.getLoginSafe();
 		try {
 			return await axios({
 				method: method,
@@ -41,8 +40,7 @@ class ApiCall {
 		} catch (err) {
 			toastr.error(utils.getError(err), "API interaction failed");
 			if(err.response !== undefined && err.response.status === 401) {
-				localStorage.removeItem("token");
-				router.push('/account/login');
+				utils.clearLogin();
 				return undefined;
 			}
 

@@ -72,7 +72,8 @@ export default {
             userHubInstance: new ShareLinkHub({
                 id: this.id,
                 welcome: this.welcome,
-                update: this.update
+                update: this.update,
+                
             })
         }
     },
