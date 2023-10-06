@@ -12,7 +12,6 @@ name: ci-develop
 # REGISTRY and IMAGE_NAME are for building and tagging the container.
 # TARGET_ENV is used by Webpack to determine the build target.
 env:
-  BRANCH: develop
   REGISTRY: ghcr.io
   ARTIFACT_NAME: openshock-webui.zip
   IMAGE_NAME: ${{ github.repository_owner }}/webui
@@ -86,15 +85,26 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
+      - name: Find latest tag
+        uses: oprypin/find-latest-tag@v1
+        id: latest-tag
+        with:
+          repository: ${{ github.repository }}
+          releases-only: false
+      
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value={{branch}},enable=${{ github.ref_name == env.BRANCH }}
+            type=raw,value={{branch}},enable=${{ github.ref_type == 'branch' && github.event_name != 'pull_request' }}
+            type=raw,value=latest,enable=${{ steps.latest-tag.outputs.tag == github.ref_name }}
             type=ref,event=branch
             type=ref,event=pr
+            type=semver,pattern={{major}},enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}.{{minor}}.{{patch}} 
       
       - name: Build image
         uses: docker/build-push-action@v5
@@ -114,4 +124,4 @@ jobs:
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         run: |
-          curl -X HEAD -d "" "$WEBHOOK_URL"
+          curl -X POST -d "" "$WEBHOOK_URL"
