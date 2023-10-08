@@ -82,7 +82,7 @@ const store = createStore({
 					url: config.apiUrl + "1/users/self"
 				});
 
-				if (res.status !== 200) {
+				if (res.status === 200) {
 					const data = res.data.data;
 					commit('setUser', {
 						id: data.id,
