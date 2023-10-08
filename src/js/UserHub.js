@@ -27,7 +27,7 @@ export default class ws {
     constructor() {
 
         this.connection = new signalR.HubConnectionBuilder()
-        .withUrl(config.apiUrl + "1/hubs/user?session=" + utils.getLoginSafe())
+        .withUrl(config.apiUrl + "1/hubs/user")
         .configureLogging(signalR.LogLevel.Information)
         .withAutomaticReconnect([0, 1000, 2000, 5000, 10000, 10000, 15000, 30000, 60000])
         .build();
@@ -52,8 +52,7 @@ export default class ws {
     start() {
         this.connection.start().catch((err) => {
             if(err.message && err.message.includes(`Status code '401'`)) {
-                localStorage.removeItem("token");
-                router.push('/account/login');
+                utils.clearLogin();
             } else toastr.error(err, "User Hub");
         });
     }

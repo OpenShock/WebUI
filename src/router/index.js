@@ -9,7 +9,7 @@ function lazyLoad(view){
 const routes = [
 	{
 		path: '/',
-		component: lazyLoad('Root'),
+		redirect: '/dashboard'
 	},
 	{
 		path: '/dashboard',

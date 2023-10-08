@@ -1,7 +1,7 @@
 import { createStore } from 'vuex';
 
 const store = createStore({
-	state () {
+	state() {
 		return {
 			user: {
 				id: "",
@@ -24,7 +24,7 @@ const store = createStore({
 		getAuthKey: (state) => () => state.authKey
 	},
 	mutations: {
-		setUser (state, user) {
+		setUser(state, user) {
 			state.user = user;
 		},
 		setAuthKey(state, authKey) {
@@ -36,14 +36,14 @@ const store = createStore({
 		setDarkMode(state, dark) {
 			state.settings.dark = dark;
 		},
-		setDeviceState(state, {id, online, firmwareVersion}) {
+		setDeviceState(state, { id, online, firmwareVersion }) {
 			const data = {
 				online,
 				firmwareVersion
 			};
 			state.deviceStates[id] = data;
 
-			emitter.emit('deviceStateUpdate', {id, data});
+			emitter.emit('deviceStateUpdate', { id, data });
 		},
 		setUserHubState(state, newState) {
 			state.userHubState = newState;
@@ -56,10 +56,10 @@ const store = createStore({
 		},
 	},
 	actions: {
-		setNewNav({commit, state}, nav) {
+		setNewNav({ commit, state }, nav) {
 			const timeout = state.secondLevelNav.length > 0;
 			commit('setSNav', []);
-			if(timeout) {
+			if (timeout) {
 				setTimeout(() => {
 					commit('setSNav', nav);
 				}, 200);
@@ -67,28 +67,36 @@ const store = createStore({
 				commit('setSNav', nav);
 			}
 		},
-		setDarkMode({commit}, dark) {
+		setDarkMode({ commit }, dark) {
 			commit('setDarkMode', dark);
 			utils.setDarkMode(dark);
 		},
-		setDeviceState({commit}, {id, online, firmwareVersion}) {
-			commit('setDeviceState', {id, online, firmwareVersion});
+		setDeviceState({ commit }, { id, online, firmwareVersion }) {
+			commit('setDeviceState', { id, online, firmwareVersion });
 		},
-		async getSelf({commit}) {
-			const res = await apiCall.makeCall('GET', '1/users/self');
-			if (res === undefined || res.status !== 200) {
-				toastr.error("Error while retrieving user information");
-				return;
-			}
+		async getSelf({ commit }) {
+			try {
+				const res = await axios({
+					method: "GET",
+					url: config.apiUrl + "1/users/self"
+				});
 
-			const data = res.data.data;
-			commit('setUser', {
-				id: data.id,
-				name: data.name,
-				image: data.image
-			});
+				if (res.status !== 200) {
+					const data = res.data.data;
+					commit('setUser', {
+						id: data.id,
+						name: data.name,
+						image: data.image
+					});
+					console.log("Successfully fetched self");
+					return;
+				} else console.log("Self status code is " + res.status + " with message " + res.data);
+			} catch (e) {
+				console.log(e);
+			}
+			console.log("Seems like the session is invalid, expired or user just never logged in, sending to login page");
 		},
-		setReturnUrl({commit}, url) {
+		setReturnUrl({ commit }, url) {
 			commit('setReturnUrl', url);
 		}
 	},

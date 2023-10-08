@@ -88,8 +88,6 @@ export default {
           }
         });
 
-        localStorage.setItem("token", res.data.data.sessionToken);
-        localStorage.setItem("token_validUntil", res.data.data.validUntil);
         this.successful = true;
         setTimeout(() => {
           const returnUrl = this.$store.state.returnUrl;

@@ -12,10 +12,7 @@ class ApiCall {
 			return await axios({
 				method: method,
 				url: config.apiUrl + path,
-				data: data,
-				headers: {
-					OpenShockSession: utils.getLoginSafe()
-				}
+				data: data
 			});
 		} catch (err) {
 			toastr.error(utils.getError(err), "API interaction failed");
@@ -29,7 +26,6 @@ class ApiCall {
 	}
 
 	async makeCallHeaders(method, path, data, headers) {
-		headers.OpenShockSession = utils.getLoginSafe();
 		try {
 			return await axios({
 				method: method,
