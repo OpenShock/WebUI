@@ -28,14 +28,18 @@
                         <b-row align-h="center">
                             <b-col md="auto" style="width: unset">
                                 <round-slider v-model="shocker.state.intensity" pathColor="#1b1d1e" rangeColor="#e14a6d"
-                                    start-angle="315" end-angle="+270" width="30" line-cap="round" radius="75" />
+                                    start-angle="315" end-angle="+270" width="30" line-cap="round" radius="75"
+                                    :max="shocker.limits.intensity === null ? 100 : shocker.limits.intensity"
+                                    />
 
                                 <p style="text-align: center;">Intensity</p>
                             </b-col>
                             <b-col md="auto" style="width: unset">
                                 <round-slider v-model="shocker.state.duration" pathColor="#1b1d1e" rangeColor="#e14a6d"
                                     start-angle="315" end-angle="+270" line-cap="round" radius="75" width="30" min="0.3"
-                                    max="30" step="0.1" />
+                                    step="0.1"
+                                    :max="shocker.limits.duration === null ? 30 : shocker.limits.duration / 1000"
+                                    />
 
                                 <p style="text-align: center;">Duration</p>
                             </b-col>
