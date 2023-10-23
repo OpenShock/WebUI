@@ -66,7 +66,7 @@ Sentry.init({
 	integrations: [
 	  new Sentry.BrowserTracing({
 		// Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
-		tracePropagationTargets: ["localhost", "api.shocklink.net", "dev-api.shocklink.net", "shocklink.net"],
+		tracePropagationTargets: ["localhost", "https://api.shocklink.net", "https://dev-api.shocklink.net", "https://shocklink.net"],
 		routingInstrumentation: Sentry.vueRouterInstrumentation(router),
 	  }),
 	  new Sentry.Replay(),

@@ -7,7 +7,37 @@
         </b-row>
         <div v-if="supported">
             <transition name="component-fade" mode="out-in">
-                <div v-if="stage === 'download'">
+                <div v-if="stage === 'connect'">
+                    <b-row align-h="center">
+                        <b-col md="auto">
+                            <loading-button @click="consoleStart" :loading="connect.connecting"
+                                :text="connect.connecting ? 'Connecting...' : 'Connect to ESP'"
+                                :disabled="connect.connecting" />
+                        </b-col>
+                    </b-row>
+                </div>
+
+                <div v-else-if="stage === 'serial-read'">
+                    <b-row>
+                        <p>Read previous data of ESP</p>
+                    </b-row>
+                    <b-row v-if="!download.started" align-h="center">
+                        <b-col md="auto">
+                            <b-button @click="downloadFirmware">Download</b-button>
+                        </b-col>
+                    </b-row>
+                    <b-row v-else>
+                        <div>
+                            <b-progress :value="download.progress" showProgress="true"
+                                :variant="download.finished ? 'success' : 'primary'" max=1></b-progress>
+                        </div>
+                        <div v-if="download.finished && download.success">
+                            <b-button @click="stage = 'connect'">Next</b-button>
+                        </div>
+                    </b-row>
+                </div>
+
+                <div v-else-if="stage === 'download'">
                     <b-row>
                         <p>{{ download.state }}</p>
                     </b-row>
@@ -26,20 +56,9 @@
                         </div>
                     </b-row>
                 </div>
-                <div v-else-if="stage === 'connect'">
-                    <b-row align-h="center">
-                        <b-col md="auto">
-                            <loading-button @click="serialConnect" :loading="connect.connecting"
-                                :text="connect.connecting ? 'Connecting...' : 'Connect to ESP'"
-                                :disabled="connect.connecting" />
-                        </b-col>
-                    </b-row>
-                </div>
+
                 <div v-else-if="stage === 'flash'">
-                    <b-button @click="readSerialTerminal"></b-button>
-                    <b-row>
-                        <p>{{ flash.state }}</p>
-                    </b-row>
+                    <b-button @click="disconnect">Disconnect</b-button>
                     <b-row>
                         <div align-h="center" v-if="!flash.started">
                             <b-col md="auto">
@@ -55,25 +74,21 @@
             </transition>
         </div>
     </b-container>
-    <b-container>
-        <textarea v-model="logsFormatted"></textarea>
-        <textarea v-model="this.text"></textarea>
-    </b-container>
+    <br>
+    <div id="terminal" class="terminal"></div>
 </template>
 <script>
+require('xterm/css/xterm.css');
 import ApiCall from '../../../../js/ApiCall.js';
 import LoadingButton from '../../../utils/LoadingButton.vue';
-import { connect } from './Lib/Ada.js'
+import { Terminal } from 'xterm';
+import SerialManager from './SerialManager.js';
 
 export default {
     components: { LoadingButton },
     data() {
         return {
-            step: 0,
-            logs: [],
-            espStub: undefined,
-            connected: false,
-            stage: 'download',
+            stage: 'connect',
             firmware: undefined,
             download: {
                 started: false,
@@ -83,50 +98,54 @@ export default {
                 progress: 0
             },
             connect: {
-                connecting: false
+                connecting: false,
+                connected: false
             },
             flash: {
+                firmware: undefined,
                 started: false,
                 finished: false,
                 progress: 0,
                 state: "Press flash to start flashing your device"
             },
-            text: ""
+            text: "",
+
+            terminal: undefined,
+            // Serial Manager
+            serialManager: undefined
         }
     },
-    methods: {
-        async processStream(stream) {
-            const textDecoder = new TextDecoder();
-            while (true) {
-                const value = await stream.read();
-                if (value === null) {
-                    console.log('End of stream');
-                    break;
-                }
+    mounted() {
+        this.terminal = new Terminal({ cols: 120, rows: 20 });
+        this.terminal.open(document.getElementById('terminal'));
+        this.terminal.write('\x1B[1;1;31mOpenShock\x1B[0m Flashing Utility');
 
-                this.text += textDecoder.decode(value.value);
+        this.serialManager = new SerialManager(
+            () => {
+                this.terminal.clear();
+            },
+            (data) => {
+                this.terminal.writeln(data);
+            },
+            (data) => {
+                this.terminal.write(data);
+            },
+            (fileIndex, written, total) => {
+                this.terminal.writeln("Progress: " + written / total + "%");
+                console.log(fileIndex, written, total);
             }
-        },
-        async readSerialTerminal() {
-            console.log(this.espStub._parent);
-            console.log(this.espStub._parent.__inputBuffer.join(' '));
-        },
-        logInfo(message) {
-            this.logs.push(message);
-        },
-        logDebug(message) {
-            this.logs.push(message);
-        },
-        logError(message) {
-            this.logs.push(message);
-        },
+        );
+    },
+    methods: {
         async erase() {
-            if (this.espStub !== undefined) {
-                this.logInfo("Erasing flash memory. Please wait...");
-                let stamp = Date.now();
-                await this.espStub.eraseFlash();
-                this.logInfo("Finished. Took " + (Date.now() - stamp) + "ms to erase.");
+            await this.serialManager.erase();
+        },
+        ui8ToBstr(u8Array) {
+            let b_str = "";
+            for (let i = 0; i < u8Array.length; i++) {
+                b_str += String.fromCharCode(u8Array[i]);
             }
+            return b_str;
         },
         async downloadFirmware() {
             this.download.started = true;
@@ -156,62 +175,42 @@ export default {
 
                 const blob = new Blob(chunks);
                 const arrayBuffer = await blob.arrayBuffer();
-                this.firmware = arrayBuffer;
+                var uint8View = new Uint8Array(arrayBuffer);
+                this.download.firmware = this.ui8ToBstr(uint8View);
                 this.download.state = 'Finished downloading Firmware version ' + versionRes.data.data.version;
                 this.download.success = true;
                 this.download.finished = true;
             } catch (error) {
-                toastr.error("Error downloading fiormware", error);
+                toastr.error("Error downloading firmware", error);
                 this.download.state = 'Error downloading firmware';
                 this.download.success = false;
                 this.download.finished = true;
             }
         },
+        async disconnect() {
+            await this.serialManager.disconnect();
+        },
+        async consoleStart() {
+            await this.serialManager.startConsole();
+            this.stage = "download";
+        },
+        consoleStop() {
+            this.serialManager.stopConsole();
+        },
         async flashData() {
-            this.logInfo("Flashing memory. Please wait...");
             this.flash.started = true;
-            let stamp = Date.now();
-            await this.espStub.flashData(
-                this.firmware,
-                (bytesWritten, totalBytes) => {
-                    this.flash.progress = bytesWritten / totalBytes;
-                },
-                0,
-                true
-            );
-            this.logInfo("Finished. Took " + (Date.now() - stamp) + "ms to flash.");
+            await this.serialManager.flash(this.download.firmware);
             this.flash.finished = true;
         },
         async serialConnect() {
 
             this.connect.connecting = true;
-            this.logs = [];
-            if (this.espStub !== undefined) {
-                await this.espStub.disconnect();
-                await this.espStub.port.close();
-                this.espStub = undefined;
-            }
-            const esploader = await connect({
-                log: (...args) => this.logInfo(...args),
-                debug: (...args) => this.logDebug(...args),
-                error: (...args) => this.logError(...args),
-            })
-
-            await esploader.initialize();
-
-            this.logInfo("Connected to " + esploader.chipName);
-            this.logInfo("MAC Address: " + this.formatMacAddr(esploader.macAddr()));
-
-            this.espStub = await esploader.runStub();
-            this.processStream(this.espStub._parent._reader);
-            this.connected = true;
-            this.stage = 'flash';
+            await this.serialManager.connect();
+            this.connected.connected = true;
+            this.stage = 'read-serial';
         },
         formatMacAddr(macAddr) {
             return macAddr.map((value) => value.toString(16).toUpperCase().padStart(2, "0")).join(":");
-        },
-        async hardReset() {
-            await this.espStub.hardReset();
         }
     },
     computed: {
@@ -228,5 +227,9 @@ export default {
 <style scoped lang="scss">
 .main {
     text-align: center;
+}
+
+:deep(.xterm-viewport) {
+    overflow: hidden;
 }
 </style>

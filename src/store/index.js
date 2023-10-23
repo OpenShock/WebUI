@@ -1,6 +1,26 @@
 import { createStore } from 'vuex';
 import axios from "axios";
 
+const serialFlash = {
+	namespaced: true,
+	state: () => ({
+		espLoader: null,
+		device: null,
+		transport: null
+	}),
+	mutations: {
+		setEspLoader(state, espLoader) {
+			state.espLoader = espLoader;
+		},
+		setDevice(state, device) {
+			state.device = device;
+		},
+		setTransport(state, transport) {
+			state.transport = transport;
+		}
+	}
+}
+
 const store = createStore({
 	state() {
 		return {
@@ -102,7 +122,7 @@ const store = createStore({
 		}
 	},
 	modules: {
-
+		serialFlash: serialFlash
 	}
 })
 

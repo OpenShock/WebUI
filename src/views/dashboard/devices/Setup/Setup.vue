@@ -6,17 +6,18 @@
                     <h3>ESP-32 setup assistant</h3>
                 </b-col>
             </b-row>
+            <br>
             <serial-flash></serial-flash>
+
         </b-container>
     </div>
 </template>
   
 <script>
-import Loading from '../../../utils/Loading.vue';
-import { connect } from './Lib/Ada.js'
+import Loading from '../../../utils/Loading';
 import Page1 from './Page1';
 import Page2 from './Page2';
-import SerialFlash from './SerialFlash.vue';
+import SerialFlash from './SerialFlash';
 
 export default {
     components: { Loading, Page1, Page2, SerialFlash },
@@ -29,8 +30,7 @@ export default {
                     ssid: "yes",
                     password: "aaa"
                 }
-            ],
-            espStub: undefined
+            ]
         }
     },
     mounted() {
@@ -52,63 +52,6 @@ export default {
 
             this.device = res.data.data;
         },
-
-        logMsg(text) {
-            console.log(text);
-        },
-        async serialConnect() {
-            if (this.espStub !== undefined) {
-                await this.espStub.disconnect();
-                await this.espStub.port.close();
-                this.espStub = undefined;
-            }
-            const esploader = await connect({
-                log: (...args) => this.logMsg(...args),
-                debug: (...args) => this.logMsg(...args),
-                error: (...args) => this.logMsg(...args),
-            })
-
-            await esploader.initialize();
-
-            this.logMsg("Connected to " + esploader.chipName);
-            this.logMsg("MAC Address: " + this.formatMacAddr(esploader.macAddr()));
-
-            this.espStub = await esploader.runStub();
-        },
-        async changeBaudRate() {
-            if (this.espStub !== undefined) {
-                await this.espStub.setBaudrate(921600);
-            }
-        },
-        async erase() {
-            if (this.espStub !== undefined) {
-                this.logMsg("Erasing flash memory. Please wait...");
-                let stamp = Date.now();
-                await this.espStub.eraseFlash();
-                this.logMsg("Finished. Took " + (Date.now() - stamp) + "ms to erase.");
-            }
-        },
-        async flashData() {
-            this.logMsg("Downloading...");
-            fetch('https://cdn.shocklink.net/firmware/shocklink_firmware_0.5.2.0.bin').then(res => res.arrayBuffer()).then(async buff => {
-                this.logMsg("Flashing memory. Please wait...");
-                let stamp = Date.now();
-                await this.espStub.flashData(
-                    buff,
-                    (bytesWritten, totalBytes) => {
-
-                    },
-                    0,
-                    true
-                );
-                this.logMsg("Finished. Took " + (Date.now() - stamp) + "ms to flash.");
-            });
-
-        },
-        async hardReset() {
-            await this.espStub.hardReset();
-        },
-
         formatMacAddr(macAddr) {
             return macAddr.map((value) => value.toString(16).toUpperCase().padStart(2, "0")).join(":");
         }
