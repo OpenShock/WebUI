@@ -20,7 +20,8 @@ module.exports = (env) => {
 		output: {
 			filename: "[name].[contenthash:8].js",
 			path: path.resolve(__dirname, "dist"),
-			chunkFilename: "[name].[contenthash:8].js"
+			chunkFilename: "[name].[contenthash:8].js",
+			// assetModuleFilename: "[name].[contenthash:8].[ext]",
 		},
 		module: {
 			rules: [
@@ -37,19 +38,17 @@ module.exports = (env) => {
 				},
 				{
 					test: /\.(eot|ttf|woff|woff2)(\?\S*)?$/,
-					loader: "file-loader",
-					options: {
-						name: "[name][contenthash:8].[ext]",
-					},
+					type: "asset/resource",
+					generator: {
+						filename: "assets/fonts/[name].[contenthash:8].[ext][query]"
+					}
 				},
 				{
 					test: /\.(png|jpe?g|gif|webm|mp4|svg)$/,
-					loader: "file-loader",
-					options: {
-						name: "[name][contenthash:8].[ext]",
-						outputPath: "assets/img",
-						useRelativePaths: true
-					},
+					type: "asset/resource",
+					generator: {
+						filename: "assets/img/[name].[contenthash:8].[ext][query]"
+					}
 				},
 				{
 					test: /\.s?css$/,

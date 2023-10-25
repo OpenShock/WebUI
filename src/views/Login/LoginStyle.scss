@@ -12,7 +12,8 @@ $material-design-icons-font-directory-path: '~material-design-icons-iconfont/dis
   margin: auto;
 
   a {
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
     font-size: 14px;
     line-height: 1.7;
     color: var(--secondary-color);
@@ -37,7 +38,8 @@ $material-design-icons-font-directory-path: '~material-design-icons-iconfont/dis
   }
 
   p {
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
     font-size: 14px;
     line-height: 1.7;
     color: #fff;
@@ -79,14 +81,16 @@ $material-design-icons-font-directory-path: '~material-design-icons-iconfont/dis
   /*//////////////////////////////////////////////////////////////////
   [ Utility ]*/
   .txt1 {
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
     font-size: 14px;
     line-height: 1.5;
     color: var(--secondary-color);
   }
 
   .txt2 {
-    font-family: Poppins-Bold, serif;
+    font-family: Poppins, sans-serif;
+    font-weight: 700;
     font-size: 1rem;
     line-height: 1.5;
     color: #fff;
@@ -140,7 +144,8 @@ $material-design-icons-font-directory-path: '~material-design-icons-iconfont/dis
     text-align: right;
     padding: 8px 0 31px;
     a {
-      font-family: Poppins-Bold, serif;
+      font-family: Poppins, sans-serif;
+      font-weight: 700;
       font-size: 14px;
       line-height: 1.5;
       color: #fff;
@@ -164,7 +169,8 @@ $material-design-icons-font-directory-path: '~material-design-icons-iconfont/dis
 
   .login100-form-title {
     display: block;
-    font-family: Poppins-Bold, serif;
+    font-family: Poppins, sans-serif;
+    font-weight: 700;
     font-size: 39px;
     color: #fff;
     line-height: 1.2;
@@ -187,7 +193,8 @@ $material-design-icons-font-directory-path: '~material-design-icons-iconfont/dis
   }
 
   .label-input100 {
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
     font-size: 1.05rem;
     color: #fff;
     line-height: 1.5;
@@ -195,7 +202,8 @@ $material-design-icons-font-directory-path: '~material-design-icons-iconfont/dis
   }
 
   .input100 {
-    font-family: Poppins-Medium, serif;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
     font-size: 16px;
     color: #fff;
     line-height: 1.2;
@@ -310,7 +318,8 @@ $material-design-icons-font-directory-path: '~material-design-icons-iconfont/dis
   }
 
   .login100-form-btn {
-    font-family: Poppins-Medium, serif;
+    font-family: Poppins, sans-serif;
+    font-weight: 500;
     font-size: 16px;
     color: #fff;
     line-height: 1.2;
@@ -345,7 +354,8 @@ $material-design-icons-font-directory-path: '~material-design-icons-iconfont/dis
     right: 2px;
     pointer-events: none;
 
-    font-family: Poppins-Regular, serif;
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
     color: var(--main-color);
     font-size: 13px;
     line-height: 1.4;
