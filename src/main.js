@@ -25,7 +25,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import 'normalize.css';
 import 'toastr/build/toastr.css';
-import "@fontsource/poppins";
+// import "@fontsource/poppins";
 
 import "./App.scss";
 import 'sweetalert2/dist/sweetalert2.min.css';
