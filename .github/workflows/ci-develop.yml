@@ -6,6 +6,7 @@ on:
     branches:
       - develop
     types: [opened, reopened, synchronize]
+  workflow_dispatch:
 
 name: ci-develop
 
