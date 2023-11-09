@@ -36,7 +36,6 @@ export default class SerialManager {
   }
 
   async loadStub() {
-    if()
 
     this.log.writeLine("Constructing ESPLoader...");
 
@@ -110,6 +109,10 @@ export default class SerialManager {
       await this.espLoader.change_baud();
     }
 
+    this.readConsoleLoop();
+  }
+
+  async readConsoleLoop() {
     this.consoleRunning = true;
 
     try {

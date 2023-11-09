@@ -10,7 +10,7 @@
                 <div v-if="stage === 'connect'">
                     <b-row align-h="center">
                         <b-col md="auto">
-                            <loading-button @click="consoleStart" :loading="connect.connecting"
+                            <loading-button @click="serialConnect" :loading="connect.connecting"
                                 :text="connect.connecting ? 'Connecting...' : 'Connect to ESP'"
                                 :disabled="connect.connecting" />
                         </b-col>
@@ -51,14 +51,32 @@
                             <b-progress :value="download.progress" showProgress="true"
                                 :variant="download.finished ? 'success' : 'primary'" max=1></b-progress>
                         </div>
+                        <br>
                         <div v-if="download.finished && download.success">
-                            <b-button @click="stage = 'connect'">Next</b-button>
+                            <b-button @click="stage = 'stuv'">Next</b-button>
+                        </div>
+                    </b-row>
+                </div>
+
+                <div v-else-if="stage === 'stub'">
+                    <b-row>
+                        <div align-h="center" v-if="!flash.started">
+                            <b-row align-h="center">
+                                <b-col md="auto">
+                                    <loading-button @click="runStub" :loading="stub.started"
+                                        :text="stub.started ? 'Stub uploading...' : 'Run Stub'"
+                                        :disabled="stub.started" />
+                                </b-col>
+                            </b-row>
+                        </div>
+                        <div v-else>
+                            <b-progress :value="flash.progress" showProgress="true"
+                                :variant="flash.finished ? 'success' : 'primary'" max=1></b-progress>
                         </div>
                     </b-row>
                 </div>
 
                 <div v-else-if="stage === 'flash'">
-                    <b-button @click="disconnect">Disconnect</b-button>
                     <b-row>
                         <div align-h="center" v-if="!flash.started">
                             <b-col md="auto">
@@ -101,6 +119,10 @@ export default {
                 connecting: false,
                 connected: false
             },
+            stub: {
+                started: false,
+                finished: false
+            },
             flash: {
                 firmware: undefined,
                 started: false,
@@ -131,8 +153,8 @@ export default {
                 this.terminal.write(data);
             },
             (fileIndex, written, total) => {
-                this.terminal.writeln("Progress: " + written / total + "%");
-                console.log(fileIndex, written, total);
+                console.log(written / total);
+                this.flash.progress = written / total;
             }
         );
     },
@@ -187,15 +209,11 @@ export default {
                 this.download.finished = true;
             }
         },
-        async disconnect() {
-            await this.serialManager.disconnect();
-        },
-        async consoleStart() {
-            await this.serialManager.startConsole();
-            this.stage = "download";
-        },
-        consoleStop() {
-            this.serialManager.stopConsole();
+        async runStub() {
+            this.stub.started = true;
+            await this.serialManager.connect();
+            await this.serialManager.loadStub();
+            this.stub.finished = true;
         },
         async flashData() {
             this.flash.started = true;
@@ -205,9 +223,9 @@ export default {
         async serialConnect() {
 
             this.connect.connecting = true;
-            await this.serialManager.connect();
-            this.connected.connected = true;
-            this.stage = 'read-serial';
+            await this.serialManager.startConsole();
+            this.connect.connected = true;
+            this.stage = "download";
         },
         formatMacAddr(macAddr) {
             return macAddr.map((value) => value.toString(16).toUpperCase().padStart(2, "0")).join(":");
