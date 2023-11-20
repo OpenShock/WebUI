@@ -15,7 +15,7 @@
   "dependencies": {
     "@fontsource/poppins": "^5.0.8",
     "@imengyu/vue3-context-menu": "^1.3.3",
-    "@microsoft/signalr": "^7.0.12",
+    "@microsoft/signalr": "^8.0.0",
     "@popperjs/core": "^2.11.8",
     "@sentry/vue": "^7.75.1",
     "animate.css": "^4.1.1",
