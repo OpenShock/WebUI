@@ -106,8 +106,8 @@ export default {
                     value: "CaiXianlin"
                 },
                 {
-                    text: "PetTrainer",
-                    value: "PetTrainer"
+                    text: "Petrainer",
+                    value: "Petrainer"
                 }
             ],
             selectedDevice: "",
