@@ -31,39 +31,55 @@
                 </b-container>
             </div>
             <div class="content-child" :class="shocker.isPaused ? 'paused' : ''">
-                <b-row>
-                    <b-container align-items="center" style="margin-top: 15px">
-                        <b-row align-h="center">
-                            <b-col md="auto" style="width: unset">
-                                <round-slider v-model="shocker.state.intensity" pathColor="#1b1d1e" rangeColor="#e14a6d"
-                                    start-angle="315" end-angle="+270" width="30" line-cap="round" radius="75" />
+                <span v-if="liveMode">
+                    <b-row class="live-type">
+                        <b-button-group>
+                            <b-button :class="{ active: shocker.$live.type === 'sound'}" @click="shocker.$live.type = 'sound'"><i class="fas fa-solid fa-volume-high"></i></b-button>
+                            <b-button :class="{ active: shocker.$live.type === 'vibrate'}" @click="shocker.$live.type = 'vibrate'"><i class="fas fa-solid fa-water"></i></b-button>
+                            <b-button :class="{ active: shocker.$live.type === 'shock'}" @click="shocker.$live.type = 'shock'"><i class="fas fa-solid fa-bolt"></i></b-button>
+                        </b-button-group>
+                    </b-row>
 
-                                <p style="text-align: center;">Intensity</p>
-                            </b-col>
-                            <b-col md="auto" style="width: unset">
-                                <round-slider v-model="shocker.state.duration" pathColor="#1b1d1e" rangeColor="#e14a6d"
-                                    start-angle="315" end-angle="+270" line-cap="round" radius="75" width="30" min="0.3"
-                                    max="30" step="0.1" />
+                    <b-row>
+                        <live-slider style="width: 100%; height: 200px;" :shocker="shocker" />
+                    </b-row>
 
-                                <p style="text-align: center;">Duration</p>
-                            </b-col>
-                        </b-row>
-                    </b-container>
-                </b-row>
-                <b-row align-h="center">
-                    <b-col cols="auto" md="auto">
-                        <control-button style="width: 46px" text="" icon="fa-solid fa-volume-high"
-                            loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(3)" />
-                    </b-col>
-                    <b-col cols="auto" md="auto">
-                        <control-button style="width: 46px" text="" icon="fa-solid fa-water"
-                            loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(2)" />
-                    </b-col>
-                    <b-col cols="auto" md="auto">
-                        <control-button style="left: 0; width: 46px" text="" icon="fa-solid fa-bolt"
-                            loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(1)" />
-                    </b-col>
-                </b-row>
+                </span>
+                <span v-else>
+                    <b-row>
+                        <b-container align-items="center" style="margin-top: 15px">
+                            <b-row align-h="center">
+                                <b-col md="auto" style="width: unset">
+                                    <round-slider v-model="shocker.state.intensity" pathColor="#1b1d1e" rangeColor="#e14a6d"
+                                        start-angle="315" end-angle="+270" width="30" line-cap="round" radius="75" />
+
+                                    <p style="text-align: center;">Intensity</p>
+                                </b-col>
+                                <b-col md="auto" style="width: unset">
+                                    <round-slider v-model="shocker.state.duration" pathColor="#1b1d1e" rangeColor="#e14a6d"
+                                        start-angle="315" end-angle="+270" line-cap="round" radius="75" width="30" min="0.3"
+                                        max="30" step="0.1" />
+
+                                    <p style="text-align: center;">Duration</p>
+                                </b-col>
+                            </b-row>
+                        </b-container>
+                    </b-row>
+                    <b-row align-h="center">
+                        <b-col cols="auto" md="auto">
+                            <control-button style="width: 46px" text="" icon="fa-solid fa-volume-high"
+                                loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(3)" />
+                        </b-col>
+                        <b-col cols="auto" md="auto">
+                            <control-button style="width: 46px" text="" icon="fa-solid fa-water"
+                                loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(2)" />
+                        </b-col>
+                        <b-col cols="auto" md="auto">
+                            <control-button style="left: 0; width: 46px" text="" icon="fa-solid fa-bolt"
+                                loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(1)" />
+                        </b-col>
+                    </b-row>
+                </span>
             </div>
         </div>
     </b-container>
@@ -73,11 +89,12 @@
 import Loading from '../../../utils/Loading.vue';
 import RoundSlider from 'vue-three-round-slider';
 import ControlButton from '../../../utils/ControlButton.vue';
+import LiveSlider from '../LiveSlider.vue';
 
 export default {
-    components: { Loading, RoundSlider, ControlButton },
+    components: { Loading, RoundSlider, ControlButton, LiveSlider },
 
-    props: ["shocker"],
+    props: ["shocker", "liveMode"],
     data() {
         return {
             inProgress: false,
@@ -208,6 +225,16 @@ export default {
         .content-child {
             transition: filter 0.3s ease-in-out;
             filter: blur(0px);
+
+            .live-type {
+                margin-top: 10px;
+                margin-bottom: 7px;
+
+                * {
+                    --bs-btn-bg: transparent;
+                    --bs-btn-active-bg: var(--main-color);
+                }
+            }
         }
 
         .paused {

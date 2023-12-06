@@ -194,6 +194,11 @@ export default {
                         intensity: 25,
                         duration: 1
                     }
+                    shocker.$live = {
+                        dragging: false,
+                        intensity: 0,
+                        type: "vibrate"
+                    }
                 });
             });
 

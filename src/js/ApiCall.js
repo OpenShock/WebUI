@@ -43,6 +43,23 @@ class ApiCall {
 			throw err;
 		}
 	}
+
+	async makeCallNoThrow(method, path, data) {
+		try {
+			return await axios({
+				method: method,
+				url: config.apiUrl + path,
+				data: data
+			});
+		} catch (err) {
+			if(err.response !== undefined && err.response.status === 401) {
+				utils.clearLogin();
+				return undefined;
+			}
+
+			return err.response;
+		}
+	}
 }
 
 export default new ApiCall();

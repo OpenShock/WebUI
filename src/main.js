@@ -60,6 +60,8 @@ app.config.globalProperties.emitter = emitter;
 app.config.devtools = true;
 global.emitter = emitter;
 
+if(env.TARGET_ENV.toUpperCase() === 'PRODUCTION') {
+
 Sentry.init({
 	app,
 	dsn: "https://052d20b68586c85c90b4e454bbf85a69@o4505946910949376.ingest.sentry.io/4505946978910208",
@@ -77,6 +79,7 @@ Sentry.init({
 	replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
 	replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
   });
+}
 
 
 app.mount('#app');
