@@ -62,19 +62,15 @@ const routes = [
 			{
 				path: 'admin',
 				component: lazyLoad('dashboard/admin/AdminRoot'),
-				redirect: '/dashboard/admin/users',
+				redirect: '/dashboard/admin/online-devices',
 				children: [
 					{
 						path: 'users',
 						component: lazyLoad('dashboard/admin/users/Users')
 					},
 					{
-						path: 'redeemables',
-						component: lazyLoad('dashboard/admin/redeemables/Redeemables')
-					},
-					{
-						path: 'sdk-versions',
-						component: lazyLoad('dashboard/admin/sdk-versions/SdkVersions')
+						path: 'online-devices',
+						component: lazyLoad('dashboard/admin/online-devices/OnlineDevices')
 					}
 				]
 			},

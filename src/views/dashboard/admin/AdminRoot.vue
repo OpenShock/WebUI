@@ -13,8 +13,8 @@ export default {
   mounted() {
     this.$store.dispatch('setNewNav', [
       {
-        routerLink: '/admin/users',
-        html: '<i class="fas fa-search"></i>Users'
+        routerLink: '/admin/online-devices',
+        html: '<i class="fas fa-search"></i>Online Devices'
       }
     ]);
   }
