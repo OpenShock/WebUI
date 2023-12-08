@@ -97,6 +97,22 @@ export default {
             this.live.gatewayCountry = res.data.data.country;
             this.live.websocket = new WebSocket('wss://' + 'localhost:5443' + '/1/ws/live/' + this.device.id);
 
+            this.live.websocket.onclose = (event) => {
+                console.log(event, "Live Control Gateway Connection Closed");
+                this.live.websocket = null;
+                this.live.rawState = 3;
+                this.live.latency = 0;
+                this.live.enabled = false;
+            };
+
+            
+            this.live.websocket.onerror = (event) => {
+                console.log(event, "Live Control Gateway Connection Error");
+                this.live.websocket = null;
+                this.live.rawState = 3;
+                this.live.latency = 0;
+                this.live.enabled = false;
+            };
 
             this.live.websocket.onmessage = (event) => {
                 console.log(event.data);
