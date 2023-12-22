@@ -30,7 +30,7 @@
     "mitt": "^3.0.1",
     "normalize.css": "^8.0.1",
     "toastr": "^2.1.4",
-    "vue": "^3.3.7",
+    "vue": "^3.3.13",
     "vue-cropperjs": "^5.0.0",
     "vue-router": "^4.2.5",
     "vue-slider-component": "^3.2.24",
