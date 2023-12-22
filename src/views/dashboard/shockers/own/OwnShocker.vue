@@ -74,7 +74,7 @@
                 </b-row>
 
                 <b-row class="random-slider">
-                    <b-col v-if="shocker.permissions.vibrate" md="auto">
+                    <b-col md="auto">
                         <BFormCheckbox v-model="delay.randomSliderWarning" id="random-slider-warning-checkbox">
                         </BFormCheckbox>
                         <b-tooltip target="random-slider-warning-checkbox" triggers="hover">
