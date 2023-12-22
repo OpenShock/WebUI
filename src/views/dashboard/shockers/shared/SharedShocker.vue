@@ -70,7 +70,7 @@
                 </b-row>
 
                 <b-row class="random-slider">
-                    <b-col md="auto">
+                    <b-col v-if="shocker.permissions.vibrate" md="auto">
                         <BFormCheckbox v-model="delay.randomSliderWarning" id="random-slider-warning-checkbox">
                         </BFormCheckbox>
                         <b-tooltip target="random-slider-warning-checkbox" triggers="hover">
@@ -206,11 +206,11 @@ export default {
                 this.delayCountDown();
                 this.delay.controlsDisabled = true;
 
-                if (this.delay.randomSliderWarning) {
+                if (this.delay.randomSliderWarning && this.shocker.permissions.vibrate) {
                     // Vibrate for half a second
                     await ws.control(
                         this.shocker.id,
-                        parseInt(this.shocker.state.intensity),
+                        intensity,
                         500,
                         2
                     );
