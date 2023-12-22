@@ -42,7 +42,7 @@ export default class ws {
             });
         });
 
-        setInterval(() => {
+        this.interval = setInterval(() => {
             if(storeF.state.userHubState != this.connection._connectionState) {
                 storeF.commit('setUserHubState', this.connection._connectionState);
             }
@@ -59,5 +59,6 @@ export default class ws {
 
     stop() {
         this.connection.stop();
+        clearInterval(this.interval);
     }
 }
