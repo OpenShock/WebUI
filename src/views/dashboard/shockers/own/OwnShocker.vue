@@ -233,7 +233,7 @@ export default {
                 this.delayCountDown();
                 this.delay.controlsDisabled = true;
 
-                if (this.delay.randomSliderWarning && this.shocker.permissions.vibrate) {
+                if (this.delay.randomSliderWarning) {
                     // Vibrate for half a second
                     await ws.control(
                         this.shocker.id,
