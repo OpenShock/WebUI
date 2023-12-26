@@ -87,7 +87,9 @@ const store = createStore({
 					commit('setUser', {
 						id: data.id,
 						name: data.name,
-						image: data.image
+						image: data.image,
+						rank: data.rank
+
 					});
 					console.log("Successfully fetched self");
 					return;

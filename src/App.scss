@@ -174,7 +174,7 @@ body {
 
   &:focus {
     border-color: var(--main-color);
-    box-shadow: 0 0 0 0.25rem rgb(80, 47, 255);
+    box-shadow: 0 0 0 0.25rem var(--main-darken-color);
     color: var(--main-text-color);
   }
 
@@ -196,7 +196,7 @@ body {
 
   &:focus {
     border-color: var(--main-color);
-    box-shadow: 0 0 0 0.25rem rgb(80, 47, 255);
+    box-shadow: 0 0 0 0.25rem var(--main-darken-color);
   }
 }
 

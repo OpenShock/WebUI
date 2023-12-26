@@ -65,7 +65,15 @@
                             </b-row>
                         </b-container>
                     </b-row>
-                    <b-row align-h="center">
+                    <b-row v-if="delay.controlsDisabled" align-h="center">
+                    <b-col md="auto">
+                        <b-button id="delayed-actions-button" variant="nano" @click="cancelDelayed">Delayed actions in {{ this.delay.timeRemaining }}s</b-button>
+                        <b-tooltip target="delayed-actions-button" triggers="hover">
+                            Click to cancel
+                        </b-tooltip>
+                    </b-col>
+                </b-row>
+                <b-row v-else align-h="center">
                         <b-col cols="auto" md="auto">
                             <control-button style="width: 46px" text="" icon="fa-solid fa-volume-high"
                                 loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(3)" />
@@ -79,6 +87,21 @@
                                 loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(1)" />
                         </b-col>
                     </b-row>
+
+                <b-row class="random-slider">
+                    <b-col md="auto">
+                        <BFormCheckbox v-model="delay.randomSliderWarning" id="random-slider-warning-checkbox">
+                        </BFormCheckbox>
+                        <b-tooltip target="random-slider-warning-checkbox" triggers="hover">
+                            Send a warning (vibrate) before sending a shock<br>
+                            (Set slider to 0 to disable delay)
+                        </b-tooltip>
+                    </b-col>
+                    <b-col>
+                        <Slider v-model="delay.randomSliderValue" style="margin-top: 10px" :step=0.3 :min=0 :max=5
+                            :format="formatTooltipSlider" showTooltip="focus" />
+                    </b-col>
+                </b-row>
                 </span>
             </div>
         </div>
@@ -90,21 +113,36 @@ import Loading from '../../../utils/Loading.vue';
 import RoundSlider from 'vue-three-round-slider';
 import ControlButton from '../../../utils/ControlButton.vue';
 import LiveSlider from '../LiveSlider.vue';
+import Slider from '@vueform/slider';
+
 
 export default {
-    components: { Loading, RoundSlider, ControlButton, LiveSlider },
+    components: { Loading, RoundSlider, ControlButton, Slider, LiveSlider },
 
     props: ["shocker", "liveMode"],
     data() {
         return {
             inProgress: false,
-            sliderValue: 0
+            sliderValue: 0,
+            lastTimeout: null,
+
+            delay: {
+                randomSliderWarning: false,
+                randomSliderValue: [0, 0],
+                timeout: null,
+                controlsDisabled: false,
+                timeRemaining: 0,
+                in: 0
+            }
         }
     },
     beforeMount() {
 
     },
     methods: {
+        formatTooltipSlider(value) {
+            return value;
+        },
         ellipsis(e) {
             this.$contextmenu({
                 theme: utils.isDarkMode() ? 'default dark' : 'default',
@@ -172,11 +210,74 @@ export default {
                 }
             });
         },
+        getRandomValueWithStep(start, end, step) {
+            const randomValue = Math.floor(Math.random() * ((end - start) / step + 1)) * step + start;
+            return randomValue.toFixed(1); // Rounds to one decimal place
+        },
+        cancelDelayed() {
+            if (this.delay.timeout !== null) {
+                clearTimeout(this.delay.timeout);
+                this.delay.timeout = null;
+            }
+
+            this.delay.controlsDisabled = false;  
+        },
+        delayCountDown() {
+            this.delay.timeRemaining = (Math.max(0, (this.delay.in - Date.now())) / 1000).toFixed(1);
+
+            if (this.delay.timeRemaining <= 0) {
+                this.delay.controlsDisabled = false;
+                return;
+            }
+
+            setTimeout(() => this.delayCountDown(), 100);
+        },
         async control(type) {
+            const min = this.delay.randomSliderValue[0];
+            const max = this.delay.randomSliderValue[1];
+
+            const intensity = parseInt(this.shocker.state.intensity);
+            const duration = parseFloat(this.shocker.state.duration) * 1000;
+
+            if (min !== 0 || max !== 0) {
+                if (this.delay.timeout !== null) {
+                    clearTimeout(this.delay.timeout);
+                    this.delay.timeout = null;
+                }
+
+                var random = this.getRandomValueWithStep(min, max, 0.1);
+                this.delay.in = Date.now() + random * 1000;
+                this.delayCountDown();
+                this.delay.controlsDisabled = true;
+
+                if (this.delay.randomSliderWarning) {
+                    // Vibrate for half a second
+                    await ws.control(
+                        this.shocker.id,
+                        intensity,
+                        500,
+                        2
+                    );
+                }
+
+                this.delay.timeout = setTimeout(() => this.internalControl(type, intensity, duration), random * 1000)
+                return;
+            }
+
+            await this.internalControl(type, intensity, duration)
+        },
+        async internalControl(type, intensity, duration) {
+            if (this.lastTimeout !== null) {
+                clearTimeout(this.lastTimeout);
+                this.lastTimeout = null;
+            }
+
+            this.delay.controlsDisabled = false;
+
             await ws.control(
                 this.shocker.id,
-                parseInt(this.shocker.state.intensity),
-                parseFloat(this.shocker.state.duration) * 1000,
+                intensity,
+                duration,
                 this.inProgress ? 0 : type
             );
 
@@ -186,7 +287,7 @@ export default {
             }
             this.inProgress = true;
 
-            setTimeout(() => this.inProgress = false, this.shocker.state.duration * 1000);
+            this.lastTimeout = setTimeout(() => this.inProgress = false, duration);
         },
         async togglePause() {
             const toSet = !this.shocker.isPaused;
@@ -208,6 +309,20 @@ export default {
     margin: 10px 0;
     padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+    .delay-text {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        line-height: 1.2;
+        color: var(--bs-heading-color);
+        font-size: 1.25rem;
+    }
+
+    .random-slider {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
 
     .content-container {
         position: relative;

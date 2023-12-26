@@ -27,6 +27,7 @@ import 'normalize.css';
 import 'toastr/build/toastr.css';
 // import "@fontsource/poppins";
 
+import "./Slider.scss";
 import "./App.scss";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import App from '@/App';

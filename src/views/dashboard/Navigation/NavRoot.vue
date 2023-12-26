@@ -1,23 +1,22 @@
 <template>
   <nav class="navbar first-level">
-    <a class="navbar-logo"><img src="@/assets/images/Logo.svg" alt="OpenShock Logo"/></a>
-    <theme-toggle/>
-    <button class="navbar-toggler" @click="mobileShow = !mobileShow" type="button"
-            aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
+    <a class="navbar-logo"><img src="@/assets/images/Logo.svg" alt="OpenShock Logo" /></a>
+    <theme-toggle />
+    <button class="navbar-toggler" @click="mobileShow = !mobileShow" type="button" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars text-white"></i>
     </button>
-    <div class="collapse navbar-collapse" :class="{show: mobileShow}">
+    <div class="collapse navbar-collapse" :class="{ show: mobileShow }">
       <ul class="navbar-nav">
         <div class="hori-selector" :style="horiStyle">
-          <div class="left"/>
-          <div class="right"/>
+          <div class="left" />
+          <div class="right" />
         </div>
-        <item v-for="(item, index) in allElements" :item="item" :index="index" :key="index"/>
+        <item v-for="(item, index) in allElements" :item="item" :index="index" :key="index" />
       </ul>
     </div>
   </nav>
-  <second-level-nav/>
+  <second-level-nav />
 </template>
 
 <script>
@@ -26,7 +25,7 @@ import SecondLevelNav from "./SecondLevelNav";
 import ThemeToggle from "../../utils/ThemeToggle";
 
 export default {
-  components: {ThemeToggle, SecondLevelNav, Item},
+  components: { ThemeToggle, SecondLevelNav, Item },
   data() {
     return {
       activeItem: "",
@@ -85,12 +84,19 @@ export default {
   },
   beforeMount() {
 
-      /*this.allElements.push({
+    if (this.$store.state.user.rank === 'Admin') {
+
+      const newElement = {
         routerLink: '/admin',
         html: '<i class="fas fa-user-shield"></i>Admin',
         active: false
-      });*/
-    
+      };
+
+      // Insert as second to last element
+      this.allElements.splice(this.allElements.length - 1, 0, newElement);
+    }
+
+
   },
   mounted() {
     this.initActive();
@@ -137,7 +143,7 @@ export default {
       if (this.activeItem.$refs === undefined || this.activeItem.$refs.li === undefined) return;
       const element = $(this.activeItem.$refs.li);
       const pos = element.position();
-      if(pos === undefined) return;
+      if (pos === undefined) return;
       this.hori.top = pos.top;
       this.hori.left = pos.left;
       this.hori.width = element.innerWidth();
@@ -148,7 +154,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .first-level {
   flex: 0 1 auto;
   background-color: var(--nav-bar-color);
@@ -190,7 +195,8 @@ export default {
         border-top-right-radius: 15px;
         margin-top: 10px;
 
-        .right, .left {
+        .right,
+        .left {
           position: absolute;
           width: 25px;
           height: 25px;
@@ -252,14 +258,15 @@ export default {
       }
     }
 
-    & > ul > :deep(li) {
-      &.active > a {
+    &>ul> :deep(li) {
+      &.active>a {
         color: var(--main-color);
         background-color: transparent;
         transition: all 0.5s;
         transition-delay: 0.2s;
       }
-      &.profile > a {
+
+      &.profile>a {
         padding: 15px 10px 5px 10px;
 
         img {
@@ -311,7 +318,8 @@ export default {
           margin-left: 10px;
           border-radius: 25px 0 0 25px;
 
-          .left, .right {
+          .left,
+          .right {
             right: 10px;
           }
 
