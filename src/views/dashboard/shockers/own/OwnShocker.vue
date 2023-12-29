@@ -34,9 +34,12 @@
                 <span v-if="liveMode">
                     <b-row class="live-type">
                         <b-button-group>
-                            <b-button :class="{ active: shocker.$live.type === 'sound'}" @click="shocker.$live.type = 'sound'"><i class="fas fa-solid fa-volume-high"></i></b-button>
-                            <b-button :class="{ active: shocker.$live.type === 'vibrate'}" @click="shocker.$live.type = 'vibrate'"><i class="fas fa-solid fa-water"></i></b-button>
-                            <b-button :class="{ active: shocker.$live.type === 'shock'}" @click="shocker.$live.type = 'shock'"><i class="fas fa-solid fa-bolt"></i></b-button>
+                            <b-button :class="{ active: shocker.$live.type === 'sound' }"
+                                @click="shocker.$live.type = 'sound'"><i class="fas fa-solid fa-volume-high"></i></b-button>
+                            <b-button :class="{ active: shocker.$live.type === 'vibrate' }"
+                                @click="shocker.$live.type = 'vibrate'"><i class="fas fa-solid fa-water"></i></b-button>
+                            <b-button :class="{ active: shocker.$live.type === 'shock' }"
+                                @click="shocker.$live.type = 'shock'"><i class="fas fa-solid fa-bolt"></i></b-button>
                         </b-button-group>
                     </b-row>
 
@@ -66,14 +69,15 @@
                         </b-container>
                     </b-row>
                     <b-row v-if="delay.controlsDisabled" align-h="center">
-                    <b-col md="auto">
-                        <b-button id="delayed-actions-button" variant="nano" @click="cancelDelayed">Delayed actions in {{ this.delay.timeRemaining }}s</b-button>
-                        <b-tooltip target="delayed-actions-button" triggers="hover">
-                            Click to cancel
-                        </b-tooltip>
-                    </b-col>
-                </b-row>
-                <b-row v-else align-h="center">
+                        <b-col md="auto">
+                            <b-button id="delayed-actions-button" variant="nano" @click="cancelDelayed">Delayed actions in
+                                {{ this.delay.timeRemaining }}s</b-button>
+                            <b-tooltip target="delayed-actions-button" triggers="hover">
+                                Click to cancel
+                            </b-tooltip>
+                        </b-col>
+                    </b-row>
+                    <b-row v-else align-h="center">
                         <b-col cols="auto" md="auto">
                             <control-button style="width: 46px" text="" icon="fa-solid fa-volume-high"
                                 loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(3)" />
@@ -88,20 +92,20 @@
                         </b-col>
                     </b-row>
 
-                <b-row class="random-slider">
-                    <b-col md="auto">
-                        <BFormCheckbox v-model="delay.randomSliderWarning" id="random-slider-warning-checkbox">
-                        </BFormCheckbox>
-                        <b-tooltip target="random-slider-warning-checkbox" triggers="hover">
-                            Send a warning (vibrate) before sending a shock<br>
-                            (Set slider to 0 to disable delay)
-                        </b-tooltip>
-                    </b-col>
-                    <b-col>
-                        <Slider v-model="delay.randomSliderValue" style="margin-top: 10px" :step=0.3 :min=0 :max=5
-                            :format="formatTooltipSlider" showTooltip="focus" />
-                    </b-col>
-                </b-row>
+                    <b-row class="random-slider">
+                        <b-col md="auto">
+                            <BFormCheckbox v-model="delay.randomSliderWarning" id="random-slider-warning-checkbox">
+                            </BFormCheckbox>
+                            <b-tooltip target="random-slider-warning-checkbox" triggers="hover">
+                                Send a warning (vibrate) before sending a shock<br>
+                                (Set slider to 0 to disable delay)
+                            </b-tooltip>
+                        </b-col>
+                        <b-col>
+                            <Slider v-model="delay.randomSliderValue" style="margin-top: 10px" :step=0.3 :min=0 :max=5
+                                :format="formatTooltipSlider" showTooltip="focus" />
+                        </b-col>
+                    </b-row>
                 </span>
             </div>
         </div>
@@ -220,7 +224,7 @@ export default {
                 this.delay.timeout = null;
             }
 
-            this.delay.controlsDisabled = false;  
+            this.delay.controlsDisabled = false;
         },
         delayCountDown() {
             this.delay.timeRemaining = (Math.max(0, (this.delay.in - Date.now())) / 1000).toFixed(1);
@@ -396,5 +400,4 @@ export default {
             padding: 0 12px;
         }
     }
-}
-</style>
+}</style>

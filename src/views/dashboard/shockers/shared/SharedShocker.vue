@@ -23,66 +23,85 @@
                 </b-container>
             </div>
             <div class="content-child" :class="shocker.isPaused ? 'paused' : ''">
-                <b-row>
-                    <b-container align-items="center" style="margin-top: 15px">
-                        <b-row align-h="center">
-                            <b-col md="auto" style="width: unset">
-                                <round-slider v-model="shocker.state.intensity" pathColor="#1b1d1e" rangeColor="#e14a6d"
-                                    start-angle="315" end-angle="+270" width="30" line-cap="round" radius="75"
-                                    :max="shocker.limits.intensity === null ? 100 : shocker.limits.intensity"
-                                    />
+                <span v-if="liveMode">
+                    <b-row class="live-type">
+                        <b-button-group>
+                            <b-button v-if="shocker.permissions.sound" :class="{ active: shocker.$live.type === 'sound' }"
+                                @click="shocker.$live.type = 'sound'"><i class="fas fa-solid fa-volume-high"></i></b-button>
+                            <b-button v-if="shocker.permissions.vibrate" :class="{ active: shocker.$live.type === 'vibrate' }"
+                                @click="shocker.$live.type = 'vibrate'"><i class="fas fa-solid fa-water"></i></b-button>
+                            <b-button  v-if="shocker.permissions.shock" :class="{ active: shocker.$live.type === 'shock' }"
+                                @click="shocker.$live.type = 'shock'"><i class="fas fa-solid fa-bolt"></i></b-button>
+                        </b-button-group>
+                    </b-row>
 
-                                <p style="text-align: center;">Intensity</p>
-                            </b-col>
-                            <b-col md="auto" style="width: unset">
-                                <round-slider v-model="shocker.state.duration" pathColor="#1b1d1e" rangeColor="#e14a6d"
-                                    start-angle="315" end-angle="+270" line-cap="round" radius="75" width="30" min="0.3"
-                                    step="0.1"
-                                    :max="shocker.limits.duration === null ? 30 : shocker.limits.duration / 1000"
-                                    />
+                    <b-row>
+                        <live-slider style="width: 100%; height: 200px;" :shocker="shocker" />
+                    </b-row>
 
-                                <p style="text-align: center;">Duration</p>
-                            </b-col>
-                        </b-row>
-                    </b-container>
-                </b-row>
-                <b-row v-if="delay.controlsDisabled" align-h="center">
-                    <b-col md="auto">
-                        <b-button id="delayed-actions-button" variant="nano" @click="cancelDelayed">Delayed actions in {{ this.delay.timeRemaining }}s</b-button>
-                        <b-tooltip target="delayed-actions-button" triggers="hover">
-                            Click to cancel
-                        </b-tooltip>
-                    </b-col>
-                </b-row>
-                <b-row v-else align-h="center">
-                    <b-col cols="auto" md="auto">
-                        <control-button style="width: 46px" text="" icon="fa-solid fa-volume-high"
-                            loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(3)" />
-                    </b-col>
-                    <b-col cols="auto" md="auto">
-                        <control-button style="width: 46px" text="" icon="fa-solid fa-water"
-                            loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(2)" />
-                    </b-col>
-                    <b-col cols="auto" md="auto">
-                        <control-button style="left: 0; width: 46px" text="" icon="fa-solid fa-bolt"
-                            loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(1)" />
-                    </b-col>
-                </b-row>
+                </span>
+                <span v-else>
+                    <b-row>
+                        <b-container align-items="center" style="margin-top: 15px">
+                            <b-row align-h="center">
+                                <b-col md="auto" style="width: unset">
+                                    <round-slider v-model="shocker.state.intensity" pathColor="#1b1d1e" rangeColor="#e14a6d"
+                                        start-angle="315" end-angle="+270" width="30" line-cap="round" radius="75"
+                                        :max="shocker.limits.intensity === null ? 100 : shocker.limits.intensity" />
 
-                <b-row class="random-slider">
-                    <b-col v-if="shocker.permissions.vibrate" md="auto">
-                        <BFormCheckbox v-model="delay.randomSliderWarning" id="random-slider-warning-checkbox">
-                        </BFormCheckbox>
-                        <b-tooltip target="random-slider-warning-checkbox" triggers="hover">
-                            Send a warning (vibrate) before sending a shock<br>
-                            (Set slider to 0 to disable delay)
-                        </b-tooltip>
-                    </b-col>
-                    <b-col>
-                        <Slider v-model="delay.randomSliderValue" style="margin-top: 10px" :step=0.3 :min=0 :max=5
-                            :format="formatTooltipSlider" showTooltip="focus" />
-                    </b-col>
-                </b-row>
+                                    <p style="text-align: center;">Intensity</p>
+                                </b-col>
+                                <b-col md="auto" style="width: unset">
+                                    <round-slider v-model="shocker.state.duration" pathColor="#1b1d1e" rangeColor="#e14a6d"
+                                        start-angle="315" end-angle="+270" line-cap="round" radius="75" width="30" min="0.3"
+                                        step="0.1"
+                                        :max="shocker.limits.duration === null ? 30 : shocker.limits.duration / 1000" />
+
+                                    <p style="text-align: center;">Duration</p>
+                                </b-col>
+                            </b-row>
+                        </b-container>
+                    </b-row>
+
+                    <b-row v-if="delay.controlsDisabled" align-h="center">
+                        <b-col md="auto">
+                            <b-button id="delayed-actions-button" variant="nano" @click="cancelDelayed">Delayed actions in
+                                {{ this.delay.timeRemaining }}s</b-button>
+                            <b-tooltip target="delayed-actions-button" triggers="hover">
+                                Click to cancel
+                            </b-tooltip>
+                        </b-col>
+                    </b-row>
+                    <b-row v-else align-h="center">
+                        <b-col v-if="shocker.permissions.sound" cols="auto" md="auto">
+                            <control-button style="width: 46px" text="" icon="fa-solid fa-volume-high"
+                                loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(3)" />
+                        </b-col>
+                        <b-col v-if="shocker.permissions.vibrate" cols="auto" md="auto">
+                            <control-button style="width: 46px" text="" icon="fa-solid fa-water"
+                                loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(2)" />
+                        </b-col>
+                        <b-col v-if="shocker.permissions.shock" cols="auto" md="auto">
+                            <control-button style="left: 0; width: 46px" text="" icon="fa-solid fa-bolt"
+                                loadingIcon="fa-solid fa-spinner fa-spin" :loading="inProgress" @click="control(1)" />
+                        </b-col>
+                    </b-row>
+
+                    <b-row class="random-slider">
+                        <b-col v-if="shocker.permissions.vibrate" md="auto">
+                            <BFormCheckbox v-model="delay.randomSliderWarning" id="random-slider-warning-checkbox">
+                            </BFormCheckbox>
+                            <b-tooltip target="random-slider-warning-checkbox" triggers="hover">
+                                Send a warning (vibrate) before sending a shock<br>
+                                (Set slider to 0 to disable delay)
+                            </b-tooltip>
+                        </b-col>
+                        <b-col>
+                            <Slider v-model="delay.randomSliderValue" style="margin-top: 10px" :step=0.3 :min=0 :max=5
+                                :format="formatTooltipSlider" showTooltip="focus" />
+                        </b-col>
+                    </b-row>
+                </span>
             </div>
         </div>
     </b-container>
@@ -92,12 +111,13 @@
 import Loading from '../../../utils/Loading.vue';
 import ControlButton from '../../../utils/ControlButton.vue';
 import RoundSlider from 'vue-three-round-slider';
+import LiveSlider from '../LiveSlider.vue';
 import Slider from '@vueform/slider';
 
 export default {
-    components: { ControlButton, Loading, RoundSlider, Slider },
+    components: { ControlButton, Loading, RoundSlider, Slider, LiveSlider },
 
-    props: ["shocker"],
+    props: ["shocker", "liveMode"],
     data() {
         return {
             inProgress: false,
@@ -177,7 +197,7 @@ export default {
                 clearTimeout(this.delay.timeout);
                 this.delay.timeout = null;
             }
-            this.delay.controlsDisabled = false;  
+            this.delay.controlsDisabled = false;
         },
         delayCountDown() {
             this.delay.timeRemaining = (Math.max(0, (this.delay.in - Date.now())) / 1000).toFixed(1);
@@ -266,6 +286,7 @@ export default {
         color: var(--bs-heading-color);
         font-size: 1.25rem;
     }
+
     .random-slider {
         margin-top: 20px;
         margin-bottom: 10px;
@@ -323,5 +344,4 @@ export default {
             padding: 0 12px;
         }
     }
-}
-</style>
+}</style>
