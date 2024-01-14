@@ -24,6 +24,10 @@ export default class ws {
         await this.connection.invoke("CaptivePortal", deviceId, enabled);
     }
 
+    async otaInstall(deviceId, version) {
+        await this.connection.invoke("OtaInstall", deviceId, version);
+    }
+
     constructor() {
 
         this.connection = new signalR.HubConnectionBuilder()

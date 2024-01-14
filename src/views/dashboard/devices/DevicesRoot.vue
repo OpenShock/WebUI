@@ -320,10 +320,17 @@ export default {
             ]
           },
           {
-            label: "Setup",
+            label: "Setup (WIP)",
             icon: 'fa-solid fa-layer-group',
             onClick: () => {
               this.$router.push(`/dashboard/devices/${item.id}/setup`);
+            }
+          },
+          {
+            label: "OTA Update",
+            icon: 'fa-solid fa-cloud-arrow-down',
+            onClick: () => {
+              this.$router.push(`/dashboard/devices/${item.id}/ota`);
             }
           },
           {

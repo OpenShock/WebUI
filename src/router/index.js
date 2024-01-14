@@ -113,6 +113,11 @@ const routes = [
 				component: lazyLoad('dashboard/devices/Setup/Setup')
 			},
 			{
+				path: 'devices/:id/ota',
+				component: lazyLoad('dashboard/devices/Ota/OtaUpdate'),
+				props: true
+			},
+			{
 				path: 'tokens',
 				component: lazyLoad('dashboard/ApiTokens/ApiTokenRoot')
 			},
