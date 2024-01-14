@@ -44,6 +44,9 @@
                         <span :class="row.item.permissions.shock ? 'enabled' : 'disabled'">
                             <i class="perm fa-solid fa-bolt"></i>
                         </span>
+                        <span :class="row.item.permissions.live ? 'enabled' : 'disabled'">
+                            <i class="perm a-solid fa-bars-staggered"></i>
+                        </span>
                     </span>
                 </template>
 
@@ -122,6 +125,11 @@
                             :state="editing.permissions.shock"
                             @click="editing.permissions.shock = !editing.permissions.shock" />
                     </b-col>
+                    <b-col cols="auto" md="auto">
+                        <permission-button style="left: 0; width: 46px" icon="fa-solid fa-bars-staggered"
+                            :state="editing.permissions.live"
+                            @click="editing.permissions.live = !editing.permissions.live" />
+                    </b-col>
                 </b-row>
 
             </b-container>
@@ -190,7 +198,8 @@ export default {
                 permissions: {
                     shock: false,
                     sound: false,
-                    vibrate: false
+                    vibrate: false,
+                    live: false
                 }
             }
         }
@@ -341,7 +350,8 @@ export default {
                 permissions: {
                     vibrate: temp.permissions.vibrate,
                     shock: temp.permissions.shock,
-                    sound: temp.permissions.sound
+                    sound: temp.permissions.sound,
+                    live: temp.permissions.live
                 },
                 limits: {
                     duration: temp.limitsTranslated.duration == 30.0 ? null : temp.limitsTranslated.duration * 1000,

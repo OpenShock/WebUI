@@ -51,37 +51,33 @@
         <loading v-if="modal.editLoading"></loading>
         <div v-else>
           <b-container style="padding: 0;">
-            <b-form-group label="ID (readonly)" label-for="item-id" label-class="mb-1">
+            <b-form-group label="ID" label-for="item-id" label-class="mb-1">
               <b-form-input id="item-id" v-model="retrievedShocker.id" readonly/>
             </b-form-group>
 
-            <b-form-group label="Device (editable)" label-for="item-device" label-class="mb-1">
+            <b-form-group label="Device" label-for="item-device" label-class="mb-1">
               <b-form-select id="item-device" :state="validationEditDevice" v-model="retrievedShocker.device" :options="deviceList" required/>
               <b-form-invalid-feedback :state="validationEditDevice">
                     Select a device
                 </b-form-invalid-feedback>
             </b-form-group>
         
-            <b-form-group label="Name (editable)" label-for="item-name" label-class="mb-1">
+            <b-form-group label="Name" label-for="item-name" label-class="mb-1">
               <b-form-input id="item-name" :state="validationEditName" v-model="retrievedShocker.name"/>
               <b-form-invalid-feedback :state="validationEditName">
                     Must be between 1 and 48 characters
                 </b-form-invalid-feedback>
             </b-form-group>
             
-            <b-form-group label="RfId (editable)" label-for="item-rfid" label-class="mb-1">
+            <b-form-group label="RfId" label-for="item-rfid" label-class="mb-1">
               <b-form-input id="item-rfid" :state="validationEditRfId" v-model="retrievedShocker.rfId"/>
               <b-form-invalid-feedback :state="validationEditRfId">
                     Must be a number between 0 - 65535
                 </b-form-invalid-feedback>
             </b-form-group>
 
-            <b-form-group label="Model (editable)" label-for="item-model" label-class="mb-1">
+            <b-form-group label="Model" label-for="item-model" label-class="mb-1">
               <b-form-select id="item-model" v-model="retrievedShocker.model" :options="modelOptions"/>
-            </b-form-group>
-
-            <b-form-group label="Created on (readonly)" label-for="item-created" label-class="mb-1">
-              <b-form-input id="item-created" v-model="retrievedShocker.createdOn" readonly/>
             </b-form-group>
           </b-container>
         </div>
