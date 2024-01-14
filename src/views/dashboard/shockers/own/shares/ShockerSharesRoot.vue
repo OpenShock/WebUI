@@ -45,7 +45,7 @@
                             <i class="perm fa-solid fa-bolt"></i>
                         </span>
                         <span :class="row.item.permissions.live ? 'enabled' : 'disabled'">
-                            <i class="perm a-solid fa-bars-staggered"></i>
+                            <i class="perm fa-solid fa-bars-staggered"></i>
                         </span>
                     </span>
                 </template>
