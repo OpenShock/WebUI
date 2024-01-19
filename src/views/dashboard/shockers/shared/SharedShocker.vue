@@ -23,7 +23,7 @@
                 </b-container>
             </div>
             <div class="content-child" :class="shocker.isPaused ? 'paused' : ''">
-                <span v-if="liveMode">
+                <span v-if="liveMode && shocker.permissions.live">
                     <b-row class="live-type">
                         <b-button-group>
                             <b-button v-if="shocker.permissions.sound" :class="{ active: shocker.$live.type === 'sound' }"

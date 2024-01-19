@@ -46,6 +46,34 @@ export default class ws {
             });
         });
 
+        this.connection.on("DeviceUpdate", (deviceId, type) => {
+            emitter.emit('deviceUpdate', { deviceId, type });
+        });
+
+
+        // OTA
+
+        this.connection.on("OtaInstallStarted", (deviceId, updateId, version) => {
+            emitter.emit('otaInstallStarted', { deviceId, updateId, version });
+        });
+
+        this.connection.on("OtaInstallProgress", (deviceId, updateId, task, progress) => {
+            emitter.emit('otaInstallProgress', { deviceId, updateId, task, progress });
+        });
+
+        this.connection.on("OtaInstallFailed", (deviceId, updateId, fatal, message) => {
+            emitter.emit('otaInstallFailed', { deviceId, updateId, fatal, message });
+        });
+
+        this.connection.on("OtaRollback", (deviceId, updateId) => {
+            emitter.emit('otaRollback', { deviceId, updateId });
+        });
+
+        this.connection.on("OtaInstallSucceeded", (deviceId, updateId) => {
+            emitter.emit('otaInstallSucceeded', { deviceId, updateId });
+        });
+
+
         this.interval = setInterval(() => {
             if(storeF.state.userHubState != this.connection._connectionState) {
                 storeF.commit('setUserHubState', this.connection._connectionState);

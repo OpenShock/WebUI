@@ -247,7 +247,7 @@ export default {
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1283px) {
   .first-level {
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -268,7 +268,7 @@ export default {
 }
 
 
-@media (max-width: 991px) {
+@media (max-width: 1282px) {
   .first-level {
     .collapse {
       ul {

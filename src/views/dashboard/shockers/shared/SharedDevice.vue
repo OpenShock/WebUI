@@ -96,7 +96,8 @@ export default {
 
             this.live.gateway = res.data.data.gateway;
             this.live.gatewayCountry = res.data.data.country;
-            this.live.websocket = new WebSocket('wss://' + this.live.gateway + '/1/ws/live/' + this.device.id);
+            this.live.websocket = new WebSocket('wss://localhost:5443/1/ws/live/' + this.device.id);
+            //this.live.websocket = new WebSocket('wss://' + this.live.gateway + '/1/ws/live/' + this.device.id);
 
             this.live.websocket.onclose = (event) => {
                 console.log(event, "Live Control Gateway Connection Closed");
@@ -175,7 +176,7 @@ export default {
     },
     computed: {
         getFirmwareVersionString() {
-            if (this.firmwareVersion === null) return "Older than 7.1.0.0, please upgrade.";
+            if (this.firmwareVersion === null) return "Older than 0.8.0, please upgrade.";
             return this.firmwareVersion;
         },
         lcgState() {

@@ -3,7 +3,7 @@
     <div class="slider-container" ref="slcon" @mousedown="startDrag">
       <div class="background" :style="{ height: `calc(100% - ${y}px)` }"></div>
       <div class="slider-handle" :class="{ dragging: this.shocker.$live.isDragging }" :style="{ left: `${x - 20}px`, top: `${y - 20}px` }">
-        <span class="percentage-label">{{ parseInt(percentageY * 100) }}%</span>
+        <span class="percentage-label">{{ actualLimitedNumber }}%</span>
       </div>
     </div>
   </div>
@@ -41,10 +41,15 @@ export default {
       const rect = this.$refs.slcon.getBoundingClientRect();
       return 1 - (this.y / rect.height);
     },
+
+    actualLimitedNumber() {
+      if(this.shocker.limits === undefined) return parseInt(this.percentageY * 100);
+      return parseInt(this.percentageY * (this.shocker.limits.intensity === null ? 100 : this.shocker.limits.intensity));
+    }
   },
   watch: {
-    percentageY(newValue) {
-      this.shocker.$live.intensity = newValue * 100;
+    actualLimitedNumber(newValue) {
+      this.shocker.$live.intensity = newValue;
     }
   },
   methods: {

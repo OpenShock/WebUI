@@ -264,7 +264,7 @@ export default {
       ws.captive(deviceId, enabled);
     },
     getFirmwareVersionString(version) {
-      if(version === null) return "Older than 7.1.0.0, please upgrade.";
+      if(version === null) return "Older than 0.8.0, please upgrade.";
       return version;
     },
     ellipsis(e, item) {

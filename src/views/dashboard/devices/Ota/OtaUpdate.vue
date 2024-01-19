@@ -8,20 +8,58 @@
         <transition name="fade" mode="out-in">
 
             <!-- SELECT BRANCH -->
-            <b-row v-if="stage === 'branchSelect'">
-                <b-col><version-display branch="develop" label="Develop" @clicked="branchClicked" /></b-col>
-                <b-col><version-display branch="stable" label="Stable" @clicked="branchClicked" /></b-col>
-                <b-col><version-display branch="beta" label="Beta" @clicked="branchClicked" /></b-col>
-            </b-row>
+            <span v-if="stage === 'branchSelect'">
+                <b-row align-h="center">
+                    <b-col md="6" style="text-align: right;">
+                        <h5>Device Status</h5>
+                    </b-col>
+                    <b-col md="6">
+                        <span id="tooltip-state" :class="deviceOnline ? 'online' : 'offline'">
+                            <i class="fa-solid fa-circle"></i>
+                        </span>
+                        <b-tooltip target="tooltip-state" triggers="hover">
+                            {{ deviceOnline ? 'Online' : 'Offline' }}
+                        </b-tooltip>
+                    </b-col>
+                </b-row>
+                <b-row align-h="center">
+                    <b-col md="6" style="text-align: right;">
+                        <h5>Firmware Version</h5>
+                    </b-col>
+                    <b-col md="6">
+                        <span>{{ deviceState.firmwareVersion }}</span>
+                    </b-col>
+                </b-row>
+                <br>
+                <b-row>
+                    <b-col><version-display branch="develop" label="Develop" @clicked="branchClicked" /></b-col>
+                    <b-col><version-display branch="stable" label="Stable" @clicked="branchClicked" /></b-col>
+                    <b-col><version-display branch="beta" label="Beta" @clicked="branchClicked" /></b-col>
+                </b-row>
+                <b-row style="margin-top: 25px; padding: 0 20px;">
+                    <b-table :fields="fieldsUpdates" :items="updates" class="ota-table">
+                        <template v-slot:cell(version)="data">
+                            <b-badge variant="primary">{{ data.value }}</b-badge>
+                        </template>
+                        <template v-slot:cell(status)="data">
+                            <b-badge :variant="getStatusVariant(data.value)">{{ data.value }}</b-badge>
+                        </template>
+                        <template v-slot:cell(startedAt)="data">
+                            <relative-time :time="new Date(data.value)" />
+                        </template>
+                    </b-table>
+                </b-row>
+            </span>
 
             <!-- CONFIRM UPDATE -->
             <span v-else-if="stage === 'startUpdate'" style="text-align: center;">
                 <b-row align-h="center">
-                    <b-col md="auto" >
+                    <b-col md="auto">
                         <h5>Start update?</h5>
                         <p>You are about to start a OTA Update<br>
-                        <br>
-                        Branch <b><u>{{ this.branch }}</u></b> with Version <b><u>{{ this.version }}</u></b></p>
+                            <br>
+                            Branch <b><u>{{ this.branch }}</u></b> with Version <b><u>{{ this.version }}</u></b>
+                        </p>
                         <br>
                     </b-col>
                 </b-row>
@@ -33,34 +71,145 @@
             </span>
 
             <!-- UPDATE IN PROGRESS -->
-            <span v-else-if="stage === 'updateInProgress'">
-                <b-progress :value="progress" showProgress="true"
-                                :variant="finished ? 'success' : 'primary'" max=100></b-progress>
+            <span v-else-if="stage === 'updateInProgress'" style="text-align: center;">
+                <b-row align-h="center">
+                    <b-col md="auto">
+                        <h5>Update in progress</h5>
+                        <br>
+                        <p>{{ progressTaskName }}</p>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-progress :value="deviceInfo.progress * 100" showProgress="true"
+                        :variant="finished ? 'success' : 'primary'" max=100></b-progress>
+                </b-row>
+            </span>
 
+            <!-- UPDATE FINISHED -->
+            <span v-else-if="stage === 'updateFinished'" style="text-align: center;">
+                <b-row align-h="center">
+                    <b-col md="auto">
+                        <h5>Update finished</h5>
+                        <br>
+                        <p>Update finished successfully</p>
+                    </b-col>
+                </b-row>
+
+                <b-row align-h="center">
+                    <b-col md="auto">
+                        <router-link :to="'/dashboard/devices'">Back</router-link>
+                    </b-col>
+                </b-row>
+            </span>
+
+            <!-- ROLLBACK -->
+            <span v-else-if="stage === 'rollback'" style="text-align: center;">
+                <b-row align-h="center">
+                    <b-col md="auto">
+                        <h5>Device rolled back to previous version</h5>
+                    </b-col>
+                </b-row>
+            </span>
+
+            <!-- ERROR -->
+            <span v-else-if="stage === 'error'" style="text-align: center;">
+                <b-row align-h="center">
+                    <b-col md="auto">
+                        <h5>Update failed</h5>
+                        <br>
+                        <p>{{ deviceInfo.failed }}</p>
+                    </b-col>
+                </b-row>
             </span>
         </transition>
     </b-container>
 </template>
 
 <script>
+import { RelativeTime } from "relative-time-vue-component";
 import VersionDisplay from './VersionDisplay.vue';
 
 export default {
-    components: { VersionDisplay },
+    components: { VersionDisplay, RelativeTime },
     props: ['id'],
     data() {
         return {
             stage: "branchSelect",
             branch: null,
             version: null,
-            progress: 0,
-            finished: false
+
+            online: false,
+            firmwareVersion: null,
+
+            deviceInfo: {
+                progress: 0,
+                progressTask: -2,
+                started: false,
+                failed: null,
+                fatal: false
+            },
+
+
+            updates: [],
+            fieldsUpdates: [
+                {
+                    key: 'version',
+                },
+                {
+                    key: 'status',
+                },
+                {
+                    key: 'id',
+                    thClass: "width0"
+                },
+                {
+                    key: 'startedAt',
+                    label: 'Started at',
+                    thClass: "startedWith"
+                }
+            ]
         }
     },
     beforeMount() {
-
+        this.registerEmits();
+        this.getUpdates();
     },
     methods: {
+        registerEmits() {
+            this.emitter.on('otaInstallStarted', ({ deviceId, updateId, version }) => {
+                if (deviceId !== this.id) return;
+                this.deviceInfo.started = true;
+                this.deviceInfo.progressTask = -1;
+            });
+
+            this.emitter.on('otaInstallProgress', ({ deviceId, updateId, task, progress }) => {
+                if (deviceId !== this.id) return;
+
+                this.deviceInfo.progress = progress;
+                this.deviceInfo.progressTask = task;
+            });
+
+            this.emitter.on('otaInstallFailed', ({ deviceId, updateId, fatal, message }) => {
+                if (deviceId !== this.id) return;
+
+                this.deviceInfo.failed = message;
+                this.deviceInfo.fatal = fatal;
+                this.stage = 'error';
+            });
+
+            this.emitter.on('otaRollback', ({ deviceId, updateId }) => {
+                if (deviceId !== this.id) return;
+
+                this.this.stage = 'rollback';
+            });
+
+            this.emitter.on('otaInstallSucceeded', ({ deviceId, updateId }) => {
+                if (deviceId !== this.id) return;
+
+                this.stage = 'updateFinished';
+            });
+
+        },
         branchClicked(branch, version) {
             this.stage = 'startUpdate';
             this.branch = branch;
@@ -69,8 +218,78 @@ export default {
         async startUpdate() {
             this.stage = 'updateInProgress';
             await ws.otaInstall(this.id, this.version);
+        },
+
+        async getUpdates() {
+            const res = await apiCall.makeCall('GET', '1/devices/' + this.id + '/ota');
+            if (res.status !== 200) {
+                console.log(res);
+                toastr.error(res.data.message, "Failed to get ota updates");
+                return;
+            }
+
+            this.updates = res.data.data;
+        },
+
+        getStatusVariant(status) {
+            if (status === 'finished') {
+                return 'success';
+            } else if (status === 'error' || status === 'timeout') {
+                return 'danger';
+            }
+            return 'primary';
+        }
+    },
+    computed: {
+        deviceState() {
+            const deviceState = this.$store.state.deviceStates[this.id];
+            console.log(deviceState);
+            return deviceState !== undefined ? deviceState : null;
+        },
+        deviceOnline() {
+            return this.deviceState !== null ? this.deviceState.online : false;
+        },
+
+        progressTaskName() {
+            switch (this.deviceInfo.progressTask) {
+                case -2:
+                    return "Waiting for Device";
+                case 0:
+                    return "Fetching Metadata";
+                case 1:
+                    return "Preparing for Install";
+                case 2:
+                    return "Flashing Filesystem";
+                case 3:
+                    return "Verifying Filesystem";
+                case 4:
+                    return "Flashing Application";
+                case 5:
+                    return "Marking Application Bootable";
+                case 6:
+                    return "Rebooting...";
+                default:
+                    return `Unkown Task [${this.deviceInfo.progressTask}]`
+            }
         }
     }
 }
 </script>
-+
+
+<style scoped lang="scss">
+:deep(.startedWith) {
+    width: 190px;
+}
+
+.ota-table {
+    display: block;
+}
+
+.online {
+    color: greenyellow;
+}
+
+.offline {
+    color: red;
+}
+</style>

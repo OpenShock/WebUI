@@ -1,7 +1,7 @@
 const config = {
 	name: "ShockLink Dev",
-	webUiUrl: "https://dev.shocklink.net/#/",
-	apiUrl: "https://dev-api.shocklink.net/",
+	webUiUrl: "https://staging.shocklink.net/#/",
+	apiUrl: "https://staging-api.shocklink.net/",
 	shortUrl: "https://shockl.ink/",
 }
 
