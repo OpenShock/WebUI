@@ -1,5 +1,5 @@
 <template>
-    <div class="root" :class="{disabled: retrievedVersion === null}" @click="clicked">
+    <div class="root" :class="{ disabled: retrievedVersion === null }" @click="clicked">
         <h3>{{ label }}</h3>
         {{ version }}
     </div>
@@ -21,7 +21,7 @@ export default {
     },
     methods: {
         clicked() {
-            if(this.retrievedVersion === null) return;
+            if (this.retrievedVersion === null) return;
             this.$emit('clicked', this.branch, this.retrievedVersion);
         },
         async getVersion() {
@@ -31,7 +31,12 @@ export default {
                 response = await axios({
                     method: 'GET',
                     url: `https://firmware.openshock.org/version-${this.branch}.txt`,
-                    withCredentials: false
+                    withCredentials: false,
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache',
+                        'Expires': '0',
+                    },
                 });
             } catch (error) {
                 console.log(error);
@@ -75,7 +80,7 @@ export default {
     margin: 10px;
     min-width: 200px;
     min-height: 200px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 
