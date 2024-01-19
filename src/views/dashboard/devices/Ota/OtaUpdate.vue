@@ -27,7 +27,7 @@
                         <h5>Firmware Version</h5>
                     </b-col>
                     <b-col md="6">
-                        <span>{{ deviceState.firmwareVersion }}</span>
+                        <span v-if="deviceOnline">{{ deviceState.firmwareVersion }}</span><span v-else>Offline</span>
                     </b-col>
                 </b-row>
                 <br>
