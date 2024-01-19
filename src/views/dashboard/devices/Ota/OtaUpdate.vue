@@ -282,7 +282,7 @@ export default {
 }
 
 .ota-table {
-    display: block;
+    
 }
 
 .online {
