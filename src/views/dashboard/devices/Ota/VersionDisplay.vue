@@ -1,5 +1,5 @@
 <template>
-    <div class="root" :class="{ disabled: retrievedVersion === null }" @click="clicked">
+    <div class="root" :class="styleRoot" @click="clicked">
         <h3>{{ label }}</h3>
         {{ version }}
     </div>
@@ -9,7 +9,7 @@
 import axios from 'axios';
 
 export default {
-    props: ['branch', 'label'],
+    props: ['branch', 'label', 'variant'],
     data() {
         return {
             retrievedVersion: null,
@@ -59,6 +59,11 @@ export default {
         }
     },
     computed: {
+        styleRoot() {
+            let arr = [this.variant];
+            if (this.retrievedVersion === null) arr.push('disabled');
+            return arr;
+        },
         version() {
             if (this.error !== null) return "Error";
             return this.retrievedVersion ?? "Loading...";
@@ -86,6 +91,18 @@ export default {
 
     &:hover {
         background-color: var(--secondary-background-color);
+    }
+
+    &.stable {
+        border-color: rgb(150, 165, 127);
+    }
+
+    &.beta {
+        border-color: rgb(145, 141, 182);
+    }
+
+    &.develop {
+        border-color: rgb(168, 103, 103);
     }
 
 

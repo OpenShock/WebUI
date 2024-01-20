@@ -32,9 +32,11 @@
                 </b-row>
                 <br>
                 <b-row>
-                    <b-col><version-display branch="develop" label="Develop" @clicked="branchClicked" /></b-col>
-                    <b-col><version-display branch="stable" label="Stable" @clicked="branchClicked" /></b-col>
-                    <b-col><version-display branch="beta" label="Beta" @clicked="branchClicked" /></b-col>
+                    <b-col><version-display branch="develop" label="Develop" variant="develop"
+                            @clicked="branchClicked" /></b-col>
+                    <b-col><version-display branch="stable" label="Stable" variant="stable"
+                            @clicked="branchClicked" /></b-col>
+                    <b-col><version-display branch="beta" label="Beta" variant="beta" @clicked="branchClicked" /></b-col>
                 </b-row>
                 <b-row style="margin-top: 25px; padding: 0 20px;">
                     <b-table :fields="fieldsUpdates" :items="updates" class="ota-table">
@@ -43,6 +45,9 @@
                         </template>
                         <template v-slot:cell(status)="data">
                             <b-badge :variant="getStatusVariant(data.value)">{{ data.value }}</b-badge>
+                        </template>
+                        <template v-slot:cell(id)="data">
+                            {{ decimalToHexString(data.value) }}
                         </template>
                         <template v-slot:cell(startedAt)="data">
                             <relative-time :time="new Date(data.value)" />
@@ -75,7 +80,14 @@
                 <b-row align-h="center">
                     <b-col md="auto">
                         <h5>Update in progress</h5>
-                        <br>
+                    </b-col>
+                </b-row>
+                <b-row>
+                    <b-progress :value="overAllProgress + partialProgressForOverall" showProgress="true"
+                        :variant="finished ? 'success' : 'primary'" max=100></b-progress>
+                </b-row>
+                <b-row align-h="center">
+                    <b-col md="auto">
                         <p>{{ progressTaskName }}</p>
                     </b-col>
                 </b-row>
@@ -149,6 +161,10 @@ export default {
                 fatal: false
             },
 
+            crawl: null,
+
+            overAllProgress: 0,
+            finalOverAllProgress: 0,
 
             updates: [],
             fieldsUpdates: [
@@ -180,13 +196,18 @@ export default {
                 if (deviceId !== this.id) return;
                 this.deviceInfo.started = true;
                 this.deviceInfo.progressTask = -1;
+                this.stage = 'updateInProgress';
             });
 
             this.emitter.on('otaInstallProgress', ({ deviceId, updateId, task, progress }) => {
                 if (deviceId !== this.id) return;
+                this.stage = 'updateInProgress';
 
                 this.deviceInfo.progress = progress;
-                this.deviceInfo.progressTask = task;
+                if (this.deviceInfo.progressTask < task) {
+                    this.deviceInfo.progressTask = task;
+                    this.overallProgressUpdated();
+                }
             });
 
             this.emitter.on('otaInstallFailed', ({ deviceId, updateId, fatal, message }) => {
@@ -200,7 +221,7 @@ export default {
             this.emitter.on('otaRollback', ({ deviceId, updateId }) => {
                 if (deviceId !== this.id) return;
 
-                this.this.stage = 'rollback';
+                this.stage = 'rollback';
             });
 
             this.emitter.on('otaInstallSucceeded', ({ deviceId, updateId }) => {
@@ -232,15 +253,90 @@ export default {
         },
 
         getStatusVariant(status) {
-            if (status === 'finished') {
+            if (status === 'Finished') {
                 return 'success';
-            } else if (status === 'error' || status === 'timeout') {
+            } else if (status === 'Error' || status === 'Timeout') {
                 return 'danger';
             }
             return 'primary';
+        },
+        stopCrawl() {
+            if (this.crawl !== null) clearTimeout(this.crawl);
+        },
+        crawlProgressOverTime(time, upTo) {
+            this.stopCrawl();
+
+            const diff = upTo - this.overAllProgress;
+            const step = diff / (time / 100);
+
+            this.internalCrawlLoop(step, upTo);
+        },
+        internalCrawlLoop(step, upTo) {
+            this.crawl = setTimeout(() => {
+                if (this.overAllProgress < upTo) {
+                    this.overAllProgress += step;
+                    this.internalCrawlLoop(step, upTo);
+                }
+            }, 100);
+        },
+        overallProgressUpdated() {
+            this.stopCrawl();
+            switch (this.deviceInfo.progressTask) {
+                case 0:
+                    this.overAllProgress = 1;
+                    this.crawlProgressOverTime(4_000, 5)
+                    break;
+                case 1:
+                    this.overAllProgress = 5;
+                    break;
+                case 2:
+                    this.overAllProgress = 6;
+                    break;
+                case 3:
+                    this.overAllProgress = 28;
+                    break;
+                case 4:
+                    this.overAllProgress = 30;
+                    break;
+                case 5:
+                    this.overAllProgress = 79;
+                    break;
+                case 6:
+                    this.overAllProgress = 80;
+                    this.crawlProgressOverTime(13_500, 100);
+                    break;
+                default:
+                    break;
+            }
+        },
+        decimalToHexString(number) {
+            if (number < 0) {
+                number = 0xFFFFFFFF + number + 1;
+            }
+
+            return number.toString(16).toUpperCase();
         }
     },
     computed: {
+        partialProgressForOverall() {
+            switch (this.deviceInfo.progressTask) {
+                case 0:
+                    return this.deviceInfo.progress * 4;
+                case 1:
+                    return this.deviceInfo.progress * 2;
+                case 2:
+                    return this.deviceInfo.progress * 22;
+                case 3:
+                    return this.deviceInfo.progress * 2;
+                case 4:
+                    return this.deviceInfo.progress * 49;
+                case 5:
+                    return this.deviceInfo.progress * 1;
+                default:
+                    return 0;
+            }
+        },
+
         deviceState() {
             const deviceState = this.$store.state.deviceStates[this.id];
             console.log(deviceState);
@@ -279,10 +375,6 @@ export default {
 <style scoped lang="scss">
 :deep(.startedWith) {
     width: 190px;
-}
-
-.ota-table {
-    
 }
 
 .online {
