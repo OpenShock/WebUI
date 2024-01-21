@@ -21,10 +21,17 @@ html {
 
 $shocker-limit-color: #f16051;
 
-[data-color-scheme="white"] {
+:root {
   --main-color: #e14a6d;
   --main-darken-color: #962e46;
   --main-lighten-color: #ff7d9b;
+
+  --bs-primary-rgb: 225, 74, 109;
+  --swal-error-line: #fc3a3a;
+}
+
+[data-color-scheme="white"] {
+
   --nav-bar-color: #d8d8d8;
   --main-background-color: #f9f9fc;
   --main-blackground-dark: #aaaaaa;
@@ -54,14 +61,9 @@ $shocker-limit-color: #f16051;
     color: #212529;
     border-color: #dee2e6;
   }
-
-  --swal-error-line: #f27474;
 }
 
 [data-color-scheme="dark"] {
-  --main-color: #e14a6d;
-  --main-darken-color: #962e46;
-  --main-lighten-color: #ff7d9b;
   --nav-bar-color: #1b1d1e;
   --main-background-color: #1b1d1e;
   --main-blackground-dark: #1a1c1d;
@@ -98,8 +100,6 @@ $shocker-limit-color: #f16051;
   input {
     color: #fff !important;
   }
-
-  --swal-error-line: #fc3a3a;
 }
 
 

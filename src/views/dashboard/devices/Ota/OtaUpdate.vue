@@ -63,14 +63,14 @@
                         <h5>Start update?</h5>
                         <p>You are about to start a OTA Update<br>
                             <br>
-                            Branch <b><u>{{ this.branch }}</u></b> with Version <b><u>{{ this.version }}</u></b>
+                            Branch <b-badge variant="primary">{{ this.branch }}</b-badge> with Version <b-badge variant="primary">{{ this.version }}</b-badge>
                         </p>
                         <br>
                     </b-col>
                 </b-row>
                 <b-row align-h="center">
                     <b-col md="auto">
-                        <b-button variant="success" @click="startUpdate">Update</b-button>
+                        <b-button style="background-color: var(--main-color)" @click="startUpdate">Update</b-button>
                     </b-col>
                 </b-row>
             </span>
