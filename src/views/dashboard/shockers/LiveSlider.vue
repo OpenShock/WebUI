@@ -93,6 +93,7 @@ export default {
     height: 100%;
     border: 1px solid #ccc;
     cursor: pointer;
+    touch-action: none;
 
     .slider-handle {
       position: absolute;
