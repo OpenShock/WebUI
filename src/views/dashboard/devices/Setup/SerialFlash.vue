@@ -63,7 +63,6 @@
 <script>
 import ApiCall from '../../../../js/ApiCall.js';
 import LoadingButton from '../../../utils/LoadingButton.vue';
-import { connect } from './Lib/Ada.js'
 
 export default {
     components: { LoadingButton },

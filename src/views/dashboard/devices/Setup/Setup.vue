@@ -13,9 +13,6 @@
   
 <script>
 import Loading from '../../../utils/Loading.vue';
-import { connect } from './Lib/Ada.js'
-import Page1 from './Page1';
-import Page2 from './Page2';
 import SerialFlash from './SerialFlash.vue';
 
 export default {
