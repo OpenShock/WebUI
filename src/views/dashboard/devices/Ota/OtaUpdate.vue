@@ -63,7 +63,8 @@
                         <h5>Start update?</h5>
                         <p>You are about to start a OTA Update<br>
                             <br>
-                            Branch <b-badge variant="primary">{{ this.branch }}</b-badge> with Version <b-badge variant="primary">{{ this.version }}</b-badge>
+                            Branch <b-badge variant="primary">{{ this.branch }}</b-badge> with Version <b-badge
+                                variant="primary">{{ this.version }}</b-badge>
                         </p>
                         <br>
                     </b-col>
@@ -169,14 +170,20 @@ export default {
             updates: [],
             fieldsUpdates: [
                 {
+                    key: 'id',
+                    thClass: "width0"
+                },
+                {
                     key: 'version',
+                    thClass: "width0"
                 },
                 {
                     key: 'status',
+                    thClass: "width0"
                 },
                 {
-                    key: 'id',
-                    thClass: "width0"
+                    key: 'message',
+
                 },
                 {
                     key: 'startedAt',
@@ -374,7 +381,7 @@ export default {
 
 <style scoped lang="scss">
 :deep(.startedWith) {
-    width: 190px;
+    width: 200px;
 }
 
 .online {
