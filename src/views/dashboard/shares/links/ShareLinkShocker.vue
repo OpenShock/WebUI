@@ -80,9 +80,9 @@
 
                 <b-row class="random-slider">
                     <b-col v-if="shocker.permissions.vibrate" md="auto">
-                        <BFormCheckbox v-model="delay.randomSliderWarning" id="random-slider-warning-checkbox">
+                        <BFormCheckbox v-model="delay.randomSliderWarning" id="'random-slider-warning-checkbox-' + shocker.id">
                         </BFormCheckbox>
-                        <b-tooltip target="random-slider-warning-checkbox" triggers="hover">
+                        <b-tooltip :target="'random-slider-warning-checkbox-' + shocker.id" triggers="hover">
                             Send a warning (vibrate) before sending a shock<br>
                             (Set slider to 0 to disable delay)
                         </b-tooltip>
