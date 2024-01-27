@@ -65,9 +65,9 @@
 
                     <b-row v-if="delay.controlsDisabled" align-h="center">
                         <b-col md="auto">
-                            <b-button id="delayed-actions-button" variant="nano" @click="cancelDelayed">Delayed actions in
+                            <b-button :id="'delayed-actions-button-' + shocker.id" variant="nano" @click="cancelDelayed">Delayed actions in
                                 {{ this.delay.timeRemaining }}s</b-button>
-                            <b-tooltip target="delayed-actions-button" triggers="hover">
+                            <b-tooltip :target="'delayed-actions-button-' + shocker.id" triggers="hover">
                                 Click to cancel
                             </b-tooltip>
                         </b-col>
