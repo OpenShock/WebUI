@@ -31,6 +31,13 @@
                     </b-col>
                 </b-row>
                 <br>
+                <b-row align-h="center">
+                    <b-col md="auto">
+                    <b-alert style="background-color: transparent; color: white;" :model-value="true" variant="danger">
+                        <p>OTA Update only works with Firmware Version 1.1.0+</p>
+                    </b-alert>
+                    </b-col>
+                </b-row>
                 <b-row>
                     <b-col><version-display branch="develop" label="Develop" variant="develop"
                             @clicked="branchClicked" /></b-col>
