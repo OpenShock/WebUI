@@ -33,7 +33,7 @@ export default {
       window.open('https://discord.gg/OpenShock', '_blank')
     },
     clickDocs() {
-      window.open('https://docs.openshock.org', '_blank')
+      window.open('https://wiki.openshock.org', '_blank')
     },
     clickGithub() {
       window.open('https://github.com/OpenShock', '_blank')

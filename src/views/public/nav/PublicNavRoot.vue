@@ -14,7 +14,7 @@
           <div class="right"/>
         </div>
         <item v-for="(item, index) in allElements" :item="item" :index="index" :key="index"/>
-        <item-link-external link="https://docs.openshock.net"><i class="fa-solid fa-book-open-reader"></i>Wiki</item-link-external>
+        <item-link-external link="https://wiki.openshock.org"><i class="fa-solid fa-book-open-reader"></i>Wiki</item-link-external>
         <item-link-external link="https://github.com/OpenShock"><i class="fa-brands fa-github"></i>GitHub</item-link-external>
         <item-link v-if="loggedIn" link="/dashboard"><i class="fa-solid fa-right-to-bracket"></i>Dashboard</item-link>
         <item-link v-else link="/account/login"><i class="fa-solid fa-right-to-bracket"></i>Login</item-link>
