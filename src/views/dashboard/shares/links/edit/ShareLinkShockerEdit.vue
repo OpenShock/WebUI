@@ -145,13 +145,23 @@ export default {
             });
         },
         async togglePause() {
-            const toSet = !this.shocker.isPaused;
-            await apiCall.makeCall("POST", `1/shockers/${this.shocker.id}/pause`, {
+            const toSet = !this.pausedOnShareLinkLevel;
+            const res = await apiCall.makeCall("POST", `1/shares/links/${this.$route.params.id}/${this.shocker.id}/pause`, {
                 pause: toSet
             });
 
-            this.shocker.isPaused = toSet;
+            if (res === undefined || res.status !== 200) {
+                toastr.error("Error while updating pause state");
+                return;
+            }
+
+            this.shocker.paused = res.data.data;
         }
+    },
+    computed: {
+        pausedOnShareLinkLevel() {
+            return this.shocker.paused & PR.SHARE_LINK;
+        },
     },
     watch: {
         'limit.duration'(newValue, oldValue) {
