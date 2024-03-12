@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import PR from '@/js/PauseReason.js';
 import RoundSlider from 'vue-three-round-slider';
 import ControlButton from '../../../../utils/ControlButton.vue';
 import Loading from '../../../../utils/Loading.vue';
