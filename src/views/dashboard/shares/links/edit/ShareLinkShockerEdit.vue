@@ -2,7 +2,7 @@
     <b-container class="shocker">
         <b-row class="head">
             <b-col cols="auto" class="pause-col" @click="togglePause">
-                <span v-if="shocker.isPaused" class="paused">
+                <span v-if="pausedOnShareLinkLevel" class="paused">
                     <i class="fa-solid fa-play"></i>
                 </span>
 
