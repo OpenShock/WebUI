@@ -9,6 +9,7 @@
           <component :is="Component"></component>
         </transition>
 
+        <firmware-update-notice></firmware-update-notice>
       </div>
       <div v-else :key="'1'" class="manager-root-loading row align-items-center justify-content-center">
         <svg class="loading-container" width="399.99554" viewBox="0 0 399.99554 400" version="1.1" id="svg1"
@@ -36,9 +37,10 @@
 import UserHub from '@/js/UserHub.js';
 import NavRoot from "./Navigation/NavRoot";
 import LoadingView from "../utils/LoadingView";
+import FirmwareUpdateNotice from './FirmwareUpdateNotice.vue';
 
 export default {
-  components: { NavRoot, LoadingView },
+  components: { NavRoot, LoadingView, FirmwareUpdateNotice },
   beforeMount() {
     this.stateLoop();
     global.ws = this.userHubInstance;

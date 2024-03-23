@@ -44,6 +44,10 @@ export default class ws {
                     firmwareVersion: state.firmwareVersion
                 })
             });
+
+            console.log("[SIGNALR] Device Status");
+
+            emitter.emit('deviceStatus', { states });
         });
 
         this.connection.on("DeviceUpdate", (deviceId, type) => {
