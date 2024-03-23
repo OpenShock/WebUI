@@ -65,7 +65,7 @@ export default {
 
             const deviceStates = this.$store.state.deviceStates;
             this.ownDeviceIds.forEach(deviceId => {
-                if(!deviceStates[deviceId]) {
+                if(deviceStates[deviceId]) {
                     const firmwareVersion = deviceStates[deviceId].firmwareVersion;
 
                     if((firmwareVersion === null || firmwareVersion.startsWith('0')) && !firmwareVersion.startsWith('0.0.0')) {
