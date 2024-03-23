@@ -65,9 +65,13 @@ export default {
 
             const deviceStates = this.$store.state.deviceStates;
             this.ownDeviceIds.forEach(deviceId => {
-                if (deviceStates[deviceId] && (deviceStates[deviceId].firmwareVersion === null || deviceStates[deviceId].firmwareVersion.startsWith('0'))) {
-                    this.updateModal = true;
-                    return;
+                if(!deviceStates[deviceId]) {
+                    const firmwareVersion = deviceStates[deviceId].firmwareVersion;
+
+                    if((firmwareVersion === null || firmwareVersion.startsWith('0')) && !firmwareVersion.startsWith('0.0.0')) {
+                        this.updateModal = true;
+                        return;
+                    }
                 }
             });
         },
