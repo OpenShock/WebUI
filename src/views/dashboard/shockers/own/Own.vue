@@ -104,6 +104,10 @@ export default {
                 {
                     text: "PetTrainer",
                     value: "PetTrainer"
+                },
+                {
+                    text: "Petrainer 998DR",
+                    value: "Petrainer998DR"
                 }
             ],
             selectedDevice: "",
