@@ -131,7 +131,7 @@ export default {
                         break;
                     case "LatencyAnnounce": 
 
-                        this.live.latency = json.Data[this.$store.state.user.id];
+                        this.live.latency = json.Data.ownLatency;
                         break;
                 }
             };
