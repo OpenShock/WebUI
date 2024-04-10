@@ -131,7 +131,7 @@ export default {
                         break;
                     case "LatencyAnnounce": 
 
-                        this.live.latency = json.Data.ownLatency;
+                        this.live.latency = json.Data.OwnLatency;
                         break;
                 }
             };
