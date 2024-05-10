@@ -182,6 +182,10 @@ const routes = [
 				component: lazyLoad('public/proxy/ShareCodeProxy'),
 				props: true
 			},
+			{
+				path: 'proxy/token',
+				component: lazyLoad('public/proxy/TokenProxy')
+			},
 		]
 	}
 ]

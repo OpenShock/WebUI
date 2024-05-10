@@ -42,6 +42,7 @@ $shocker-limit-color: #f16051;
   --main-text-hover-color: #282828;
   --main-seperator-color: #373b3e;
   color: #000;
+  --invert-color: #fff;
 
   --hover-darken-color: #e0e0e0;
   --secondary-color: #666666;
@@ -74,6 +75,7 @@ $shocker-limit-color: #f16051;
   --main-text-hover-color: #c8c8c8;
   --main-seperator-color: #373b3e;
   color: #fff;
+  --invert-color: #000;
 
   --hover-darken-color: #373b3e;
   --secondary-color: #c7c7c7;
@@ -94,6 +96,8 @@ $shocker-limit-color: #f16051;
     --bs-table-hover-bg: #323539;
     --bs-table-hover-color: #fff;
     color: #fff;
+
+
     border-color: #373b3e;
   }
 
