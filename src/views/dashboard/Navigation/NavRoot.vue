@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar first-level">
-    <a class="navbar-logo"><img src="@/assets/images/Logo.svg" alt="OpenShock Logo" /></a>
+    <a @click="goHome" class="navbar-logo"><img src="@/assets/images/Logo.svg" alt="OpenShock Logo" /></a>
     <theme-toggle />
     <button class="navbar-toggler" @click="mobileShow = !mobileShow" type="button" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -148,6 +148,9 @@ export default {
       this.hori.left = pos.left;
       this.hori.width = element.innerWidth();
       this.hori.height = element.innerHeight();
+    },
+    goHome() {
+      this.$router.push('/dashboard/home');
     }
   }
 }
@@ -167,6 +170,7 @@ export default {
 
   .navbar-logo {
     margin: 0 20px 0 10px;
+    cursor: pointer;
 
     img {
       height: 48px;
