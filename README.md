@@ -78,4 +78,5 @@ This will output static web files to `./dist/` which can be deployed on pretty m
 This also works for cloudflare pages auto build pipeline.
 
 ## Support
-You can support me and my projects here [Ko-fi.com/LucHeart](https://ko-fi.com/lucheart)
+
+You can support the OpenShock team here: [Sponsor OpenShock](https://github.com/sponsors/OpenShock)
