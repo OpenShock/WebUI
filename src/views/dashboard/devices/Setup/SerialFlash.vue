@@ -88,7 +88,7 @@ export default {
                 started: false,
                 finished: false,
                 progress: 0,
-                state: "Press flash to start flashing your device"
+                state: "Press flash to start flashing your hub"
             },
             text: ""
         }

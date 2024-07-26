@@ -14,7 +14,7 @@ export default {
     this.$store.dispatch('setNewNav', [
       {
         routerLink: '/admin/online-devices',
-        html: '<i class="fas fa-search"></i>Online Devices'
+        html: '<i class="fas fa-search"></i>Online Hubs'
       }
     ]);
   }

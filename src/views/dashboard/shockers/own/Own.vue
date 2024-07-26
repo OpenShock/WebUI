@@ -55,10 +55,10 @@
               <b-form-input id="item-id" v-model="retrievedShocker.id" readonly/>
             </b-form-group>
 
-            <b-form-group label="Device" label-for="item-device" label-class="mb-1">
+            <b-form-group label="Hub" label-for="item-device" label-class="mb-1">
               <b-form-select id="item-device" :state="validationEditDevice" v-model="retrievedShocker.device" :options="deviceList" required/>
               <b-form-invalid-feedback :state="validationEditDevice">
-                    Select a device
+                    Select a hub
                 </b-form-invalid-feedback>
             </b-form-group>
         

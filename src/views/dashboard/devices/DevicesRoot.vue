@@ -22,7 +22,7 @@
       </b-table>
     </b-container>
 
-    <b-modal v-model="modal.edit" title="Edit Device" ok-title="Save" @ok="applyEdits">
+    <b-modal v-model="modal.edit" title="Edit Hub" ok-title="Save" @ok="applyEdits">
       <loading v-if="modal.editLoading"></loading>
       <div v-else>
         <b-container style="padding: 0;">
@@ -240,7 +240,7 @@ export default {
 
       const res = await apiCall.makeCall('GET', '1/devices/' + item.id);
       if (res === undefined || res.status !== 200) {
-        toastr.error("Error while retrieving device details");
+        toastr.error("Error while retrieving hub details");
         return;
       }
 
