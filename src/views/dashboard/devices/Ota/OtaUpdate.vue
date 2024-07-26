@@ -11,7 +11,7 @@
             <span v-if="stage === 'branchSelect'">
                 <b-row align-h="center">
                     <b-col md="6" style="text-align: right;">
-                        <h5>Device Status</h5>
+                        <h5>Hub Status</h5>
                     </b-col>
                     <b-col md="6">
                         <span id="tooltip-state" :class="deviceOnline ? 'online' : 'offline'">
@@ -363,7 +363,7 @@ export default {
         progressTaskName() {
             switch (this.deviceInfo.progressTask) {
                 case -2:
-                    return "Waiting for Device";
+                    return "Waiting for Hub";
                 case 0:
                     return "Fetching Metadata";
                 case 1:

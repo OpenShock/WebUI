@@ -19,7 +19,7 @@
             <b-form-group label="Shocker's device" label-for="device">
                 <b-form-select :state="validationDevice" id="device" v-model="selectedDevice" :options="deviceList" required/>
                 <b-form-invalid-feedback :state="validationDevice">
-                    Select a device
+                    Select a hub
                 </b-form-invalid-feedback>
             </b-form-group>
 

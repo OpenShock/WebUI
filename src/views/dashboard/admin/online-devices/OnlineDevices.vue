@@ -1,7 +1,7 @@
 <template>
     <b-container>
         <b-row>
-            <h4>Online Devices: <b>{{ devices.length }}</b></h4>
+            <h4>Online Hubs: <b>{{ devices.length }}</b></h4>
         </b-row>
         <b-row>
         <b-table hover striped :items="devices" :fields="fields" class="devices-table">

@@ -96,7 +96,7 @@ export default {
     async generatePairCode(item) {
       this.$swal({
         title: 'Generate Pair Code?',
-        html: "Generate a pair code for this device.<br>Its vaild for <b>15 minutes</b> since its creation.<br>There is only one active pair code per device, newly generated ones will override the older active ones.",
+        html: "Generate a pair code for this hub.<br>Its vaild for <b>15 minutes</b> since its creation.<br>There is only one active pair code per hub, newly generated ones will override the older active ones.",
         icon: 'info',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -144,7 +144,7 @@ export default {
     regenerateToken(item) {
       this.$swal({
         title: 'Regenerate token?',
-        html: "Your device token will be regenerated, this means the <b>previous one</b> is going to <b>invalid</b> from that point on. <br><br>Are you sure?",
+        html: "Your hub token will be regenerated, this means the <b>previous one</b> is going to <b>invalid</b> from that point on. <br><br>Are you sure?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -165,7 +165,7 @@ export default {
         },
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$swal('Success!', 'Successfully regenerated device token', 'success');
+          this.$swal('Success!', 'Successfully regenerated hub token', 'success');
         }
       });
     },
@@ -173,14 +173,14 @@ export default {
 
       this.$swal({
         title: 'Delete?',
-        html: `You are about to delete device <b>${item.name}</b> with id (${item.id}).<br>This will also delete <b>all shocker configurations and shares associated with that shocker.</b>
+        html: `You are about to delete hub <b>${item.name}</b> with id (${item.id}).<br>This will also delete <b>all shocker configurations and shares associated with that shocker.</b>
           <br><br><b><u>This is permanent and cannot be undone.</u></b><br>Are you sure?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: 'var(--secondary-seperator-color)',
         showLoaderOnConfirm: true,
-        confirmButtonText: 'Delete device',
+        confirmButtonText: 'Delete hub',
         allowOutsideClick: () => !this.$swal.isLoading(),
         preConfirm: async () => {
           try {
@@ -195,7 +195,7 @@ export default {
         },
       }).then(async (result) => {
         if (result.isConfirmed) {
-          this.$swal('Success!', 'Successfully deleted device', 'success');
+          this.$swal('Success!', 'Successfully deleted hub', 'success');
           this.loadDevices();
         }
       });
@@ -205,11 +205,11 @@ export default {
     async createNewDevice() {
       const res = await apiCall.makeCall('POST', '1/devices');
       if (res === undefined || res.status !== 201) {
-        toastr.error("Error while creating new device");
+        toastr.error("Error while creating new hub");
         return;
       }
 
-      this.$swal('Success!', 'Successfully created new device', 'success');
+      this.$swal('Success!', 'Successfully created new hub', 'success');
       await this.loadDevices();
     },
     updateOnlineStateAll() {
@@ -257,7 +257,7 @@ export default {
         return;
       }
 
-      this.$swal('Success!', `Successfully updated device [${this.editItem.id}]`, 'success');
+      this.$swal('Success!', `Successfully updated hub [${this.editItem.id}]`, 'success');
       await this.loadDevices();
     },
     sendCaptiveMessage(deviceId, enabled) {

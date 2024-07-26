@@ -1,13 +1,13 @@
 <template>
-    <b-modal v-model="updateModal" title="Update your Device!" ok-title="Update now!" cancel-title="Postpone"
+    <b-modal v-model="updateModal" title="Update your Hub!" ok-title="Update now!" cancel-title="Postpone"
         @ok.prevent="updateLink" @cancel.prevent="cancel" @hide.prevent>
 
         <b-container>
             <b-row>
-                <p>One or more of your devices have a <b>firmware version</b> that is lower than <b>1.0.0</b>.</p>
+                <p>One or more of your hubs have a <b>firmware version</b> that is lower than <b>1.0.0</b>.</p>
             </b-row>
             <b-row>
-                <p>Please update your device to the latest firmware version to be able to use it in the future.</p>
+                <p>Please update your hub to the latest firmware version to be able to use it in the future.</p>
             </b-row>
         </b-container>
     </b-modal>
@@ -19,7 +19,7 @@
             <p>We are not joking! Anything below 1.0.0 uses a different connection method and will not working correctly
                 or at all in the future! Please upgrade!</p>
         </b-row>
-        <BFormCheckbox v-model="dontWarnAgain" switch>I understand that my device could stop working at any point and
+        <BFormCheckbox v-model="dontWarnAgain" switch>I understand that my hub could stop working at any point and
             dont want to see this popup again.</BFormCheckbox>
     </b-modal>
 
