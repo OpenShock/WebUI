@@ -37,7 +37,7 @@ These lines might be interesting if you are wanting to modify something related 
 
 # Deployment
 
-This documentation describes how to self-host the WebUI container. This might not be of interest to you if you are content using a public OpenShock instance such as [ShockLink.net](https://shocklink.net).
+This documentation describes how to self-host the WebUI container. This might not be of interest to you if you are content using a public OpenShock instance such as [openshock.app](https://openshock.app).
 
 ## Using Docker
 Assuming you are running on `localhost`, with [the API](https://github.com/OpenShock/API) running on port `5001`:
@@ -78,4 +78,5 @@ This will output static web files to `./dist/` which can be deployed on pretty m
 This also works for cloudflare pages auto build pipeline.
 
 ## Support
-You can support me and my projects here [Ko-fi.com/LucHeart](https://ko-fi.com/lucheart)
+
+You can support the OpenShock team here: [Sponsor OpenShock](https://github.com/sponsors/OpenShock)
