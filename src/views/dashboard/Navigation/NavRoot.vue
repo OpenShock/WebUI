@@ -42,7 +42,7 @@ export default {
         },
         {
           routerLink: '/devices',
-          html: '<i class="fa-solid fa-microchip"></i>Devices',
+          html: '<i class="fa-solid fa-microchip"></i>Hubs',
           active: false
         },
         {
