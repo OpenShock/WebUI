@@ -2,6 +2,8 @@
 
 This is the OpenShock Web UI. It is a single-page application that communicates with the [OpenShock API](https://github.com/OpenShock/API). It is written using JavaScript and SCSS using the Vue 3 framework.
 
+Rework in progress at [Frontend Repo](https://github.com/openshock/frontend)
+
 ## Contents
 
 - [OpenShock WebUI](#openshock-webui)
