@@ -31,10 +31,10 @@ import "./Slider.scss";
 import "./App.scss";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import App from '@/App';
+import mitt from 'mitt';
 import Footer from '@/Footer';
 import router from '@/router';
 import storeA from '@/store';
-import mitt from 'mitt';
 import BootstrapVueNext from 'bootstrap-vue-next'
 import VueSweetalert2 from 'vue-sweetalert2';
 
@@ -82,6 +82,10 @@ Sentry.init({
   });
 }
 
+emitter.on('logout', () => {
+	router.push('/account/login');
+	utils.setLogin("");
+});
 
 app.mount('#app');
 
