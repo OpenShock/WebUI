@@ -48,8 +48,6 @@ export default class ws {
                 })
             });
 
-            console.log("[SIGNALR] Device Status");
-
             emitter.emit('deviceStatus', { states });
         });
 
@@ -90,8 +88,8 @@ export default class ws {
 
     start() {
         this.connection.start().catch((err) => {
-            if(err.message && err.message.includes(`Status code '401'`)) {
-                utils.clearLogin();
+            if(err.message && err.message.includes(`Error: Failed to start the connection: Error: WebSocket failed to connect`)) {
+                // We previously cleared login here, we dont need to do that anymore
             } else toastr.error(err, "User Hub");
         });
     }
