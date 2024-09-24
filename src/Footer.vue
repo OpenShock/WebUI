@@ -1,5 +1,5 @@
 <template>
-  <p class="version">OpenShock UI 3.6.3
+  <p class="version">OpenShock UI 3.6.4
     <a target="_blank" :href="'https://github.com/OpenShock/WebUI/commit/' + commitHash">{{ commitHash }}</a> | API <span
       v-html="apiVersion"></span> <a target="_blank"
       :href="'https://github.com/OpenShock/API/commit/' + apiCommitHash">{{ apiCommitHash }}</a> | <span>{{ targetEnv }}</span>
