@@ -93,14 +93,12 @@ const store = createStore({
 					});
 					console.log("Successfully fetched self");
 					return;
-				} else if(res.status === 401) {
-					emitter.emit('logout');
-					return;
 				} else console.log("Self status code is " + res.status + " with message " + res.data);
 			} catch (e) {
 				console.log(e);
 			}
 			console.log("Seems like the session is invalid, expired or user just never logged in, sending to login page");
+			emitter.emit('logout');
 		},
 		setReturnUrl({ commit }, url) {
 			commit('setReturnUrl', url);
