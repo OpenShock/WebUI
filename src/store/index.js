@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import axios from "axios";
+import router from '@/router';
 
 const store = createStore({
 	state() {
@@ -93,6 +94,8 @@ const store = createStore({
 					});
 					console.log("Successfully fetched self");
 					return;
+				} else if(res.status === 401) {
+					router.push('/account/login');
 				} else console.log("Self status code is " + res.status + " with message " + res.data);
 			} catch (e) {
 				console.log(e);
