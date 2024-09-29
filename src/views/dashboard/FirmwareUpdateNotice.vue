@@ -77,7 +77,7 @@ export default {
         },
 
         updateLink() {
-            window.open('https://next.shocklink.net/flashtool', '_blank');
+            window.open('https://next.openshock.app/flashtool', '_blank');
             this.updateModal = false;
         },
 

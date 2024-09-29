@@ -25,7 +25,7 @@ The [webui](https://github.com/OpenShock/WebUI/pkgs/container/webui) container s
 
 |Variable|Default|Description|
 |-|-|-|
-|`OPENSHOCK_NAME`|`LocalShock`| Name of the OpenShock instance. |
+|`OPENSHOCK_NAME`|`OpenShock`| Name of the OpenShock instance. |
 |`OPENSHOCK_URL`|`http://webui:80`| URL of the OpenShock WebUI. (NO trailing slash!) |
 |`OPENSHOCK_SHARE_URL`|`https://webui:80/`| URL to prefix share links with. (NO trailing slash!) When visited, should redirect to `${OPENSHOCK_WEBUI_URL}/public/proxy/shares/links/{ID}`. |
 |`OPENSHOCK_API_URL`|`http://api:80/`| URL of the API. (NO trailing slash!) |
@@ -47,7 +47,7 @@ Assuming you are running on `localhost`, with [the API](https://github.com/OpenS
 ```bash
 $ docker run \
     -p 5002:80/tcp \
-    -e OPENSHOCK_NAME=LocalShock \
+    -e OPENSHOCK_NAME=OpenShock \
     -e OPENSHOCK_URL=http://localhost:5002 \
     -e OPENSHOCK_API_URL=http://localhost:5001 \
     -e OPENSHOCK_SHARE_URL=http://localhost:5002/#/public/proxy/shares/links/ \

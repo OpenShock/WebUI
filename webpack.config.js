@@ -78,7 +78,7 @@ module.exports = (env) => {
 				chunkFilename: "[name].[contenthash:8].css",
 			}),
 			new HtmlWebpackPlugin({
-				template: path.resolve(__dirname, "public", `index.${targetEnv === 'container' ? 'container' : 'shocklink'}.html`),
+				template: path.resolve(__dirname, "public", `index.${targetEnv === 'container' ? 'container' : 'openshock'}.html`),
 				favicon: "./public/favicon.ico",
 				inject: true
 			}),

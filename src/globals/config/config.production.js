@@ -1,7 +1,7 @@
 const config = {
-	name: "ShockLink",
-	webUiUrl: "https://shocklink.net/#/",
-	apiUrl: "https://api.shocklink.net/",
+	name: "OpenShock",
+	webUiUrl: "https://openshock.app/#/",
+	apiUrl: "https://api.openshock.app/",
 	shortUrl: "https://shockl.ink/"
 }
 

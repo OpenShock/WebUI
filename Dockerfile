@@ -1,7 +1,7 @@
 FROM nginx:1-alpine
 
 # Default values.
-ENV OPENSHOCK_NAME=LocalShock
+ENV OPENSHOCK_NAME=OpenShock
 ENV OPENSHOCK_URL=http://webui.localhost:5002
 ENV OPENSHOCK_API_URL=http://api.localhost:5001
 ENV OPENSHOCK_SHARE_URL=

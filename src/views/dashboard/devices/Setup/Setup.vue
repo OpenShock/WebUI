@@ -87,7 +87,7 @@ export default {
         },
         async flashData() {
             this.logMsg("Downloading...");
-            fetch('https://cdn.shocklink.net/firmware/shocklink_firmware_0.5.2.0.bin').then(res => res.arrayBuffer()).then(async buff => {
+            fetch('https://cdn.openshock.app/firmware/openshock_firmware_0.5.2.0.bin').then(res => res.arrayBuffer()).then(async buff => {
                 this.logMsg("Flashing memory. Please wait...");
                 let stamp = Date.now();
                 await this.espStub.flashData(
