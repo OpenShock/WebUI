@@ -146,7 +146,7 @@ export default {
                 return;
             }
 
-            this.tokens = res.data.data;
+            this.tokens = res.data;
         },
         remove(item) {
             this.$swal({
@@ -207,7 +207,7 @@ export default {
 
             this.load();
             this.newTokenModal = false;
-            this.$swal('Successfully created API token!', `Make sure to save it somewhere secure, as it will not be showen to you again.<br><br>Code: ${res.data.data}`, 'success');
+            this.$swal('Successfully created API token!', `Make sure to save it somewhere secure, as it will not be showen to you again.<br><br>Code: ${res.data.token}`, 'success');
         }
     }
 }
