@@ -119,7 +119,7 @@ export default {
                 return;
             }
 
-            this.redirectedUri = this.redirectUri.replace("%", res.data.data);
+            this.redirectedUri = this.redirectUri.replace("%", res.data.token);
             this.redirectToUri();
             this.loadingProceed = false;
         },
