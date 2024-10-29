@@ -260,7 +260,7 @@ export default {
                 model: this.retrievedShocker.model
             });
 
-            if (res === undefined || res.status !== 200) {
+            if (res === undefined || res.status !== 200 && res.status !== 204) {
                 toastr.error("Error while updating shocker");
                 return;
             }

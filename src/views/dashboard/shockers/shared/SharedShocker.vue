@@ -168,7 +168,7 @@ export default {
                 preConfirm: async () => {
                     try {
                         const res = await apiCall.makeCall('DELETE', `1/shockers/${this.shocker.id}/shares/${this.$store.state.user.id}`);
-                        if (res.status !== 200) {
+                        if (res.status !== 200 && res.status !== 204) {
                             throw new Error(res.statusText);
                         }
 

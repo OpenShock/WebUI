@@ -33,7 +33,7 @@ export default {
 
         try {
             const res = await apiCall.makeCall('POST', `1/shares/code/${this.id}`);
-            if (res.status !== 200) {
+            if (res.status !== 200 && res.status !== 204) {
                 throw new Error(res.statusText);
             }
             toastr.success(`Failed to add share: ${utils.getError(err)}`);

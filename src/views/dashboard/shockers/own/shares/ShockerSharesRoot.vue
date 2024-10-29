@@ -280,7 +280,7 @@ export default {
                 preConfirm: async () => {
                     try {
                         const res = await apiCall.makeCall('DELETE', `1/shares/code/${code.id}`);
-                        if (res.status !== 200) {
+                        if (res.status !== 200 && res.status !== 204) {
                             throw new Error(res);
                         }
 
@@ -319,7 +319,7 @@ export default {
                 preConfirm: async () => {
                     try {
                         const res = await apiCall.makeCall('DELETE', `1/shockers/${this.$route.params.id}/shares/${share.sharedWith.id}`);
-                        if (res.status !== 200) {
+                        if (res.status !== 200 && res.status !== 204) {
                             throw new Error(res);
                         }
 
@@ -358,7 +358,7 @@ export default {
                     intensity: temp.limitsTranslated.intensity == 100 ? null : temp.limitsTranslated.intensity
                 }
             });
-            if (res === undefined || res.status !== 200) {
+            if (res === undefined || res.status !== 200 && res.status !== 204) {
                 toastr.error("Error while creating share code");
                 return;
             }

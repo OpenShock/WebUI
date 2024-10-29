@@ -163,7 +163,7 @@ export default {
                 preConfirm: async () => {
                     try {
                         const res = await apiCall.makeCall('DELETE', `1/tokens/${item.id}`);
-                        if (res.status !== 200) {
+                        if (res.status !== 200 && res.status !== 204) {
                             throw new Error(res);
                         }
 
@@ -187,7 +187,7 @@ export default {
                 name: this.editing.token.name,
 
             });
-            if (res === undefined || res.status !== 200) {
+            if (res === undefined || res.status !== 200 && res.status !== 204) {
                 this.$swal('Error', 'Error while updating new token', 'error');
                 return;
             }

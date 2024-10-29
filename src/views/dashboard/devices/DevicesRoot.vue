@@ -155,7 +155,7 @@ export default {
         preConfirm: async () => {
           try {
             const res = await apiCall.makeCall('PUT', `1/devices/${item.id}`);
-            if (res.status !== 200) {
+            if (res.status !== 200 && res.status !== 204) {
               throw new Error(res.statusText);
             }
 
@@ -185,7 +185,7 @@ export default {
         preConfirm: async () => {
           try {
             const res = await apiCall.makeCall('DELETE', `1/devices/${item.id}`);
-            if (res.status !== 200) {
+            if (res.status !== 200 && res.status !== 204) {
               throw new Error(res.statusText);
             }
 
@@ -252,7 +252,7 @@ export default {
         name: this.editItem.name
       });
 
-      if (res === undefined || res.status !== 200) {
+      if (res === undefined || res.status !== 200 && res.status !== 204) {
         toastr.error("Error while updating device");
         return;
       }

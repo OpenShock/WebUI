@@ -68,7 +68,7 @@ export default {
                 preConfirm: async (id) => {
                     try {
                         const res = await apiCall.makeCall('POST', `1/shares/code/${id}`);
-                        if (res.status !== 200) {
+                        if (res.status !== 200 && res.status !== 204) {
                             throw new Error(res.statusText);
                         }
                     } catch (err) {

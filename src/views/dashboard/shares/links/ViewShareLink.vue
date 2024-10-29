@@ -154,7 +154,7 @@ export default {
         async addShockerAction() {
             if (!this.validateAddShocker) return;
             const res = await apiCall.makeCall('POST', `1/shares/links/${this.id}/${this.addShocker.selectedShocker}`);
-            if (res === undefined || res.status !== 200) {
+            if (res === undefined || res.status !== 200 && res.status !== 204) {
                 toastr.error("Error while adding shocker to share link");
                 return;
             }
