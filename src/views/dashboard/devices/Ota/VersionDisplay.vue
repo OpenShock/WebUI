@@ -31,12 +31,7 @@ export default {
                 response = await axios({
                     method: 'GET',
                     url: `https://firmware.openshock.org/version-${this.branch}.txt`,
-                    withCredentials: false,
-                    headers: {
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache',
-                        'Expires': '0',
-                    },
+                    withCredentials: false
                 });
             } catch (error) {
                 console.log(error);
