@@ -108,6 +108,10 @@ export default {
                 {
                     text: "Petrainer 998DR",
                     value: "Petrainer998DR"
+                },
+                {
+                    text: "Wellturn T330",
+                    value: "WellturnT330"
                 }
             ],
             selectedDevice: "",
