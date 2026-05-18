@@ -173,7 +173,7 @@ export default {
 
       this.$swal({
         title: 'Delete?',
-        html: `You are about to delete hub <b>${item.name}</b> with id (${item.id}).<br>This will also delete <b>all shocker configurations and shares associated with that shocker.</b>
+        html: `You are about to delete hub <b>${item.name}</b> with id (${item.id}).<br>This will also delete <b>all shocker configurations and shares associated with that hub.</b>
           <br><br><b><u>This is permanent and cannot be undone.</u></b><br>Are you sure?`,
         icon: 'warning',
         showCancelButton: true,
