@@ -60,21 +60,6 @@ const routes = [
 				]
 			},
 			{
-				path: 'admin',
-				component: lazyLoad('dashboard/admin/AdminRoot'),
-				redirect: '/dashboard/admin/online-devices',
-				children: [
-					{
-						path: 'users',
-						component: lazyLoad('dashboard/admin/users/Users')
-					},
-					{
-						path: 'online-devices',
-						component: lazyLoad('dashboard/admin/online-devices/OnlineDevices')
-					}
-				]
-			},
-			{
 				path: 'profile',
 				component: lazyLoad('dashboard/profile/ProfileRoot'),
 				redirect: '/dashboard/profile/account',
@@ -84,23 +69,8 @@ const routes = [
 						component: lazyLoad('dashboard/profile/Account')
 					},
 					{
-						path: 'settings',
-						component: lazyLoad('dashboard/profile/Settings')
-					},
-					{
 						path: 'license',
 						component: lazyLoad('dashboard/profile/License')
-					},
-					{
-						path: "connections",
-						component: lazyLoad('dashboard/profile/connections/ConnectionsRoot'),
-						redirect: '/dashboard/profile/settings',
-						children: [
-							{
-								path: "patreon",
-								component: lazyLoad('dashboard/profile/connections/Patreon')
-							}
-						]
 					}
 				]
 			},
@@ -131,31 +101,6 @@ const routes = [
 			{
 				path: 'login',
 				component: lazyLoad('Login/Login')
-			},
-			{
-				path: 'signup',
-				component: lazyLoad('Login/Signup')
-			},
-			{
-				path: 'password',
-				component: lazyLoad('Login/Password/Root'),
-				redirect: '/account/password/reset',
-				children: [
-					{
-						path: 'reset',
-						component: lazyLoad('Login/Password/Reset')
-					},
-					{
-						path: 'recover/:uuid/:secret',
-						component: lazyLoad('Login/Password/Recover'),
-						props: true
-					}
-				]
-			},
-			{
-				path: 'activate/:uuid/:secret',
-				component: lazyLoad('Login/Activate'),
-				props: true
 			}
 		]
 	},

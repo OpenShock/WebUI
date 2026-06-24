@@ -82,22 +82,6 @@ export default {
       }
     }
   },
-  beforeMount() {
-
-    if (this.$store.state.user.rank === 'Admin') {
-
-      const newElement = {
-        routerLink: '/admin',
-        html: '<i class="fas fa-user-shield"></i>Admin',
-        active: false
-      };
-
-      // Insert as second to last element
-      this.allElements.splice(this.allElements.length - 1, 0, newElement);
-    }
-
-
-  },
   mounted() {
     this.initActive();
     window.addEventListener('resize', () => this.updateHori());

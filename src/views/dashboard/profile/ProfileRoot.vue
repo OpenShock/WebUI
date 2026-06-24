@@ -15,10 +15,6 @@ export default {
       {
         routerLink: '/profile/account',
         html: '<i class="fas fa-user"></i>Account'
-      },
-      {
-        routerLink: '/profile/settings',
-        html: '<i class="fas fa-cog"></i>Settings'
       }
     ]);
   }

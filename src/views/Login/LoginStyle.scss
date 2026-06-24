@@ -140,24 +140,6 @@ $material-design-icons-font-directory-path: '~material-design-icons-iconfont/dis
     }
   }
 
-  .forgot-pw {
-    text-align: right;
-    padding: 8px 0 31px;
-    a {
-      font-family: Poppins, sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #fff;
-      text-decoration: none;
-      transition: all 0.4s;
-
-      &:hover {
-        color: var(--main-color);
-      }
-    }
-  }
-
   /*------------------------------------------------------------------
   [ Form ]*/
 
