@@ -1,4 +1,7 @@
 <template>
+  <div class="deprecated-header">
+    <p>⚠️ This legacy Web UI is <b>DEPRECATED</b> and no longer maintained. Please use the <a href="https://github.com/openshock/frontend" target="_blank">new Frontend</a>.</p>
+  </div>
   <div v-if="dev" class="dev-header">
     <p>This is the OpenShock <b>DEVELOPMENT</b> environment. <u>No data is saved</u>, and regularly overwritten by production data</p>
   </div>
@@ -26,6 +29,28 @@ export default {
 </script>
 
 <style lang="scss">
+
+.deprecated-header {
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 25px;
+  background-color: #b30000;
+  color: #fff;
+  text-align: center;
+  z-index: 1000;
+  line-height: 25px;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  a {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+}
 
 .dev-header {
   top: 0;

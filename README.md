@@ -1,3 +1,8 @@
+# DEPRECATED - LEGACY WEB UI FOR OPENSHOCK - NO LONGER MAINTAINED
+
+This is the old legacy Web UI for OpenShock. Its not longer maintained as it is replaced by the new [Frontend](https://github.com/openshock/frontend).
+**Consider this an archived project.**
+
 # OpenShock WebUI
 
 This is the OpenShock Web UI. It is a single-page application that communicates with the [OpenShock API](https://github.com/OpenShock/API). It is written using JavaScript and SCSS using the Vue 3 framework.
