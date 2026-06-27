@@ -1,6 +1,6 @@
 <template>
   <div class="deprecated-header">
-    <p>⚠️ This legacy Web UI is <b>DEPRECATED</b> and no longer maintained. Please use the <a href="https://github.com/openshock/frontend" target="_blank">new Frontend</a>.</p>
+    <p>⚠️ This legacy Web UI is <b>DEPRECATED</b> and no longer maintained. Please use the new one at <a href="https://openshock.app" target="_blank">openshock.app</a>. Selfhosters please migrate to <a href="https://github.com/openshock/frontend" target="_blank">the new Frontend</a>.</p>
   </div>
   <div v-if="dev" class="dev-header">
     <p>This is the OpenShock <b>DEVELOPMENT</b> environment. <u>No data is saved</u>, and regularly overwritten by production data</p>

@@ -130,32 +130,29 @@ const routes = [
 		children: [
 			{
 				path: 'login',
-				component: lazyLoad('Login/Login')
+				component: lazyLoad('Login/DeprecationNotice')
 			},
 			{
 				path: 'signup',
-				component: lazyLoad('Login/Signup')
+				component: lazyLoad('Login/DeprecationNotice')
 			},
 			{
 				path: 'password',
-				component: lazyLoad('Login/Password/Root'),
-				redirect: '/account/password/reset',
+				component: lazyLoad('Login/DeprecationNotice'),
 				children: [
 					{
 						path: 'reset',
-						component: lazyLoad('Login/Password/Reset')
+						component: lazyLoad('Login/DeprecationNotice')
 					},
 					{
 						path: 'recover/:uuid/:secret',
-						component: lazyLoad('Login/Password/Recover'),
-						props: true
+						component: lazyLoad('Login/DeprecationNotice')
 					}
 				]
 			},
 			{
 				path: 'activate/:uuid/:secret',
-				component: lazyLoad('Login/Activate'),
-				props: true
+				component: lazyLoad('Login/DeprecationNotice')
 			}
 		]
 	},
